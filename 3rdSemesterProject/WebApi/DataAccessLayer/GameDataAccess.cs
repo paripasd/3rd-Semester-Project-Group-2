@@ -159,7 +159,7 @@ namespace WebApi.DataAccessLayer
             game.YearOfRelease = (int)reader["YearOfRelease"];
             game.Specifications = (string)reader["Specifications"];
             game.Type = (string)reader["Type"];
-            game.Price = (float)reader["Price"];
+            game.Price = Convert.ToSingle(reader["Price"]);
             game.GameFile = (byte[])reader["GameFile"];
 
             return game;

@@ -6,7 +6,7 @@ using WebApi.ModelLayer;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class GameController : ControllerBase
     {
         #region Properties

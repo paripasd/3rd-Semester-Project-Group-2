@@ -35,7 +35,7 @@ namespace WebApi.DataAccessLayer
             }
         }
 
-        public bool DeleteMember(Member member)
+        public bool DeleteMember(int memberId)
         {
             string commandText = "DELETE FROM Member WHERE MemberID = @memberid";
             using (connection.GetConnection())
@@ -43,7 +43,7 @@ namespace WebApi.DataAccessLayer
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
-                command.Parameters.AddWithValue("@memberid", member.MemberID);
+                command.Parameters.AddWithValue("@memberid", memberId);
 
                 try
                 {

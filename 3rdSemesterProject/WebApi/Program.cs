@@ -9,6 +9,7 @@ builder.Services.AddScoped<IEventDataAccess, EventDataAccess>();
 builder.Services.AddScoped<IMemberDataAccess, MemberDataAccess>();
 builder.Services.AddScoped<ILoginDataAccess, LoginDataAccess>();
 builder.Services.AddScoped<ISaleDataAccess, SaleDataAccess>();
+builder.Services.AddScoped<IEventMemberDataAccess, EventMemberDataAccess>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

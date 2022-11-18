@@ -49,9 +49,9 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public ActionResult DeleteMember(Member member)
+        public ActionResult DeleteMember(int memberId)
         {
-            if (!DataAccessLayer.DeleteMember(member))
+            if (!DataAccessLayer.DeleteMember(memberId))
             {
                 return NotFound();  //returns 404
             }

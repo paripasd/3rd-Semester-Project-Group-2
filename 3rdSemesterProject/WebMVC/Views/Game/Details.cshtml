@@ -1,0 +1,60 @@
+@model WebMVC.Models.Game
+
+@{
+    //Layout = null;
+}
+
+    <ul class="navbar">
+        <li>Home</li>
+        <a href=gamepage.html>
+        <li>Games</li></a>
+        <li>Events</li>
+        <li style="float:right">Contact</li>
+    </ul>
+    <div id="pagecontent">
+        <div id="titlearea">
+            <h1>GAME TITLE</h1>
+            <a href="#buyform"><input type="button" value="BUY" class="tomatobutton"></a>
+
+        </div>
+        <div id="showcasearea">
+            <img src="/images/placeholder.jpg" style="padding-bottom:20px">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut nulla non eros pretium malesuada eget commodo arcu. Cras pellentesque at quam a sagittis. Nulla facilisi. Vestibulum accumsan, nisi eu placerat aliquet, orci magna efficitur nisi, nec laoreet arcu neque porttitor nunc. Nam a porta nisl. Phasellus feugiat, odio sit amet aliquam egestas, dolor mi lobortis diam, sed dictum nibh leo luctus purus. Curabitur pretium mattis euismod. Aliquam semper augue ac est ullamcorper, et bibendum justo mollis. Nullam in dictum arcu. Vivamus tincidunt metus in odio vehicula, convallis aliquet metus porttitor. Nam at leo augue.
+
+                Maecenas sagittis nunc massa, sit amet tincidunt mi posuere ac. Aenean feugiat mauris ipsum, sit amet egestas nibh varius sed. In faucibus tincidunt faucibus. Suspendisse est lorem, efficitur ac dapibus ut, aliquam vitae nunc. Cras ornare condimentum turpis, nec interdum sapien feugiat fermentum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque efficitur ornare elit, vel interdum arcu congue sed. Morbi in justo pellentesque, tempor justo id, mollis est. Nunc rutrum nec lectus ac dictum.
+
+                Donec magna ipsum, ultricies sit amet justo non, fringilla pretium dui. Phasellus porttitor quam lorem, in aliquet elit pharetra sed. Nullam id finibus tellus. Vivamus porta ullamcorper dictum. Pellentesque lobortis bibendum ipsum in laoreet. Aenean rhoncus augue congue est viverra, eu scelerisque lectus imperdiet. Nunc at orci elit. Nullam purus enim, ultrices ac pellentesque sed, lobortis sed diam. Sed interdum mattis maximus. Vivamus eleifend turpis in cursus luctus. Maecenas laoreet erat vel gravida volutpat. Aenean auctor magna et urna gravida, sit amet commodo neque gravida. Vestibulum sodales nunc cursus neque semper malesuada. Morbi pretium cursus faucibus. Morbi ac tellus mauris.
+
+                Donec nibh odio, maximus sed ultricies euismod, hendrerit eu turpis. Morbi suscipit, orci ac vulputate dignissim, massa urna dapibus eros, vel iaculis augue orci a magna. Vestibulum accumsan lacus metus, in viverra dolor sodales at. Ut feugiat ultrices metus, eget auctor diam iaculis sit amet. Morbi finibus blandit semper. Integer interdum dui et sem facilisis, at condimentum ligula vulputate. Sed lorem lacus, imperdiet vel gravida vel, faucibus sed libero. Quisque felis lorem, hendrerit ut mi in, euismod ornare eros. Fusce vel felis iaculis, varius leo a, congue nisi. Mauris congue erat nulla, id varius nisl semper sed.
+
+                Aenean consequat ut quam sit amet lobortis. Aliquam vitae finibus diam. Suspendisse vitae accumsan purus. Nunc eu magna nec velit egestas accumsan vitae ut massa. Praesent mollis magna sed dui molestie, eget elementum dui tempus. Etiam lobortis quis diam pulvinar luctus. Sed vulputate dui sed magna tempus, ut finibus nibh posuere. Vivamus porttitor purus vitae nisl convallis, nec mollis velit tempor. Maecenas semper est justo, id pharetra massa ultrices eget. Donec augue leo, rhoncus id justo id, suscipit rhoncus elit. Sed dapibus neque eget sem venenatis tempus. Nam at lacus ut leo volutpat mollis. Mauris semper odio ut est molestie euismod.
+            </p>
+        </div>
+        <div id="horizontal-wrapper">
+            <form id="buyform">
+                <label for="emailfield">Email:</label><br>
+                <input type="email" id="emailfield"><br>
+                <label for="cardnumberfield">Card Number:</label><br>
+                <input type="text" id="cardnumberfield" min="0" max="9999999999999999"><br>
+                <label for="cvcfield">CVC:</label><br>
+                <input type="number" id="cvcfield"><br>
+                <label for="expiryfield">Expiry Date:</label><br>
+                <input type="date" id="expiryfield"><br>
+                <label for="cardholderfield">Cardholder's Name:</label><br>
+                <input type="text" id="cardholderfield"><br>
+                <label for="toscheckbox">I accept terms of service</label>
+                <input type="checkbox" id="toscheckbox"><br>
+                <input type="submit" id="formsubmit" value="BUY (price here)" class="tomatobutton">
+                <p class="button-undertext">Already own the game?<br><a href="" class="button-undertext">Download here</a></p>
+            </form>
+            <div id="systemrequirements">
+                <h2>System Requirements</h2>
+                <p>CPU:</p>
+                <p>GPU:</p>
+                <p>Memory:</p>
+                <p>Storage:</p>
+                <p>OS:</p>
+            </div>
+        </div>
+    </div>

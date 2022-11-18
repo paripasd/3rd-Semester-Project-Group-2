@@ -30,7 +30,7 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@price", game.Price);
                 command.Parameters.AddWithValue("@gamefile", game.GameFile);
 
-                try
+				try
                 {
                     command.ExecuteScalar();
                 }
@@ -159,7 +159,7 @@ namespace WebApi.DataAccessLayer
             game.YearOfRelease = (int)reader["YearOfRelease"];
             game.Specifications = (string)reader["Specifications"];
             game.Type = (string)reader["Type"];
-            game.Price = (float)reader["Price"];
+            game.Price = Convert.ToSingle(reader["Price"]);
             game.GameFile = (byte[])reader["GameFile"];
 
             return game;

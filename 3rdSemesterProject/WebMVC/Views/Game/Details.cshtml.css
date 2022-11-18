@@ -1,0 +1,128 @@
+﻿.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 99, 71);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 60px;
+}
+
+    .navbar li {
+        display: inline;
+        font-weight: 300;
+        font-size: x-large;
+        color: white;
+        padding: 18px;
+        float: left;
+        text-align: center;
+        text-decoration: none;
+    }
+
+        .navbar li:hover {
+            background-color: rgb(216, 84, 60)
+        }
+
+body {
+    color: white;
+    margin: 0;
+    background-image: url(/images/2.jpeg);
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-repeat: repeat;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#titlearea {
+    margin-top: 85px;
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+    #titlearea h1 {
+        padding-top: 8px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        font-weight: bolder;
+    }
+
+.tomatobutton {
+    background-color: tomato;
+    border: none;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 25px;
+    font-size: 25px;
+}
+
+    .tomatobutton:hover {
+        color: tomato;
+        background-color: white;
+    }
+
+#pagecontent {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#showcasearea {
+    width: 50%;
+    margin: auto;
+}
+
+    #showcasearea * {
+        margin: auto;
+        width: 100%;
+        text-align: center;
+    }
+
+#buyform {
+    width: 40%;
+    float: left;
+    text-align: left;
+    padding-left: 20px;
+}
+
+    #buyform * {
+        width: 100%;
+    }
+
+.button-undertext {
+    text-align: center;
+    margin-top: 0px;
+}
+
+#systemrequirements {
+    width: 40%;
+    float: right;
+    text-align: left;
+    padding-right: 20px;
+}
+
+#horizontal-wrapper {
+    padding-top: 100px;
+    width: 50%;
+    margin: auto;
+    overflow: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+}

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/Kab82YGZgWgsfA5kogHk1QQ7gD33fucOvS3/di8cUw9HQMHg/x2afy8cIyiB+wrXAedCa5MJIiPPKFansjGWg==",
+  "dgSpecHash": "aKHt5nRfpGI8jc2Gvkpl6zT2IFQO2b6ncyJtErpkjtE97e6YHmSveXVYeFSEuRtwgT7bL+Y6JyBTIG8KqVwbEg==",
   "success": true,
   "projectFilePath": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\parip\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Users\\parip\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\parip\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\parip\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",

@@ -31,6 +31,9 @@ namespace WebApi.ModelLayer
             Price = price;
             GameFile = gameFile;
         }
+
+        
+
         #region Properties
         public int GameID { get; set; }
         public int DeveloperID { get; set; }

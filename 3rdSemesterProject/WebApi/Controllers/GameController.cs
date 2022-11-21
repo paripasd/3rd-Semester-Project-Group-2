@@ -49,9 +49,9 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public ActionResult DeleteGame(Game game)
+        public ActionResult DeleteGame(int id)
         {
-            if (!DataAccessLayer.DeleteGame(game))
+            if (!DataAccessLayer.DeleteGame(id))
             {
                 return NotFound();  //returns 404
             }
@@ -59,9 +59,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
-        public ActionResult UpdateGame(Game game)
+        public ActionResult UpdateAllGameDetails(Game game)
         {
-            if (!DataAccessLayer.UpdateGame(game))
+            if (!DataAccessLayer.UpdateAllGameDetails(game))
             {
                 return NotFound();
             }

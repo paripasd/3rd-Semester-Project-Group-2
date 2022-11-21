@@ -7,7 +7,7 @@ namespace WebApi.DataAccessLayer
         public void CreateGame(Game game);
         public Game FindGameFromId(int gameId);
         public IEnumerable<Game> GetAllGames();
-        public bool UpdateGame(Game game);
-        public bool DeleteGame(Game game);
+        public bool UpdateAllGameDetails(Game game);
+        public bool DeleteGame(int id);
     }
 }

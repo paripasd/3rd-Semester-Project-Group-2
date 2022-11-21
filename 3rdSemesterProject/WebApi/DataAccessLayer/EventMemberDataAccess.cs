@@ -77,12 +77,12 @@ namespace WebApi.DataAccessLayer
             int eventCapacity;
             int eventParticipantNumber;
             string step1 = "SELECT Capacity FROM Event WHERE EventID = @eventid";
-            string step2 = "SELECT COUNT(MemberID) WHERE EventID = @eventid";
+            string step2 = "SELECT COUNT(MemberID) FROM EventMember WHERE EventID = @eventid";
             string step3 = "INSERT INTO EventMember (EventID, MemberID) VALUES (@eventid, @memberid)";
             using (connection.GetConnection())
             {
-                connection.Open();
-                transaction = connection.GetConnection().BeginTransaction();
+                connection.Open();                                        //we need to lock the resources when we use them for the transaction to make sense
+                transaction = connection.GetConnection().BeginTransaction(System.Data.IsolationLevel.RepeatableRead);
 
                 SqlCommand commandGetCapacity = new SqlCommand(step1, connection.GetConnection());
                 commandGetCapacity.Parameters.AddWithValue("@eventid", eventMember.EventID);
@@ -100,7 +100,8 @@ namespace WebApi.DataAccessLayer
                     eventParticipantNumber = (int)numberOfParticipants.ExecuteReader().GetInt64(0);
                     if (!(eventParticipantNumber < eventCapacity))
                     {
-                        throw new Exception("Exception");
+                        transaction.Rollback();
+                        return false;
                     }
                     commandCreateAttendance.ExecuteScalar();
                     transaction.Commit();
@@ -108,7 +109,16 @@ namespace WebApi.DataAccessLayer
                 }
                 catch (Exception)
                 {
-                    transaction.Rollback();
+                    //if the connection with the database breaks at the same time as the rollback happens we need to add a try catch to be able to see what happened.
+                    try
+                    {
+                        transaction.Rollback();
+                    }
+                    catch (Exception)
+                    {
+
+                        throw new Exception("Error rolling back signup transaction.");
+                    }
                     return false;
                 }
             }

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "J5eIP42zkhOupOpyjY+mLKCFlMXj81ynW38GoV+BKKaQMY1sp71m355FFN3CqqpXooEl/Xw6I8Ii3nWz3haGvg==",
+  "dgSpecHash": "GsFdAsiqZNHlpUDa8r+0/LqFATPCEbDBcEc4WQntrKqnqX+7oSRav1p3mdvpVftv25IxInPPBhqoph5pOH5asw==",
   "success": true,
   "projectFilePath": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\TestDeveloperAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\parip\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Users\\parip\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\parip\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",
     "C:\\Users\\parip\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

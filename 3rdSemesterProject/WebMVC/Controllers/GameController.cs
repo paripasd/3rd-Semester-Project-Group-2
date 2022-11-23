@@ -23,7 +23,7 @@ namespace WebMVC.Controllers
         // GET: Game/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(_dataAccess.GetGameUsingId(id));
         }
 
         // GET: Game/Create

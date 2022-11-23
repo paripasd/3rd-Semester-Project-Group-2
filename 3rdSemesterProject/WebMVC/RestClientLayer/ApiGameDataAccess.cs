@@ -21,6 +21,12 @@ namespace WebMVC.RestClientLayer
 			return response.Data;
 		}
 
+		public Game GetGameUsingId(int id)
+		{
+			var response = RestClient.Execute<Game>(new RestRequest(id.ToString()));
+			return response.Data;
+		}
+
 		//testing method, this shouldn't be here on release
 		public void CreateGame(Game game)
 		{

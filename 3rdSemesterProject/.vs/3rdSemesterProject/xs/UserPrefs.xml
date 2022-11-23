@@ -2,49 +2,35 @@
   <MonoDevelop.Ide.ItemProperties.WebMVC PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebMVC/Controllers/GameController.cs" relfile="WebMVC/Controllers/GameController.cs" line="26" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="WebMVC/Views/Game/Details.cshtml.css">
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebMVC/Views/Game/Details.cshtml">
     <Files>
-      <File FileName="WebMVC/Views/Game/Details.cshtml" Line="13" Column="10" />
-      <File FileName="WebMVC/Views/Shared/_Layout.cshtml" Line="6" Column="47" />
-      <File FileName="WebMVC/Views/Shared/_Layout.cshtml.css" Line="4" Column="1" />
+      <File FileName="WebMVC/Views/Game/Details.cshtml" Line="16" Column="34" />
+      <File FileName="WebMVC/Views/Shared/_Layout.cshtml" Line="13" Column="103" />
+      <File FileName="WebMVC/Views/Shared/_Layout.cshtml.css" Line="42" Column="2" />
       <File FileName="WebApi/Program.cs" Line="33" Column="1" />
-      <File FileName="WebMVC/Views/Game/Details.cshtml.css" Line="31" Column="34" />
       <File FileName="WebMVC/Views/_ViewStart.cshtml" Line="1" Column="1" />
       <File FileName="WebMVC/Views/_ViewImports.cshtml" Line="1" Column="1" />
+      <File FileName="WebMVC/Views/Game/Index.cshtml" Line="1" Column="1" />
+      <File FileName="WebMVC/Controllers/GameController.cs" Line="26" Column="54" />
+      <File FileName="WebMVC/RestClientLayer/ApiGameDataAccess.cs" Line="27" Column="25" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="3rdSemesterProject" expanded="True">
-            <Node name="ClientApp" expanded="True">
-              <Node name="RestClientLayer" expanded="True" />
-              <Node name="UILayer" expanded="True" />
-            </Node>
-            <Node name="WebApi" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="DataAccessLayer" expanded="True" />
-              <Node name="ModelLayer" expanded="True" />
-            </Node>
+          <Node name="3rdSemesterProject" expanded="True" selected="True">
+            <Node name="WebApi" expanded="True" />
             <Node name="WebMVC" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Properties" expanded="True" />
               <Node name="RestClientLayer" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Game" expanded="True">
                   <Node name="Details.cshtml" expanded="True" />
                 </Node>
-                <Node name="Home" expanded="True" />
-                <Node name="Shared" expanded="True">
-                  <Node name="_Layout.cshtml" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="wwwroot" expanded="True">
-                <Node name="css" expanded="True" />
-                <Node name="images" expanded="True" />
               </Node>
             </Node>
           </Node>

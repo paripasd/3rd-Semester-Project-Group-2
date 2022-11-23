@@ -32,17 +32,10 @@ body[b-w617uacm1g] {
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
-    background-repeat: repeat;
+    background-attachment: fixed;
 }
 
-body[b-w617uacm1g], html[b-w617uacm1g] {
-    height: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-}
 
-*[b-w617uacm1g] {
-    box-sizing: border-box;
-}
 
 #titlearea[b-w617uacm1g] {
     margin-top: 85px;
@@ -123,6 +116,3 @@ body[b-w617uacm1g], html[b-w617uacm1g] {
     overflow: hidden;
 }
 
-html[b-w617uacm1g] {
-    scroll-behavior: smooth;
-}

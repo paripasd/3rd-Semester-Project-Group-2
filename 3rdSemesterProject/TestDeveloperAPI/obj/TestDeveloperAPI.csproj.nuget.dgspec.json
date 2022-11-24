@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\TestDeveloperAPI.csproj": {}
+    "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\TestDeveloperAPI.csproj": {}
   },
   "projects": {
-    "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\TestDeveloperAPI.csproj": {
+    "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\TestDeveloperAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\TestDeveloperAPI.csproj",
+        "projectUniqueName": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\TestDeveloperAPI.csproj",
         "projectName": "TestDeveloperAPI",
-        "projectPath": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\TestDeveloperAPI.csproj",
-        "packagesPath": "C:\\Users\\parip\\.nuget\\packages\\",
-        "outputPath": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\obj\\",
+        "projectPath": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\TestDeveloperAPI.csproj",
+        "packagesPath": "C:\\Users\\korik\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\TestDeveloperAPI\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\parip\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\korik\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,15 +22,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj": {
-                "projectPath": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj"
+              "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj": {
+                "projectPath": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj"
               }
             }
           }
@@ -86,25 +81,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj": {
+    "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj",
+        "projectUniqueName": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj",
         "projectName": "WebApi",
-        "projectPath": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj",
-        "packagesPath": "C:\\Users\\parip\\.nuget\\packages\\",
-        "outputPath": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\obj\\",
+        "projectPath": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj",
+        "packagesPath": "C:\\Users\\korik\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\parip\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\korik\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -112,7 +103,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -173,7 +163,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

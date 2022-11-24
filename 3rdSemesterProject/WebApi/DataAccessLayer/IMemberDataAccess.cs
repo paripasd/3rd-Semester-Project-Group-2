@@ -8,6 +8,6 @@ namespace WebApi.DataAccessLayer
         public Member FindMemberFromId(int memberId);
         public IEnumerable<Member> GetAllMembers();
         public bool UpdateMember(Member member);
-        public bool DeleteMember(Member member);
+        public bool DeleteMember(int memberId);
     }
 }

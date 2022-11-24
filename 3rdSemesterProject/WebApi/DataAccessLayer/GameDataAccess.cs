@@ -97,7 +97,7 @@ namespace WebApi.DataAccessLayer
             }
         }
 
-        public bool UpdateGame(Game game)
+        public bool UpdateAllGameDetails(Game game)
         {
             string commandText = "UPDATE Game SET DeveloperID=@developerid, Title=@title, Description=@description, YearOfRelease=@yearofrelease, Specifications=@specifications, Type=@type, Price=@price, GameFile=@gamefile WHERE GameID=@gameid";
             using (connection.GetConnection())
@@ -126,7 +126,7 @@ namespace WebApi.DataAccessLayer
             }
         }
 
-        public bool DeleteGame(Game game)
+        public bool DeleteGame(int id)
         {
             string commandText = "DELETE FROM Game WHERE GameID = @gameid";
             using (connection.GetConnection())
@@ -134,7 +134,7 @@ namespace WebApi.DataAccessLayer
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
-                command.Parameters.AddWithValue("@gameid", game.GameID);
+                command.Parameters.AddWithValue("@gameid", id);
 
                 try
                 {

@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "WebApi/1.0.0": {
         "dependencies": {
+          "BCrypt": "1.0.0",
           "BCrypt.Net-Core": "1.6.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.5",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.5",
@@ -16,6 +17,14 @@
         },
         "runtime": {
           "WebApi.dll": {}
+        }
+      },
+      "BCrypt/1.0.0": {
+        "runtime": {
+          "lib/DevOne.Security.Cryptography.BCrypt.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "BCrypt.Net-Core/1.6.0": {
@@ -558,6 +567,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BCrypt/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/ibwe2Sg7MJR26IrEzW2Rde9/+A+AYXB5Kf9w/8BVLDdzSfUe4W2M7i2efy1Wa9wHh1k0y81Q6h9Ty8C6IrUGA==",
+      "path": "bcrypt/1.0.0",
+      "hashPath": "bcrypt.1.0.0.nupkg.sha512"
     },
     "BCrypt.Net-Core/1.6.0": {
       "type": "package",

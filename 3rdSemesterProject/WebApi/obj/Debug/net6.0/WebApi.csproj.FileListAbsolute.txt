@@ -132,3 +132,5 @@ C:/repositories/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/bin/Debug
 /Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/obj/Debug/net6.0/WebApi.pdb
 /Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/obj/Debug/net6.0/WebApi.genruntimeconfig.cache
 /Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/obj/Debug/net6.0/ref/WebApi.dll
+/Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/bin/Debug/net6.0/DevOne.Security.Cryptography.BCrypt.dll
+/Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/bin/Debug/net6.0/BCrypt.Net-Core.dll

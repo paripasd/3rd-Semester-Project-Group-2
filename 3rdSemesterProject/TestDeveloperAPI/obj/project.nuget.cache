@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "3R8Pi9V3glJTJMGpXR1SyxQ9sm1DXhsAVozL3dMm4bXTwOuOVzTgQgPvWJufyAU1FgmtJf0zcRr8DXNeEH30vw==",
+  "dgSpecHash": "VlpZ74vesQahH3z671VAQKg0xihXGyIslKOECgS0ZMrw+J5womTggGTqdwq3L6xhCeDcqaWazs+quGPP8OX5Vw==",
   "success": true,
   "projectFilePath": "/Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/TestDeveloperAPI/TestDeveloperAPI.csproj",
   "expectedPackageFiles": [
+    "/Users/gaborkiss/.nuget/packages/bcrypt/1.0.0/bcrypt.1.0.0.nupkg.sha512",
+    "/Users/gaborkiss/.nuget/packages/bcrypt.net-core/1.6.0/bcrypt.net-core.1.6.0.nupkg.sha512",
     "/Users/gaborkiss/.nuget/packages/coverlet.collector/3.1.2/coverlet.collector.3.1.2.nupkg.sha512",
     "/Users/gaborkiss/.nuget/packages/microsoft.codecoverage/17.1.0/microsoft.codecoverage.17.1.0.nupkg.sha512",
     "/Users/gaborkiss/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
@@ -101,5 +103,16 @@
     "/Users/gaborkiss/.nuget/packages/system.xml.readerwriter/4.0.11/system.xml.readerwriter.4.0.11.nupkg.sha512",
     "/Users/gaborkiss/.nuget/packages/system.xml.xdocument/4.0.11/system.xml.xdocument.4.0.11.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'BCrypt 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "libraryId": "BCrypt",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

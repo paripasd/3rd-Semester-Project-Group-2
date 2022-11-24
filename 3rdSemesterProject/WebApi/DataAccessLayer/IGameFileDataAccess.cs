@@ -1,6 +1,10 @@
-﻿namespace WebApi.DataAccessLayer
+﻿using WebApi.ModelLayer;
+
+namespace WebApi.DataAccessLayer
 {
-    public interface Interface
+    public interface IGameFileDataAccess
     {
+        public bool AddGame(GameFile gameFile);
+        
     }
 }

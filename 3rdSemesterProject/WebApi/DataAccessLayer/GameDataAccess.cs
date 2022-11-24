@@ -15,7 +15,7 @@ namespace WebApi.DataAccessLayer
         #region CRUD Methods
         public void CreateGame(Game game)
         {
-            string commandText = "INSERT INTO Game (DeveloperID, Title, Description, YearOfRelease, Specifications, Type, Price, GameFile) VALUES (@developerid, @title, @description, @yearofrelease, @specifications, @type, @price, @gamefile)";
+            string commandText = "INSERT INTO Game (DeveloperID, Title, Description, YearOfRelease, Specifications, Type, Price) VALUES (@developerid, @title, @description, @yearofrelease, @specifications, @type, @price)";
             using (connection.GetConnection())
             {
                 connection.Open();
@@ -28,7 +28,6 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@specifications", game.Specifications);
                 command.Parameters.AddWithValue("@type", game.Type);
                 command.Parameters.AddWithValue("@price", game.Price);
-                command.Parameters.AddWithValue("@gamefile", game.GameFile);
 
                 try
                 {
@@ -99,7 +98,7 @@ namespace WebApi.DataAccessLayer
 
         public bool UpdateAllGameDetails(Game game)
         {
-            string commandText = "UPDATE Game SET DeveloperID=@developerid, Title=@title, Description=@description, YearOfRelease=@yearofrelease, Specifications=@specifications, Type=@type, Price=@price, GameFile=@gamefile WHERE GameID=@gameid";
+            string commandText = "UPDATE Game SET DeveloperID=@developerid, Title=@title, Description=@description, YearOfRelease=@yearofrelease, Specifications=@specifications, Type=@type, Price=@price WHERE GameID=@gameid";
             using (connection.GetConnection())
             {
                 connection.Open();
@@ -112,8 +111,6 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@specifications", game.Specifications);
                 command.Parameters.AddWithValue("@type", game.Type);
                 command.Parameters.AddWithValue("@price", game.Price);
-                command.Parameters.AddWithValue("@gamefile", game.GameFile);
-                command.Parameters.AddWithValue("@gameid", game.GameID);
 
                 try
                 {
@@ -160,7 +157,6 @@ namespace WebApi.DataAccessLayer
             game.Specifications = (string)reader["Specifications"];
             game.Type = (string)reader["Type"];
             game.Price = Convert.ToSingle(reader["Price"]);
-            game.GameFile = (byte[])reader["GameFile"];
 
             return game;
         }

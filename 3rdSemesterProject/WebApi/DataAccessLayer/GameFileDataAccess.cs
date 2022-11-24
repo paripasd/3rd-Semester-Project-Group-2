@@ -82,7 +82,7 @@ namespace WebApi.DataAccessLayer
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Exception while trying to find the game with the '{gameId}'. The exception was: '{ex.Message}'", ex);
+                    throw new Exception($"Exception while trying to find the gamefile with the '{gameId}'. The exception was: '{ex.Message}'", ex);
                 }
             }
         }

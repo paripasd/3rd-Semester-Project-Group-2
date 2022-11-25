@@ -6,21 +6,21 @@ namespace WebApi.DataAccessLayer
 {
     public class GameDataAccess : IGameDataAccess
     {
-        DatabaseConnection connection;
+        SqlConnection connection;
 
-        public GameDataAccess()
+        public GameDataAccess(string connectionString)
         {
-            connection = new DatabaseConnection();
+            connection = new SqlConnection(connectionString);
         }
         #region CRUD Methods
         public void CreateGame(Game game)
         {
             string commandText = "INSERT INTO Game (DeveloperID, Title, Description, YearOfRelease, Specifications, Type, Price) VALUES (@developerid, @title, @description, @yearofrelease, @specifications, @type, @price)";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@developerid", game.DeveloperID);
                 command.Parameters.AddWithValue("@title", game.Title);
                 command.Parameters.AddWithValue("@description", game.Description);
@@ -43,11 +43,11 @@ namespace WebApi.DataAccessLayer
         public Game FindGameFromId(int gameId)
         {
             string commandText = "SELECT * FROM Game WHERE GameID = @gameId";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@gameId", gameId);
 
                 try
@@ -72,11 +72,11 @@ namespace WebApi.DataAccessLayer
         public IEnumerable<Game> GetAllGames()
         {
             string commandText = "SELECT * FROM Game";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
 
                 try
                 {
@@ -99,11 +99,11 @@ namespace WebApi.DataAccessLayer
         public bool UpdateAllGameDetails(Game game)
         {
             string commandText = "UPDATE Game SET DeveloperID=@developerid, Title=@title, Description=@description, YearOfRelease=@yearofrelease, Specifications=@specifications, Type=@type, Price=@price WHERE GameID=@gameid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@developerid", game.DeveloperID);
                 command.Parameters.AddWithValue("@title", game.Title);
                 command.Parameters.AddWithValue("@description", game.Description);
@@ -126,11 +126,11 @@ namespace WebApi.DataAccessLayer
         public bool DeleteGame(int id)
         {
             string commandText = "DELETE FROM Game WHERE GameID = @gameid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@gameid", id);
 
                 try

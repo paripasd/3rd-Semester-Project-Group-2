@@ -1,15 +1,17 @@
-﻿using System.Data.SqlClient;
+﻿using System.Data.Common;
+using System.Data.SqlClient;
 using WebApi.ModelLayer;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApi.DataAccessLayer
 {
     public class DeveloperDataAccess : IDeveloperDataAccess
     {
-        DatabaseConnection connection;
+        SqlConnection connection;
 
-        public DeveloperDataAccess()
+        public DeveloperDataAccess(string connectionString)
         {
-            connection = new DatabaseConnection();
+            connection = new SqlConnection(connectionString);
 
 
         }
@@ -17,11 +19,11 @@ namespace WebApi.DataAccessLayer
         public bool CreateDeveloper(Developer developer)
         {
             string commandText = "INSERT INTO Developer (Name,Email,Description) VALUES (@name, @email, @description)";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@name", developer.Name);
                 command.Parameters.AddWithValue("@email", developer.Email);
                 command.Parameters.AddWithValue("@description", developer.Description);
@@ -42,11 +44,11 @@ namespace WebApi.DataAccessLayer
         public Developer FindDeveloperFromId(int developerId)
         {
             string commandText = "SELECT * FROM Developer WHERE DeveloperID = @developerid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@developerid", developerId);
 
                 try
@@ -71,11 +73,11 @@ namespace WebApi.DataAccessLayer
         public IEnumerable<Developer> GetAllDevelopers()
         {
             string commandText = "SELECT * FROM Developer";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
 
                 try
                 {
@@ -98,11 +100,11 @@ namespace WebApi.DataAccessLayer
         public bool UpdateDeveloper(Developer developer)
         {
             string commandText = "UPDATE Developer SET Name=@name, Email=@email, Description=@description WHERE DeveloperID=@developerid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@name", developer.Name);
                 command.Parameters.AddWithValue("@email", developer.Email);
                 command.Parameters.AddWithValue("@description", developer.Description);
@@ -122,11 +124,11 @@ namespace WebApi.DataAccessLayer
         public bool DeleteDeveloper(Developer developer)
         {
             string commandText = "DELETE FROM Developer WHERE DeveloperID = @developerid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@developerid", developer.DeveloperID);
 
                 try

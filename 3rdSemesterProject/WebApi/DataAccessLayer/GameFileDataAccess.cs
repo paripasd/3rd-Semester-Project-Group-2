@@ -7,19 +7,19 @@ namespace WebApi.DataAccessLayer
     public class GameFileDataAccess : IGameFileDataAccess
     {
 
-        DatabaseConnection connection;
-        public GameFileDataAccess()
+        SqlConnection connection;
+        public GameFileDataAccess(string connectionString)
         {
-            connection = new DatabaseConnection();
+            connection = new SqlConnection(connectionString);
         }
         public bool AddGame(GameFile gameFile)
         {
             string commandText = "INSERT INTO GameFile (FileName, GameFile) VALUES (@fileName, @gameFile)";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@fileName", gameFile.FileName);
                 command.Parameters.AddWithValue("@fileContent", gameFile.FileContent);
 
@@ -38,11 +38,11 @@ namespace WebApi.DataAccessLayer
         public bool UpdateGameFile(GameFile gameFile)
         {
             string commandText = "UPDATE GameFile SET FileName=@filename, FileContent=@filecontent WHERE GameID=@gameid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@filename", gameFile.FileName);
                 command.Parameters.AddWithValue("@filecontent", gameFile.FileContent);
                 command.Parameters.AddWithValue("@gameid", gameFile.GameID);
@@ -61,11 +61,11 @@ namespace WebApi.DataAccessLayer
         public GameFile GetGameFileById(int gameId)
         {
             string commandText = "SELECT * FROM GameFile WHERE GameID = @gameId";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@gameId", gameId);
 
                 try

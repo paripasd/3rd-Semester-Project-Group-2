@@ -1,26 +1,25 @@
 ﻿using System.Data.SqlClient;
 using System.Linq.Expressions;
 using WebApi.ModelLayer;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApi.DataAccessLayer
 {
     public class EventMemberDataAccess : IEventMemberDataAccess
     {
-        DatabaseConnection connection;
-        public EventMemberDataAccess()
+        SqlConnection connection;
+        public EventMemberDataAccess(string connectionString)
         {
-            connection = new DatabaseConnection();
+            connection = new SqlConnection(connectionString);
         }
         #region CRUD Methods
         public EventMember FindEventByMemberId(int memberid)
         {
             string commandText = "SELECT EventID FROM EventMember WHERE MemberID = @memberid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@memberid", memberid);
 
                 try
@@ -45,11 +44,11 @@ namespace WebApi.DataAccessLayer
         public EventMember FindMemberInEventFromId(int eventId)
         {
             string commandText = "SELECT MemberID FROM EventMember WHERE EventID = @eventid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@eventid", eventId);
 
                 try
@@ -79,18 +78,18 @@ namespace WebApi.DataAccessLayer
             string step1 = "SELECT Capacity FROM Event WHERE EventID = @eventid";
             string step2 = "SELECT COUNT(MemberID) FROM EventMember WHERE EventID = @eventid";
             string step3 = "INSERT INTO EventMember (EventID, MemberID) VALUES (@eventid, @memberid)";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();                                        //we need to lock the resources when we use them for the transaction to make sense
-                transaction = connection.GetConnection().BeginTransaction(System.Data.IsolationLevel.RepeatableRead);
+                transaction = connection.BeginTransaction(System.Data.IsolationLevel.RepeatableRead);
 
-                SqlCommand commandGetCapacity = new SqlCommand(step1, connection.GetConnection());
+                SqlCommand commandGetCapacity = new SqlCommand(step1, connection);
                 commandGetCapacity.Parameters.AddWithValue("@eventid", eventMember.EventID);
 
-                SqlCommand numberOfParticipants = new SqlCommand(step2, connection.GetConnection());
+                SqlCommand numberOfParticipants = new SqlCommand(step2, connection);
                 numberOfParticipants.Parameters.AddWithValue("@eventid", eventMember.EventID);
 
-                SqlCommand commandCreateAttendance = new SqlCommand(step3, connection.GetConnection());
+                SqlCommand commandCreateAttendance = new SqlCommand(step3, connection);
                 commandCreateAttendance.Parameters.AddWithValue("@eventid", eventMember.EventID);
                 commandCreateAttendance.Parameters.AddWithValue("@memberid", eventMember.MemberID);
 
@@ -127,11 +126,11 @@ namespace WebApi.DataAccessLayer
         public bool RemoveMemberFromEvent(EventMember eventMember)
         {
             string commandText = "DELETE FROM EventMember WHERE MemberID = @memberid AND EventID = @eventid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@memberid", eventMember.MemberID);
                 command.Parameters.AddWithValue("@eventid", eventMember.EventID);
 

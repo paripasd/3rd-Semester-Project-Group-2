@@ -6,21 +6,21 @@ namespace WebApi.DataAccessLayer
 {
     public class LoginDataAccess : ILoginDataAccess
     {
-        DatabaseConnection connection;
-        public LoginDataAccess()
+        SqlConnection connection;
+        public LoginDataAccess(string connectionString)
         {
-            connection = new DatabaseConnection();
+            connection = new SqlConnection(connectionString);
         }
         #region CRUD Methods
         public bool CreateLogin(Login login)
         {
             string hashPassword = Login.HashPassword(login.Password);
             string commandText = "INSERT INTO Login (UserName,Password) VALUES (@username,@password)";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@username", login.UserName);
                 command.Parameters.AddWithValue("@password", hashPassword);
                 try
@@ -39,11 +39,11 @@ namespace WebApi.DataAccessLayer
         public bool DeleteLogin(Login login)
         {
             string commandText = "DELETE FROM Login WHERE UserName = @username";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@username", login.UserName);
 
                 try
@@ -61,11 +61,11 @@ namespace WebApi.DataAccessLayer
         public IEnumerable<Login> GetAllLoginInformation()
         {
             string commandText = "SELECT * FROM Login";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
 
                 try
                 {
@@ -88,11 +88,11 @@ namespace WebApi.DataAccessLayer
         public bool UpdateLogin(Login login)
         {
             string commandText = "UPDATE Login SET UserName=@username, Password=@password WHERE UserName=@un";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@username", login.UserName);
                 command.Parameters.AddWithValue("@password", login.Password);
                 command.Parameters.AddWithValue("@un", login.UserName);

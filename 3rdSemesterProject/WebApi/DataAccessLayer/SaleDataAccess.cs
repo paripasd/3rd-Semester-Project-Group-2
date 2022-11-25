@@ -6,19 +6,19 @@ namespace WebApi.DataAccessLayer
 {
     public class SaleDataAccess : ISaleDataAccess
     {
-        DatabaseConnection connection;
-        public SaleDataAccess()
+        SqlConnection connection;
+        public SaleDataAccess(string connectionString)
         {
-            connection = new DatabaseConnection();
+            connection = new SqlConnection(connectionString);
         }
         public bool CreateSale(Sale sale)
         {
             string commandText = "INSERT INTO Sale (GameKey, GameID, Email, Date, SalesPrice) VALUES (@gamekey, @gameid, @email, @date, @salesprice)";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@gamekey", sale.GameKey);
                 command.Parameters.AddWithValue("@gameid", sale.GameID);
                 command.Parameters.AddWithValue("@email", sale.Email);
@@ -42,11 +42,11 @@ namespace WebApi.DataAccessLayer
         public bool DeleteSale(Sale sale)
         {
             string commandText = "DELETE FROM Sale WHERE GameKey = @gamekey";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@gamekey", sale.GameKey);
 
                 try
@@ -64,11 +64,11 @@ namespace WebApi.DataAccessLayer
         public Sale FindSaleFromGameKey(string gameKey)
         {
             string commandText = "SELECT * FROM Sale WHERE GameKey = @gamekey";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@gamekey", gameKey);
 
                 try
@@ -93,11 +93,11 @@ namespace WebApi.DataAccessLayer
         public IEnumerable<Sale> GetAllSales()
         {
             string commandText = "SELECT * FROM Sale";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
 
                 try
                 {

@@ -1,16 +1,19 @@
+using Microsoft.Extensions.DependencyInjection;
 using WebApi.DataAccessLayer;
 
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationManager _configuration = builder.Configuration;
+
 
 // Add services to the container.
-builder.Services.AddScoped<IDeveloperDataAccess, DeveloperDataAccess>();
-builder.Services.AddScoped<IGameDataAccess, GameDataAccess>();
-builder.Services.AddScoped<IEventDataAccess, EventDataAccess>();
-builder.Services.AddScoped<IMemberDataAccess, MemberDataAccess>();
-builder.Services.AddScoped<ILoginDataAccess, LoginDataAccess>();
-builder.Services.AddScoped<ISaleDataAccess, SaleDataAccess>();
-builder.Services.AddScoped<IEventMemberDataAccess, EventMemberDataAccess>();
-builder.Services.AddScoped<IGameFileDataAccess, GameFileDataAccess>();
+builder.Services.AddScoped<IDeveloperDataAccess>((conf) => new DeveloperDataAccess(_configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IGameDataAccess>((conf) => new GameDataAccess(_configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IEventDataAccess>((conf) => new EventDataAccess(_configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IMemberDataAccess>((conf) => new MemberDataAccess(_configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<ILoginDataAccess>((conf) => new LoginDataAccess(_configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<ISaleDataAccess>((conf) => new SaleDataAccess(_configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IEventMemberDataAccess>((conf) => new EventMemberDataAccess(_configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IGameFileDataAccess>((conf) => new GameFileDataAccess(_configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

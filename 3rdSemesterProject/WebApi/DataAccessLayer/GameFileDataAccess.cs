@@ -12,7 +12,7 @@ namespace WebApi.DataAccessLayer
         {
             connection = new DatabaseConnection();
         }
-        public bool AddGame(GameFile gameFile)
+        /*public bool AddGame(GameFile gameFile)
         {
             string commandText = "INSERT INTO GameFile (FileName, GameFile) VALUES (@fileName, @gameFile)";
             using (connection.GetConnection())
@@ -34,7 +34,7 @@ namespace WebApi.DataAccessLayer
                     throw new Exception($"Exception while trying to insert GameFile object. The exception was: '{ex.Message}'", ex);
                 }
             }
-        }
+        }*/
         public bool UpdateGameFile(GameFile gameFile)
         {
             string commandText = "UPDATE GameFile SET FileName=@filename, FileContent=@filecontent WHERE GameID=@gameid";

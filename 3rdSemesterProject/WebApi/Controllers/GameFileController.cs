@@ -16,6 +16,16 @@ namespace WebApi.Controllers
             DataAccessLayer = dataAccessLayer;
         }
 
+        #region Download Game
+        [HttpGet]
+        public ActionResult FileDownload(int gameId)
+        {
+            byte[] filebytes = DataAccessLayer.GetGameFileById(gameId).FileContent; // file in the form of  bytes array.
+            return File(filebytes,System.Net.Mime.MediaTypeNames.Application.Octet, DataAccessLayer.GetGameFileById(gameId).FileName);
+        }
+
+        #endregion
+
         [HttpGet("{id}")]
         public ActionResult<GameFile> GetGameFileById(int gameId)
         {
@@ -27,12 +37,12 @@ namespace WebApi.Controllers
             return Ok(gameFile); //returns 200 + account JSON as body
         }
         
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult<GameFile> Post(GameFile gameFile)
         {
             DataAccessLayer.AddGame(gameFile);
             return Created($"{baseURI}/{gameFile.FileName}", gameFile);
-        }
+        }*/
 
         [HttpPut("{id}")]
         public ActionResult<GameFile> UpdateGameFile(GameFile gameFile)

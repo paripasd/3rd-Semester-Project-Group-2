@@ -13,12 +13,16 @@ namespace WebApi.DataAccessLayer
             connection = new DatabaseConnection();
         }
         #region CRUD Methods
-        public void CreateGame(Game game)
+        //can only add into GameFile table if Game table info is added first
+        public bool CreateGame(Game game, GameFile gameFile)
         {
+            SqlTransaction transaction;
             string commandText = "INSERT INTO Game (DeveloperID, Title, Description, YearOfRelease, Specifications, Type, Price) VALUES (@developerid, @title, @description, @yearofrelease, @specifications, @type, @price)";
+            string commandText2 = "INSERT INTO GameFile (GameID, FileName, GameFile) VALUES (@gameid, @fileName, @gameFile)";
             using (connection.GetConnection())
             {
                 connection.Open();
+                transaction = connection.GetConnection().BeginTransaction(System.Data.IsolationLevel.RepeatableRead);
 
                 SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
                 command.Parameters.AddWithValue("@developerid", game.DeveloperID);
@@ -29,13 +33,54 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@type", game.Type);
                 command.Parameters.AddWithValue("@price", game.Price);
 
-				try
+
+
+                // in the try and catch part there are try catches to see if the code breaks exactly at the roll back line
+                int gameID;
+                try
                 {
-                    command.ExecuteScalar();
+                    gameID = (int)command.ExecuteScalar();
+                    gameFile.GameID = gameID;
+                    
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Exception while trying to insert game object. The exception was: '{ex.Message}'", ex);
+                    try
+                    {
+                        transaction.Rollback();
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Error rolling back create game transaction.");
+                    }
+                    return false;
+                    throw new Exception($"Exception while trying to insert game info into game table. The exception was: '{ex.Message}'", ex);
+                }
+
+                SqlCommand command2 = new SqlCommand(commandText2, connection.GetConnection());
+                command2.Parameters.AddWithValue("@fileName", gameFile.FileName);
+                command2.Parameters.AddWithValue("@fileContent", gameFile.FileContent);
+                command2.Parameters.AddWithValue("@gameid", gameFile.GameID);
+
+                try
+                {
+                    command2.ExecuteScalar();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+
+                    try
+                    {
+                        transaction.Rollback();
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Error rolling back create game transaction.");
+                    }
+                    return false;
+                    throw new Exception($"Exception while trying to insert game file info into GameFile table. The exception was: '{ex.Message}'", ex);
                 }
             }
         }

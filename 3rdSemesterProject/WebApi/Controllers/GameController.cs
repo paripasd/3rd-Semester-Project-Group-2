@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Security.Principal;
 using WebApi.DataAccessLayer;
 using WebApi.ModelLayer;
@@ -41,9 +42,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Game> AddGame(Game game)
+        public ActionResult<Game> AddGame(Game game, GameFile gameFile)
         {
-            DataAccessLayer.CreateGame(game);
+            DataAccessLayer.CreateGame(game, gameFile);
             return Created($"{baseURI}/{game.GameID}", game);
         }
 

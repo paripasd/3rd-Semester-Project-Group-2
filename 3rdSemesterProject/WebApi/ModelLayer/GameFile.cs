@@ -8,6 +8,10 @@ namespace WebApi.ModelLayer
         {
                 
         }
+        public GameFile(String fileName, byte[] fileContent)
+        {
+
+        }
         public GameFile(int gameID ,String fileName, byte[]fileContent)
         {
             GameID = gameID;

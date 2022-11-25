@@ -21,20 +21,7 @@ namespace ClientApp
         #region Functionality
         private void LoadData()
         { 
-            
-            try
-            {
-                listBox1.Items.Clear();
-                var result = apiDeveloperDataAccess.GetAllDevelopers();
-                foreach (Developer developer in result)
-                {
-                    listBox1.Items.Add(developer.Name);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error retrieving data from the server. Error is: '{ex.Message}'", "Communication error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+           
         }
         #endregion
 

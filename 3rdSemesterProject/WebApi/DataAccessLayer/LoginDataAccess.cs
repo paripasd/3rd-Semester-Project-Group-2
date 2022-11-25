@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
-using System.Diagnostics.Metrics;
 using WebApi.ModelLayer;
+
 
 namespace WebApi.DataAccessLayer
 {
@@ -14,6 +14,7 @@ namespace WebApi.DataAccessLayer
         #region CRUD Methods
         public bool CreateLogin(Login login)
         {
+            string hashPassword = Login.HashPassword(login.Password);
             string commandText = "INSERT INTO Login (UserName,Password) VALUES (@username,@password)";
             using (connection.GetConnection())
             {
@@ -21,7 +22,7 @@ namespace WebApi.DataAccessLayer
 
                 SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
                 command.Parameters.AddWithValue("@username", login.UserName);
-                command.Parameters.AddWithValue("@password", login.Password);
+                command.Parameters.AddWithValue("@password", hashPassword);
                 try
                 {
                     command.ExecuteScalar();

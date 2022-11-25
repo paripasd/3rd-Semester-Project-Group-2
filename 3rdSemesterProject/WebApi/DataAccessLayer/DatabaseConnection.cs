@@ -10,7 +10,7 @@ namespace WebApi.DataAccessLayer
     public class DatabaseConnection
     {
 
-        string ConnectionString = "Data Source=hildur.ucn.dk;Initial Catalog=CSC-CSD-S212_10407565;User ID=csc-csd-s212_10407565;Password=Password1!";
+        private string ConnectionString = "Data Source=hildur.ucn.dk;Initial Catalog=CSC-CSD-S212_10407565;User ID=csc-csd-s212_10407565;Password=Password1!";
         SqlConnection con;
 
         public DatabaseConnection()

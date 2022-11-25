@@ -1,0 +1,19 @@
+@model IEnumerable<WebMVC.Models.Game>
+
+@{
+    //Layout = null;
+}
+
+<h1 style="padding-top:150px; text-align:center;">Games</h1>
+<div class="gamelist">
+    @foreach (var item in Model)
+			{
+                <div class="gamelistitem">
+                    <div class="gamelistimg"><a href="@Url.Action("Details","Game", new {id = item.GameID})"><img src="/images/placeholder2.jpg"/></a></div>
+                    <div class="overlay">
+                        <h2>@Html.DisplayFor(x => item.Title)</h2>
+                        <p>geci</p>
+                    </div>
+                </div>
+			}
+</div>

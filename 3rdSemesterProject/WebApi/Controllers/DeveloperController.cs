@@ -48,7 +48,6 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
         public ActionResult DeleteDeveloper(Developer developer)
         {
             if (!DataAccessLayer.DeleteDeveloper(developer))

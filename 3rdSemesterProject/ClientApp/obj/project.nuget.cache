@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "G3fdR5nmu4gVGZ8KSG030zG1a/EgcrbxAuAafqDJcfvfoL2Z0HciJRflXs8XWQnj2HnS+731ggr+R34+P/3mlg==",
+  "success": true,
+  "projectFilePath": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\ClientApp\\ClientApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\parip\\.nuget\\packages\\restsharp\\106.12.0\\restsharp.106.12.0.nupkg.sha512"
+  ],
+  "logs": []
+}

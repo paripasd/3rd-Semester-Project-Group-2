@@ -156,6 +156,23 @@ namespace WebApi.DataAccessLayer
         }
         #endregion
         #region Helper Methods
+        protected Game DataReaderRowToGameAll(SqlDataReader reader)
+        {
+            Game game = new Game();
+            game.GameID = (int)reader["GameID"];
+            game.DeveloperID = (int)reader["DeveloperID"];
+            game.Title = (string)reader["Title"];
+            game.Description = (string)reader["Description"];
+            game.YearOfRelease = (int)reader["YearOfRelease"];
+            game.Specifications = (string)reader["Specifications"];
+            game.Type = (string)reader["Type"];
+            game.Price = Convert.ToSingle(reader["Price"]);
+            game.FileName = (string)reader["FileName"];
+            game.FileContent = (byte[])reader["FileContent"];  //FileContent was GameFile up to now ??
+
+            return game;
+        }
+
         protected Game DataReaderRowToGame(SqlDataReader reader)
         {
             Game game = new Game();
@@ -167,6 +184,13 @@ namespace WebApi.DataAccessLayer
             game.Specifications = (string)reader["Specifications"];
             game.Type = (string)reader["Type"];
             game.Price = Convert.ToSingle(reader["Price"]);
+
+            return game;
+        }
+
+        protected Game DataReaderRowToGameFile(SqlDataReader reader)
+        {
+            Game game = new Game();
             game.FileName = (string)reader["FileName"];
             game.FileContent = (byte[])reader["FileContent"];  //FileContent was GameFile up to now ??
 

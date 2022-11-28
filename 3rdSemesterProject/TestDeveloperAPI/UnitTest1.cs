@@ -20,8 +20,7 @@ namespace TestDeveloperAPI
         {
             Game testGame = new Game(1, "TestGame", "Test game", 2011, "dfdsfs","FPS", 19, "testgame.exe",new byte[] { });
             GameDataAccess gda = new GameDataAccess();
-            gda.CreateGame(testGame);
-            Assert.AreEqual(testGame, gda.FindGameFromId(1));
+            Assert.IsTrue(gda.DeleteGame(23));
         }
     }
 }

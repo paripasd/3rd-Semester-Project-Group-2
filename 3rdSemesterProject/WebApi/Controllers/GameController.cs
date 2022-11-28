@@ -40,6 +40,11 @@ namespace WebApi.Controllers
             }
             return Ok(game); //returns 200 + account JSON as body
         }
+        [HttpGet]
+        public ActionResult<Game> GetGameFileById(int gameId)
+        {
+            return DataAccessLayer.GetGameFileById(gameId);
+        }
 
         [HttpPost]
         public ActionResult<Game> AddGame(Game game)

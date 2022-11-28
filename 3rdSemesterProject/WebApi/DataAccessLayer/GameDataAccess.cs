@@ -14,16 +14,14 @@ namespace WebApi.DataAccessLayer
         }
         #region CRUD Methods
         //can only add into GameFile table if Game table info is added first
-        public bool CreateGame(Game game, GameFile gameFile)
-        {
-            SqlTransaction transaction;
-            string commandText = "INSERT INTO Game (DeveloperID, Title, Description, YearOfRelease, Specifications, Type, Price) VALUES (@developerid, @title, @description, @yearofrelease, @specifications, @type, @price)";
-            string commandText2 = "INSERT INTO GameFile (GameID, FileName, GameFile) VALUES (@gameid, @fileName, @gameFile)";
+        public bool CreateGame(Game game) //creates game table and gameFile table full entry
+        {            
+            string commandText = "INSERT INTO Game (DeveloperID, Title, Description, YearOfRelease, Specifications, Type, Price) VALUES (@developerid, @title, @description, @yearofrelease, @specifications, @type, @price); INSERT INTO GameFile (GameID, FileName, FileContent) VALUES (SCOPE_IDENTITY(), @fileName, @fileContent)";
+           
             using (connection.GetConnection())
             {
                 connection.Open();
-                transaction = connection.GetConnection().BeginTransaction(System.Data.IsolationLevel.RepeatableRead);
-
+                
                 SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
                 command.Parameters.AddWithValue("@developerid", game.DeveloperID);
                 command.Parameters.AddWithValue("@title", game.Title);
@@ -32,56 +30,23 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@specifications", game.Specifications);
                 command.Parameters.AddWithValue("@type", game.Type);
                 command.Parameters.AddWithValue("@price", game.Price);
-
-
-
-                // in the try and catch part there are try catches to see if the code breaks exactly at the roll back line
-                int gameID;
-                try
-                {
-                    gameID = (int)command.ExecuteScalar();
-                    gameFile.GameID = gameID;
-                    
-                }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        transaction.Rollback();
-                    }
-                    catch (Exception)
-                    {
-                        throw new Exception("Error rolling back create game transaction.");
-                    }
-                    return false;
-                    throw new Exception($"Exception while trying to insert game info into game table. The exception was: '{ex.Message}'", ex);
-                }
-
-                SqlCommand command2 = new SqlCommand(commandText2, connection.GetConnection());
-                command2.Parameters.AddWithValue("@fileName", gameFile.FileName);
-                command2.Parameters.AddWithValue("@fileContent", gameFile.FileContent);
-                command2.Parameters.AddWithValue("@gameid", gameFile.GameID);
+                command.Parameters.AddWithValue("@fileName", game.FileName);
+                command.Parameters.AddWithValue("@fileContent", game.FileContent);
 
                 try
                 {
-                    command2.ExecuteScalar();
-                    transaction.Commit();
+                    command.ExecuteScalar();
                     return true;
                 }
                 catch (Exception ex)
                 {
-
-                    try
-                    {
-                        transaction.Rollback();
-                    }
-                    catch (Exception)
-                    {
-                        throw new Exception("Error rolling back create game transaction.");
-                    }
                     return false;
-                    throw new Exception($"Exception while trying to insert game file info into GameFile table. The exception was: '{ex.Message}'", ex);
+                    throw new Exception($"Exception while trying to insert Game object into Game and GameFile tables. The exception was: '{ex.Message}'", ex);
                 }
+
+
+
+               
             }
         }
 
@@ -202,6 +167,8 @@ namespace WebApi.DataAccessLayer
             game.Specifications = (string)reader["Specifications"];
             game.Type = (string)reader["Type"];
             game.Price = Convert.ToSingle(reader["Price"]);
+            game.FileName = (string)reader["FileName"];
+            game.FileContent = (byte[])reader["FileContent"];  //FileContent was GameFile up to now ??
 
             return game;
         }

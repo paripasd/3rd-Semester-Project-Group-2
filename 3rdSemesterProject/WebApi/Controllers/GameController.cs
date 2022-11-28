@@ -42,9 +42,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Game> AddGame(Game game, GameFile gameFile)
+        public ActionResult<Game> AddGame(Game game)
         {
-            DataAccessLayer.CreateGame(game, gameFile);
+            DataAccessLayer.CreateGame(game);
             return Created($"{baseURI}/{game.GameID}", game);
         }
 

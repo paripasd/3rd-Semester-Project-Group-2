@@ -26,7 +26,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Game>> GetAll()
         {
-            return Ok(DataAccessLayer.GetAllGames());
+			return Ok(DataAccessLayer.GetAllGames());
         }
 
         [HttpGet]
@@ -41,6 +41,7 @@ namespace WebApi.Controllers
             return Ok(game); //returns 200 + account JSON as body
         }
         [HttpGet]
+		[Route("file/{gameId}")]
         public ActionResult<Game> GetGameFileById(int gameId)
         {
             return DataAccessLayer.GetGameFileById(gameId);

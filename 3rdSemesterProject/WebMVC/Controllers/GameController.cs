@@ -18,7 +18,7 @@ namespace WebMVC.Controllers
         // GET: Game
         public ActionResult Index()
         {
-			return View(_dataAccess.GetAllGames());
+            return View(_dataAccess.GetAllGames());
         }
 
         // GET: Game/Details/5
@@ -95,7 +95,6 @@ namespace WebMVC.Controllers
                 return View();
             }
         }
-
 
 		[HttpGet]
         public FileResult DownloadGame(int gameId)

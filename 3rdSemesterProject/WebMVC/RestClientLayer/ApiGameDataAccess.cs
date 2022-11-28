@@ -29,7 +29,7 @@ namespace WebMVC.RestClientLayer
 
 		public Game GetGameFileById(int id)
 		{
-			var response = RestClient.Execute<Game>(new RestRequest(id.ToString()));
+			var response = RestClient.Execute<Game>(new RestRequest("file/" + id.ToString()));
 			return response.Data;
 		}
 	}

@@ -1,0 +1,47 @@
+@model WebMVC.Models.Game
+
+@{
+//Layout = null;
+}
+
+    <div id="pagecontent">
+        <div id="titlearea">
+            <h1>@Html.DisplayFor(m => m.Title)</h1>
+            <a href="#buyform"><input type="button" value="BUY" class="tomatobutton"></a>
+
+        </div>
+        <div id="showcasearea">
+            <p style="text-align:left;">Genre: @Html.DisplayFor(m => m.Type)</p>
+            <img src="/images/placeholder2.jpg">
+            <p style="padding-top:25px;">
+                @Html.DisplayFor(m => m.Description);
+            </p>
+        </div>
+        <div id="horizontal-wrapper">
+            <form id="buyform">
+                <label for="emailfield">Email:</label><br>
+                <input type="email" id="emailfield"><br>
+                <label for="cardnumberfield">Card Number:</label><br>
+                <input type="text" id="cardnumberfield" min="0" max="9999999999999999"><br>
+                <label for="cvcfield">CVC:</label><br>
+                <input type="number" id="cvcfield"><br>
+                <label for="expiryfield">Expiry Date:</label><br>
+                <input type="date" id="expiryfield"><br>
+                <label for="cardholderfield">Cardholder's Name:</label><br>
+                <input type="text" id="cardholderfield"><br>
+                <label for="toscheckbox">I accept terms of service</label>
+                <input type="checkbox" id="toscheckbox"><br>
+                <input type="submit" id="formsubmit" value="BUY - EUR @Html.DisplayFor(m => m.Price)" class="tomatobutton">
+                <p class="button-undertext">Already own the game?<br><a href="" class="button-undertext">Download here</a></p>
+            </form>
+            <div id="systemrequirements">
+                <h2>System Requirements</h2>
+                <p>Testing - data from database: @Html.DisplayFor(m => m.Specifications)</p>
+                <p>CPU:</p>
+                <p>GPU:</p>
+                <p>Memory:</p>
+                <p>Storage:</p>
+                <p>OS:</p>
+            </div>
+        </div>
+    </div>

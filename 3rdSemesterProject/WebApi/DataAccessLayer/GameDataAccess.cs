@@ -13,13 +13,15 @@ namespace WebApi.DataAccessLayer
             connection = new DatabaseConnection();
         }
         #region CRUD Methods
-        public void CreateGame(Game game)
-        {
-            string commandText = "INSERT INTO Game (DeveloperID, Title, Description, YearOfRelease, Specifications, Type, Price, GameFile) VALUES (@developerid, @title, @description, @yearofrelease, @specifications, @type, @price, @gamefile)";
+        //can only add into GameFile table if Game table info is added first
+        public bool CreateGame(Game game) //creates game table and gameFile table full entry
+        {            
+            string commandText = "INSERT INTO Game (DeveloperID, Title, Description, YearOfRelease, Specifications, Type, Price) VALUES (@developerid, @title, @description, @yearofrelease, @specifications, @type, @price); INSERT INTO GameFile (GameID, FileName, FileContent) VALUES (SCOPE_IDENTITY(), @fileName, @fileContent)";
+           
             using (connection.GetConnection())
             {
                 connection.Open();
-
+                
                 SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
                 command.Parameters.AddWithValue("@developerid", game.DeveloperID);
                 command.Parameters.AddWithValue("@title", game.Title);
@@ -28,16 +30,23 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@specifications", game.Specifications);
                 command.Parameters.AddWithValue("@type", game.Type);
                 command.Parameters.AddWithValue("@price", game.Price);
-                command.Parameters.AddWithValue("@gamefile", game.GameFile);
+                command.Parameters.AddWithValue("@fileName", game.FileName);
+                command.Parameters.AddWithValue("@fileContent", game.FileContent);
 
                 try
                 {
                     command.ExecuteScalar();
+                    return true;
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Exception while trying to insert game object. The exception was: '{ex.Message}'", ex);
+                    return false;
+                    throw new Exception($"Exception while trying to insert Game object into Game and GameFile tables. The exception was: '{ex.Message}'", ex);
                 }
+
+
+
+               
             }
         }
 
@@ -99,7 +108,7 @@ namespace WebApi.DataAccessLayer
 
         public bool UpdateAllGameDetails(Game game)
         {
-            string commandText = "UPDATE Game SET DeveloperID=@developerid, Title=@title, Description=@description, YearOfRelease=@yearofrelease, Specifications=@specifications, Type=@type, Price=@price, GameFile=@gamefile WHERE GameID=@gameid";
+            string commandText = "UPDATE Game SET DeveloperID=@developerid, Title=@title, Description=@description, YearOfRelease=@yearofrelease, Specifications=@specifications, Type=@type, Price=@price WHERE GameID=@gameid";
             using (connection.GetConnection())
             {
                 connection.Open();
@@ -112,8 +121,6 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@specifications", game.Specifications);
                 command.Parameters.AddWithValue("@type", game.Type);
                 command.Parameters.AddWithValue("@price", game.Price);
-                command.Parameters.AddWithValue("@gamefile", game.GameFile);
-                command.Parameters.AddWithValue("@gameid", game.GameID);
 
                 try
                 {
@@ -149,6 +156,23 @@ namespace WebApi.DataAccessLayer
         }
         #endregion
         #region Helper Methods
+        protected Game DataReaderRowToGameAll(SqlDataReader reader)
+        {
+            Game game = new Game();
+            game.GameID = (int)reader["GameID"];
+            game.DeveloperID = (int)reader["DeveloperID"];
+            game.Title = (string)reader["Title"];
+            game.Description = (string)reader["Description"];
+            game.YearOfRelease = (int)reader["YearOfRelease"];
+            game.Specifications = (string)reader["Specifications"];
+            game.Type = (string)reader["Type"];
+            game.Price = Convert.ToSingle(reader["Price"]);
+            game.FileName = (string)reader["FileName"];
+            game.FileContent = (byte[])reader["FileContent"];  //FileContent was GameFile up to now ??
+
+            return game;
+        }
+
         protected Game DataReaderRowToGame(SqlDataReader reader)
         {
             Game game = new Game();
@@ -160,7 +184,15 @@ namespace WebApi.DataAccessLayer
             game.Specifications = (string)reader["Specifications"];
             game.Type = (string)reader["Type"];
             game.Price = Convert.ToSingle(reader["Price"]);
-            game.GameFile = (byte[])reader["GameFile"];
+
+            return game;
+        }
+
+        protected Game DataReaderRowToGameFile(SqlDataReader reader)
+        {
+            Game game = new Game();
+            game.FileName = (string)reader["FileName"];
+            game.FileContent = (byte[])reader["FileContent"];  //FileContent was GameFile up to now ??
 
             return game;
         }

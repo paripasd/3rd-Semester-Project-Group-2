@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "+QD/6cUjtGp5TVS3JqKjZZw8WG5bfJRKUDkOLwXfwdiemvF1HDCwmFUfPlGqAdZhH533S8nhoXICkEoDPjPUzQ==",
+  "dgSpecHash": "ZU8NbhljN40GIjlIul3q8F1TkmeDcZ4JCEPnbZ5I/u421PoiRd+CussHRC+QynNVfLyHVTejOhWqdjjbu3TkuQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\ClientApp\\ClientApp.csproj",
+  "projectFilePath": "C:\\Users\\marki\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\ClientApp\\ClientApp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\korik\\.nuget\\packages\\restsharp\\106.12.0\\restsharp.106.12.0.nupkg.sha512"
+    "C:\\Users\\marki\\.nuget\\packages\\restsharp\\106.12.0\\restsharp.106.12.0.nupkg.sha512"
   ],
   "logs": []
 }

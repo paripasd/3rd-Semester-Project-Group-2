@@ -1,27 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj": {}
+    "/Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/WebApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj": {
+    "/Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj",
+        "projectUniqueName": "/Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/WebApi.csproj",
         "projectName": "WebApi",
-        "projectPath": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\WebApi.csproj",
-        "packagesPath": "C:\\Users\\korik\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebApi\\obj\\",
+        "projectPath": "/Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/WebApi.csproj",
+        "packagesPath": "/Users/gaborkiss/.nuget/packages/",
+        "outputPath": "/Users/gaborkiss/Documents/GitHub/3rd-Semester-Project-Group-2/3rdSemesterProject/WebApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\korik\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/gaborkiss/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,6 +39,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "BCrypt": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
             "BCrypt.Net-Core": {
               "target": "Package",
               "version": "[1.6.0, )"
@@ -82,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.401/RuntimeIdentifierGraph.json"
         }
       }
     }

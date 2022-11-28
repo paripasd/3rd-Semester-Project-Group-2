@@ -6,7 +6,7 @@ namespace WebApi.DataAccessLayer
 {
     public class GameDataAccess : IGameDataAccess
     {
-        DatabaseConnection connection;
+        DatabaseConnection connection; //yo
 
         public GameDataAccess()
         {

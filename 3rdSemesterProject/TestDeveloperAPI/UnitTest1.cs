@@ -18,10 +18,9 @@ namespace TestDeveloperAPI
         [Test]
         public void Test1()
         {
-            Developer david = new Developer(1,"David", "paripasd@gmail.com", "Cool developer");
-            DeveloperDataAccess dda = new DeveloperDataAccess();
-            DeveloperController developerController = new DeveloperController(dda);
-            Assert.AreEqual(david.Description, dda.FindDeveloperFromId(1).Description);
+            Game testGame = new Game(1, "TestGame", "Test game", 2011, "dfdsfs","FPS", 19, "testgame.exe",new byte[] { });
+            GameDataAccess gda = new GameDataAccess();
+            Assert.IsTrue(gda.DeleteGame(23));
         }
     }
 }

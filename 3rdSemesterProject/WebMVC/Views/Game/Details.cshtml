@@ -1,0 +1,46 @@
+@model WebMVC.Models.Game
+
+@{
+//Layout = null;
+}
+
+    <div id="pagecontent">
+        <div id="titlearea">
+            <h1>@Html.DisplayFor(m => m.Title)</h1>
+            <a href="#buyform"><input type="button" value="BUY" class="tomatobutton" asp-controller="Game" asp-action="DownloadGame"></a>
+
+        </div>
+        <div id="showcasearea">
+            <p style="text-align:left;">Genre: @Html.DisplayFor(m => m.Type)</p>
+            <img src="/images/placeholder2.jpg">
+            <p style="padding-top:25px;">
+                @Html.DisplayFor(m => m.Description);
+            </p>
+        </div>
+        <div id="horizontal-wrapper">
+            <form id="buyform" onsubmit="validateBuyForm();">
+                <label for="emailfield">Email:</label><br>
+                <input type="email" id="emailfield"><br>
+                <label for="paymentmethod">Payment method:</label><br />
+                <select id="paymentmethod">
+                    <option selected disabled value="none">Please Choose</option>
+                    <option value="creditcard">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="mobilepay">MobilePay</option>
+                </select>
+                <label for="toscheckbox">I accept terms of service</label>
+                <input type="checkbox" id="toscheckbox"><br>
+                <input type="submit" id="formsubmit" value="BUY - EUR @Html.DisplayFor(m => m.Price)" class="tomatobutton">
+                <p class="button-undertext">Already own the game?<br><a href="" class="button-undertext">Download here</a></p>
+            </form>
+            <div id="systemrequirements">
+                <h2>System Requirements</h2>
+                <p>Testing - data from database: @Html.DisplayFor(m => m.Specifications)</p>
+                <p>CPU:</p>
+                <p>GPU:</p>
+                <p>Memory:</p>
+                <p>Storage:</p>
+                <p>OS:</p>
+            </div>
+        </div>
+    </div>

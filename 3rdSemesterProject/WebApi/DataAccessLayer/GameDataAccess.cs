@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
 using System.Security.Principal;
 using WebApi.ModelLayer;
 
@@ -13,13 +14,15 @@ namespace WebApi.DataAccessLayer
             connection = new SqlConnection(connectionString);
         }
         #region CRUD Methods
-        public void CreateGame(Game game)
-        {
-            string commandText = "INSERT INTO Game (DeveloperID, Title, Description, YearOfRelease, Specifications, Type, Price) VALUES (@developerid, @title, @description, @yearofrelease, @specifications, @type, @price)";
+        //can only add into GameFile table if Game table info is added first
+        public bool CreateGame(Game game) //creates game table and gameFile table full entry
+        {            
+            string commandText = "INSERT INTO Game (DeveloperID, Title, Description, YearOfRelease, Specifications, Type, Price) VALUES (@developerid, @title, @description, @yearofrelease, @specifications, @type, @price); INSERT INTO GameFile (GameID, FileName, FileContent) VALUES (SCOPE_IDENTITY(), @fileName, @fileContent)";
+           
             using (connection)
             {
                 connection.Open();
-
+                
                 SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@developerid", game.DeveloperID);
                 command.Parameters.AddWithValue("@title", game.Title);
@@ -28,15 +31,23 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@specifications", game.Specifications);
                 command.Parameters.AddWithValue("@type", game.Type);
                 command.Parameters.AddWithValue("@price", game.Price);
+                command.Parameters.AddWithValue("@fileName", game.FileName);
+                command.Parameters.AddWithValue("@fileContent", game.FileContent);
 
                 try
                 {
                     command.ExecuteScalar();
+                    return true;
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Exception while trying to insert game object. The exception was: '{ex.Message}'", ex);
+                    return false;
+                    throw new Exception($"Exception while trying to insert Game object into Game and GameFile tables. The exception was: '{ex.Message}'", ex);
                 }
+
+
+
+               
             }
         }
 
@@ -144,8 +155,78 @@ namespace WebApi.DataAccessLayer
                 }
             }
         }
+
+        public bool UpdateGameFile(Game game)
+        {
+            string commandText = "UPDATE GameFile SET FileName=@filename, FileContent=@filecontent WHERE GameID=@gameid";
+            using (connection)
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(commandText, connection);
+                command.Parameters.AddWithValue("@filename", game.FileName);
+                command.Parameters.AddWithValue("@filecontent", game.FileContent);
+                command.Parameters.AddWithValue("@gameid", game.GameID);
+
+                try
+                {
+                    return command.ExecuteNonQuery() == 1;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Exception while trying to update gameFile info in gameFile table. The exception was: '{ex.Message}'", ex);
+                }
+            }
+        }
+
+        public Game GetGameFileById(int gameId)
+        {
+            string commandText = "SELECT FileName, FileContent FROM GameFile WHERE GameID = @gameId";
+            using (connection)
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(commandText, connection);
+                command.Parameters.AddWithValue("@gameId", gameId);
+
+                try
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return DataReaderRowToGameFile(reader);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Exception while trying to find the game info in gamefile table with the '{gameId}'. The exception was: '{ex.Message}'", ex);
+                }
+            }
+        }
+
         #endregion
         #region Helper Methods
+        protected Game DataReaderRowToGameAll(SqlDataReader reader)
+        {
+            Game game = new Game();
+            game.GameID = (int)reader["GameID"];
+            game.DeveloperID = (int)reader["DeveloperID"];
+            game.Title = (string)reader["Title"];
+            game.Description = (string)reader["Description"];
+            game.YearOfRelease = (int)reader["YearOfRelease"];
+            game.Specifications = (string)reader["Specifications"];
+            game.Type = (string)reader["Type"];
+            game.Price = Convert.ToSingle(reader["Price"]);
+            game.FileName = (string)reader["FileName"];
+            game.FileContent = (byte[])reader["FileContent"];  //FileContent was GameFile up to now ??
+
+            return game;
+        }
+
         protected Game DataReaderRowToGame(SqlDataReader reader)
         {
             Game game = new Game();
@@ -157,6 +238,15 @@ namespace WebApi.DataAccessLayer
             game.Specifications = (string)reader["Specifications"];
             game.Type = (string)reader["Type"];
             game.Price = Convert.ToSingle(reader["Price"]);
+
+            return game;
+        }
+
+        protected Game DataReaderRowToGameFile(SqlDataReader reader)
+        {
+            Game game = new Game();
+            game.FileName = (string)reader["FileName"];
+            game.FileContent = (byte[])reader["FileContent"];  //FileContent was GameFile up to now ??
 
             return game;
         }

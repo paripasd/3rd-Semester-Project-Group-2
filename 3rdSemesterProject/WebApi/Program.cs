@@ -13,7 +13,6 @@ builder.Services.AddScoped<IMemberDataAccess>((conf) => new MemberDataAccess(_co
 builder.Services.AddScoped<ILoginDataAccess>((conf) => new LoginDataAccess(_configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<ISaleDataAccess>((conf) => new SaleDataAccess(_configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEventMemberDataAccess>((conf) => new EventMemberDataAccess(_configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IGameFileDataAccess>((conf) => new GameFileDataAccess(_configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

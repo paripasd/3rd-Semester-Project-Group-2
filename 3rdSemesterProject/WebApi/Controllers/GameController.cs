@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Security.Principal;
 using WebApi.DataAccessLayer;
 using WebApi.ModelLayer;
@@ -38,6 +39,11 @@ namespace WebApi.Controllers
                 return NotFound();  //returns 404
             }
             return Ok(game); //returns 200 + account JSON as body
+        }
+        [HttpGet]
+        public ActionResult<Game> GetGameFileById(int gameId)
+        {
+            return DataAccessLayer.GetGameFileById(gameId);
         }
 
         [HttpPost]

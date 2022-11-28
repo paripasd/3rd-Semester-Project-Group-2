@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
 using System.Security.Principal;
 using WebApi.ModelLayer;
 
@@ -180,7 +181,7 @@ namespace WebApi.DataAccessLayer
 
         public Game GetGameFileById(int gameId)
         {
-            string commandText = "SELECT * FROM GameFile WHERE GameID = @gameId";
+            string commandText = "SELECT FileName, FileContent FROM GameFile WHERE GameID = @gameId";
             using (connection)
             {
                 connection.Open();
@@ -202,10 +203,11 @@ namespace WebApi.DataAccessLayer
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Exception while trying to find the gamefile with the '{gameId}' in GameFile table. The exception was: '{ex.Message}'", ex);
+                    throw new Exception($"Exception while trying to find the game info in gamefile table with the '{gameId}'. The exception was: '{ex.Message}'", ex);
                 }
             }
         }
+
         #endregion
         #region Helper Methods
         protected Game DataReaderRowToGameAll(SqlDataReader reader)

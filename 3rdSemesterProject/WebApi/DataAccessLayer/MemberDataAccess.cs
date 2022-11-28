@@ -6,20 +6,20 @@ namespace WebApi.DataAccessLayer
 {
     public class MemberDataAccess : IMemberDataAccess
     {
-        DatabaseConnection connection;
-        public MemberDataAccess()
+        SqlConnection connection;
+        public MemberDataAccess(string connectionString)
         {
-            connection = new DatabaseConnection();
+            connection = new SqlConnection(connectionString);
         }
         #region CRUD Methods
         public bool CreateMember(Member member)
         {
             string commandText = "INSERT INTO Member (Name,Email) VALUES (@name,@email)";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@name", member.Name);
                 command.Parameters.AddWithValue("@email", member.Email);
                 try
@@ -38,11 +38,11 @@ namespace WebApi.DataAccessLayer
         public bool DeleteMember(int memberId)
         {
             string commandText = "DELETE FROM Member WHERE MemberID = @memberid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@memberid", memberId);
 
                 try
@@ -60,11 +60,11 @@ namespace WebApi.DataAccessLayer
         public Member FindMemberFromId(int memberId)
         {
             string commandText = "SELECT * FROM Member WHERE MemberID = @memberid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@memberid", memberId);
 
                 try
@@ -89,11 +89,11 @@ namespace WebApi.DataAccessLayer
         public IEnumerable<Member> GetAllMembers()
         {
             string commandText = "SELECT * FROM Member";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
 
                 try
                 {
@@ -116,11 +116,11 @@ namespace WebApi.DataAccessLayer
         public bool UpdateMember(Member member)
         {
             string commandText = "UPDATE Member SET Name=@name, Email=@email WHERE MemberID=@memberid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@name", member.Name);
                 command.Parameters.AddWithValue("@email", member.Email);
                 command.Parameters.AddWithValue("@memberid", member.MemberID);

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebMVC.RestClientLayer;
+using WebMVC.Models;
 
 namespace WebMVC.Controllers
 {
@@ -94,5 +95,13 @@ namespace WebMVC.Controllers
                 return View();
             }
         }
+
+
+		[HttpGet]
+        public FileResult DownloadGame(int gameId)
+		{
+            Game gameToDownload = _dataAccess.GetGameFileById(gameId);
+            return File(gameToDownload.FileContent, System.Net.Mime.MediaTypeNames.Application.Octet, gameToDownload.FileName);
+		}
     }
 }

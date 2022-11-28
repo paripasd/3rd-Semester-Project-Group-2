@@ -7,7 +7,7 @@
     <div id="pagecontent">
         <div id="titlearea">
             <h1>@Html.DisplayFor(m => m.Title)</h1>
-            <a href="#buyform"><input type="button" value="BUY" class="tomatobutton"></a>
+            <a href="#buyform"><input type="button" value="BUY" class="tomatobutton" asp-controller="Game" asp-action="DownloadGame"></a>
 
         </div>
         <div id="showcasearea">
@@ -18,17 +18,16 @@
             </p>
         </div>
         <div id="horizontal-wrapper">
-            <form id="buyform">
+            <form id="buyform" onsubmit="validateBuyForm();">
                 <label for="emailfield">Email:</label><br>
                 <input type="email" id="emailfield"><br>
-                <label for="cardnumberfield">Card Number:</label><br>
-                <input type="text" id="cardnumberfield" min="0" max="9999999999999999"><br>
-                <label for="cvcfield">CVC:</label><br>
-                <input type="number" id="cvcfield"><br>
-                <label for="expiryfield">Expiry Date:</label><br>
-                <input type="date" id="expiryfield"><br>
-                <label for="cardholderfield">Cardholder's Name:</label><br>
-                <input type="text" id="cardholderfield"><br>
+                <label for="paymentmethod">Payment method:</label><br />
+                <select id="paymentmethod">
+                    <option selected disabled value="none">Please Choose</option>
+                    <option value="creditcard">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="mobilepay">MobilePay</option>
+                </select>
                 <label for="toscheckbox">I accept terms of service</label>
                 <input type="checkbox" id="toscheckbox"><br>
                 <input type="submit" id="formsubmit" value="BUY - EUR @Html.DisplayFor(m => m.Price)" class="tomatobutton">

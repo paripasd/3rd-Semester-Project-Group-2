@@ -6,20 +6,20 @@ namespace WebApi.DataAccessLayer
 {
     public class EventDataAccess : IEventDataAccess
     {
-        DatabaseConnection connection;
-        public EventDataAccess()
+        SqlConnection connection;
+        public EventDataAccess(string connectionString)
         {
-            connection = new DatabaseConnection();
+            connection = new SqlConnection(connectionString);
         }
         #region CRUD Methods
         public bool CreateEvent(Event e)
         {
             string commandText = "INSERT INTO Event (Name,Description,StartDate,EndDate,Capacity) VALUES (@name,@description,@startdate,@enddate,@capacity)";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@name", e.Name);
                 command.Parameters.AddWithValue("@description", e.Description);
                 command.Parameters.AddWithValue("@startdate", e.StartDate);
@@ -41,11 +41,11 @@ namespace WebApi.DataAccessLayer
         public bool DeleteEvent(Event e)
         {
             string commandText = "DELETE FROM Event WHERE EventID = @eventid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@eventid", e.EventID);
 
                 try
@@ -63,11 +63,11 @@ namespace WebApi.DataAccessLayer
         public Event FindEventFromId(int eventId)
         {
             string commandText = "SELECT * FROM Event WHERE EventID = @eventid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@eventid", eventId);
 
                 try
@@ -92,11 +92,11 @@ namespace WebApi.DataAccessLayer
         public IEnumerable<Event> GetAllEvents()
         {
             string commandText = "SELECT * FROM Event";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
 
                 try
                 {
@@ -119,11 +119,11 @@ namespace WebApi.DataAccessLayer
         public bool UpdateEvent(Event e)
         {
             string commandText = "UPDATE Event SET Name=@name, Description=@description, StartDate=@startdate, EndDate=@enddate, Capacity=@capacity WHERE EventID=@eventid";
-            using (connection.GetConnection())
+            using (connection)
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(commandText, connection.GetConnection());
+                SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@name", e.Name);
                 command.Parameters.AddWithValue("@description", e.Description);
                 command.Parameters.AddWithValue("@startdate", e.StartDate);

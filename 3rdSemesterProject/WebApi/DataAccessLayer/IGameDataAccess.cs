@@ -11,7 +11,8 @@ namespace WebApi.DataAccessLayer
         public bool UpdateAllGameDetails(Game game);
         public Game GetGameFileById(int gameId);
         public bool UpdateGameFile(Game game);
-        public FileResult Download(int gameId);
+        //public FileResult Download(int gameId);
         public bool DeleteGame(int id);
-    }
+
+	}
 }

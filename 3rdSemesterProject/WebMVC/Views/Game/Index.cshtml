@@ -1,7 +1,7 @@
 @model IEnumerable<WebMVC.Models.Game>
 
 @{
-    //Layout = null;
+    ViewData["Title"] = "Games";
 }
 
 <h1 style="padding-top:150px; text-align:center;">Games</h1>
@@ -12,7 +12,8 @@
                     <div class="gamelistimg"><a href="@Url.Action("Details","Game", new {id = item.GameID})"><img src="/images/placeholder2.jpg"/></a></div>
                     <div class="overlay">
                         <h2>@Html.DisplayFor(x => item.Title)</h2>
-                        <p>data</p>
+                        <p>Genre: @Html.DisplayFor(x => item.Type)</p>
+                        <p>!!Dev name!! @Html.DisplayFor(x => item.YearOfRelease)</p>
                     </div>
                 </div>
 			}

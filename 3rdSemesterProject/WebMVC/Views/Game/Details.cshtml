@@ -1,46 +1,98 @@
 @model WebMVC.Models.Game
+@using Newtonsoft.Json;
 
 @{
-    var gameObject = ViewData.Model;
+    ViewData["Title"] = ViewData.Model.Title;
+    string downloadLink = "\"" + "../DownloadGame?gameId=" + ViewData.Model.GameID + "\"";
+
 }
 
-    <div id="pagecontent">
-        <div id="titlearea">
-            <h1>@Html.DisplayFor(m => m.Title)</h1>
-            <a href="#buyform"><input type="button" value="BUY" class="tomatobutton"></a>
+@section script {
 
-        </div>
-        <div id="showcasearea">
-            <p style="text-align:left;">Genre: @Html.DisplayFor(m => m.Type)</p>
-            <img src="/images/placeholder2.jpg">
-            <p style="padding-top:25px;">
-                @Html.DisplayFor(m => m.Description);
-            </p>
-        </div>
-        <div id="horizontal-wrapper">
-            <form id="buyform" onsubmit="return validateBuyForm();">
-                <label for="emailfield">Email:</label><br>
-                <input type="email" id="emailfield"><br>
-                <label for="paymentmethod">Payment method:</label><br />
-                <select id="paymentmethod">
-                    <option selected disabled value="none">Please Choose</option>
-                    <option value="creditcard">Credit Card</option>
-                    <option value="paypal">PayPal</option>
-                    <option value="mobilepay">MobilePay</option>
-                </select>
-                <label for="toscheckbox">I accept terms of service</label>
-                <input type="checkbox" id="toscheckbox"><br>
-                <input type="submit" id="formsubmit" value="BUY - EUR @Html.DisplayFor(m => m.Price)" class="tomatobutton">
-                <p class="button-undertext">Already own the game?<br><a href="../DownloadGame?gameId=@ViewData.Model.GameID" class="button-undertext">Download here</a></p>
-            </form>
-            <div id="systemrequirements">
-                <h2>System Requirements</h2>
-                <p>Testing - data from database: @Html.DisplayFor(m => m.Specifications)</p>
-                <p>CPU:</p>
-                <p>GPU:</p>
-                <p>Memory:</p>
-                <p>Storage:</p>
-                <p>OS:</p>
-            </div>
+    <script>
+        function validateBuyForm() {
+    var emailInput = document.getElementById("emailfield");
+    if (emailInput.value == "") {
+        alert("Input an email address!");
+        return false;
+    } /*if the field isn't empty the html imput type email verifies that it's an email address*/
+
+    var paymentMethodInput = document.getElementById("paymentmethod");
+    if (paymentMethodInput.value == "none") {
+        alert("Select payment method!");
+        return false;
+    }
+
+    var tosInput = document.getElementById("toscheckbox");
+    if (tosInput.checked == false) {
+        alert("You have to accept the terms of service to purchase");
+        return false;
+    }
+    return true;
+}
+
+function addSale() {
+    var game = JSON.parse('@Html.Raw(JsonConvert.SerializeObject(Model))');
+    var email = document.getElementById("emailfield").value;
+    var date = new Date().toLocaleTimeString('en-GB');
+    const sale = { GameID: game.GameID, Email: email, Date: date, SalesPrice: game.Price };
+    var saleString = JSON.stringify(sale);
+    $.post('@Url.Action("CreateSale","Sale")', saleString, null, "json");
+}
+
+function downloadGame(link) {
+    window.open(link);
+}
+
+function buyGame(link) {
+    if (validateBuyForm()) {
+        addSale();
+        downloadGame(link);
+        return true;
+    } else {
+        return false;
+    }
+}
+    </script>
+}
+
+<div id="pagecontent">
+    <div id="titlearea">
+        <h1>@Html.DisplayFor(m => m.Title)</h1>
+        <a href="#buyform"><input type="button" value="BUY" class="tomatobutton"></a>
+
+    </div>
+    <div id="showcasearea">
+        <p style="text-align:left;">Genre: @Html.DisplayFor(m => m.Type)</p>
+        <img src="/images/placeholder2.jpg">
+        <p style="padding-top:25px;">
+            @Html.DisplayFor(m => m.Description)
+        </p>
+    </div>
+    <div id="horizontal-wrapper">
+        <form id="buyform" onsubmit="return buyGame(@downloadLink);">
+            <label for="emailfield">Email:</label><br>
+            <input type="email" id="emailfield"><br>
+            <label for="paymentmethod">Payment method:</label><br />
+            <select id="paymentmethod">
+                <option selected disabled value="none">Please Choose</option>
+                <option value="creditcard">Credit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="mobilepay">MobilePay</option>
+            </select>
+            <label for="toscheckbox">I accept terms of service</label>
+            <input type="checkbox" id="toscheckbox"><br>
+            <input type="submit" id="formsubmit" value="BUY - EUR @Html.DisplayFor(m => m.Price)" class="tomatobutton">
+            <p class="button-undertext">Already own the game?<br><a href=@downloadLink class="button-undertext" id="downloadlink">Download here</a></p>
+        </form>
+        <div id="systemrequirements">
+            <h2>System Requirements</h2>
+            <p>Testing - data from database: @Html.DisplayFor(m => m.Specifications)</p>
+            <p>CPU:</p>
+            <p>GPU:</p>
+            <p>Memory:</p>
+            <p>Storage:</p>
+            <p>OS:</p>
         </div>
     </div>
+</div>

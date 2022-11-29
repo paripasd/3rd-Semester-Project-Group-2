@@ -13,13 +13,12 @@ namespace WebApi.DataAccessLayer
         }
         public bool CreateSale(Sale sale)
         {
-            string commandText = "INSERT INTO Sale (GameKey, GameID, Email, Date, SalesPrice) VALUES (@gamekey, @gameid, @email, @date, @salesprice)";
+            string commandText = "INSERT INTO Sale (GameID, Email, Date, SalesPrice) VALUES (@gameid, @email, @date, @salesprice)";
             using (connection)
             {
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(commandText, connection);
-                command.Parameters.AddWithValue("@gamekey", sale.GameKey);
                 command.Parameters.AddWithValue("@gameid", sale.GameID);
                 command.Parameters.AddWithValue("@email", sale.Email);
                 command.Parameters.AddWithValue("@date", sale.Date);
@@ -39,7 +38,62 @@ namespace WebApi.DataAccessLayer
             }
         }
 
-        public bool DeleteSale(Sale sale)
+        public IEnumerable<Sale> SalesInPeriod(DateTime startTime, DateTime endTime)
+        {
+            string commandText = "SELECT * FROM Sale WHERE Date BETWEEN @starttime AND @endtime";
+            using (connection)
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(commandText, connection);
+                command.Parameters.AddWithValue("@starttime", startTime);
+                command.Parameters.AddWithValue("@endtime", endTime);
+
+                try
+                {
+                    List<Sale> sales = new List<Sale>();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sales.Add(DataReaderRowToSale(reader));
+                    }
+                    return sales;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Exception while trying to get sales info between two given times. The exception was: '{ex.Message}'", ex);
+                }
+            }
+        }
+
+        public IEnumerable<Sale> SalesByGame(int gameId)
+        {
+            string commandText = "SELECT * FROM Sale WHERE GameID = @gameid";
+            using (connection)
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(commandText, connection);
+                command.Parameters.AddWithValue("@gameid", gameId);
+
+                try
+                {
+                    List<Sale> sales = new List<Sale>();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sales.Add(DataReaderRowToSale(reader));
+                    }
+                    return sales;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Exception while trying to get sales info by one game. The exception was: '{ex.Message}'", ex);
+                }
+            }
+        }
+
+        public bool DeleteSale(Guid gamekey)
         {
             string commandText = "DELETE FROM Sale WHERE GameKey = @gamekey";
             using (connection)
@@ -47,7 +101,7 @@ namespace WebApi.DataAccessLayer
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(commandText, connection);
-                command.Parameters.AddWithValue("@gamekey", sale.GameKey);
+                command.Parameters.AddWithValue("@gamekey", gamekey);
 
                 try
                 {
@@ -61,7 +115,7 @@ namespace WebApi.DataAccessLayer
             }
         }
 
-        public Sale FindSaleFromGameKey(string gameKey)
+        public Sale FindSaleFromGameKey(Guid gameKey)
         {
             string commandText = "SELECT * FROM Sale WHERE GameKey = @gamekey";
             using (connection)
@@ -121,7 +175,7 @@ namespace WebApi.DataAccessLayer
         protected Sale DataReaderRowToSale(SqlDataReader reader)
         {
             Sale sale = new Sale();
-            sale.GameKey = (string)reader["GameKey"];
+            sale.GameKey = (Guid)reader["GameKey"];
             sale.GameID = (int)reader["GameID"];
             sale.Email = (string)reader["Email"];
             sale.Date = (DateTime)reader["Date"];

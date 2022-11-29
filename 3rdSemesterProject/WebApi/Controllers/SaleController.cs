@@ -6,7 +6,7 @@ using WebApi.ModelLayer;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("ap1/v1/[controller]")]
     public class SaleController : ControllerBase
     {
         #region Properties
@@ -30,7 +30,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("{gamekey}")]
-        public ActionResult<Game> GetSaleUsingGameKey(string gamekey)
+        public ActionResult<Sale> GetSaleUsingGameKey(Guid gamekey)
         {
             Sale sale = DataAccessLayer.FindSaleFromGameKey(gamekey);
             if (sale == null)
@@ -40,8 +40,32 @@ namespace WebApi.Controllers
             return Ok(sale); //returns 200 + account JSON as body
         }
 
+        [HttpGet]
+        [Route("{gameid}")]
+        public ActionResult<Sale> SalesByGame(int gameId)
+        {
+            IEnumerable<Sale> sales = DataAccessLayer.SalesByGame(gameId);
+            if (sales == null)
+            {
+                return NotFound();  //returns 404
+            }
+            return Ok(sales); //returns 200 + account JSON as body
+        }
+
+        [HttpGet]
+        [Route("{starttime}/{endtime}")]
+        public ActionResult<Sale> SalesInPeriod(DateTime startTime, DateTime endTime)
+        {
+            IEnumerable<Sale> sales = DataAccessLayer.SalesInPeriod(startTime, endTime);
+            if (sales == null)
+            {
+                return NotFound();  //returns 404
+            }
+            return Ok(sales); //returns 200 + account JSON as body
+        }
+
         [HttpPost]
-        public ActionResult<Game> AddSale(Sale sale)
+        public ActionResult<Sale> AddSale(Sale sale)
         {
             DataAccessLayer.CreateSale(sale);
             return Created($"{baseURI}/{sale.GameID}", sale);
@@ -49,9 +73,9 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("{gamekey}")]
-        public ActionResult DeleteSale(Sale sale)
+        public ActionResult DeleteSale(Guid gamekey)
         {
-            if (!DataAccessLayer.DeleteSale(sale))
+            if (!DataAccessLayer.DeleteSale(gamekey))
             {
                 return NotFound();  //returns 404
             }

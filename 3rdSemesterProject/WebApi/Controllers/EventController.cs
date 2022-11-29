@@ -5,7 +5,7 @@ using WebApi.ModelLayer;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("ap1/v1/[controller]")]
     public class EventController : ControllerBase
     {
         #region Properties

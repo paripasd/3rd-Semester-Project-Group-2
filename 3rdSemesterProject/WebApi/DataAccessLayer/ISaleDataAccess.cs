@@ -5,8 +5,10 @@ namespace WebApi.DataAccessLayer
     public interface ISaleDataAccess
     {
         public bool CreateSale(Sale sale);
-        public Sale FindSaleFromGameKey(string gameKey);
+        public Sale FindSaleFromGameKey(Guid gameKey);
         public IEnumerable<Sale> GetAllSales();
-        public bool DeleteSale(Sale sale);
+        public IEnumerable<Sale> SalesByGame(int gameId);
+        public IEnumerable<Sale> SalesInPeriod(DateTime startTime, DateTime endTime);
+        public bool DeleteSale(Guid gamekey);
     }
 }

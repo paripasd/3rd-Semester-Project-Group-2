@@ -11,10 +11,17 @@
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <None Remove="Swashbuckle.AspNetCore" />
     <None Remove="RestSharp" />
+    <None Remove="Views\Event\" />
+    <None Remove="Views\Developer\" />
+    <None Remove="Views\Contact\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Game\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="Views\Event\" />
+    <Folder Include="Views\Developer\" />
+    <Folder Include="Views\Contact\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
@@ -23,5 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\images\" />
+    <Content Remove="wwwroot\css\" />
   </ItemGroup>
 </Project>

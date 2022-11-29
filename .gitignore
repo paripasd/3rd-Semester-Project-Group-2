@@ -2,3 +2,9 @@
 *.lock
 3rdSemesterProject/.vs/3rdSemesterProject/DesignTimeBuild/.dtbcache.v2
 *.vsidx
+*.dll
+*.cache
+*.editorconfig
+*.dll
+*.json
+*.json

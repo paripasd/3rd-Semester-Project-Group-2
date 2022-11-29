@@ -18,7 +18,3 @@
     }
     return true;
 }
-
-function DownloadGame() {
-    window.open("localhost:7064/Game/DownloadGame?gameId=" + );
-}

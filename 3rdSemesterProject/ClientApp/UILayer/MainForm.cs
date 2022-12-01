@@ -16,12 +16,15 @@ namespace ClientApp.UILayer
     public partial class MainForm : Form
     {
         private ApiDeveloperDataAccess developerApi;
+        private ApiGameDataAccess gameApi;
         public MainForm()
         {
             InitializeComponent();
             developerApi = new ApiDeveloperDataAccess("https://localhost:7023/api/v1/Developer");
+            gameApi = new ApiGameDataAccess("https://localhost:7023/api/v1/Game");
             GetAllDevsFromApi();
             ClearDeveloperInputFields();
+            panelCreateDeveloper.Visible = false;
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -43,9 +46,18 @@ namespace ClientApp.UILayer
 
         private void buttonUpdateDeveloper_Click(object sender, EventArgs e)
         {
-            UpdateDeveloper();
-            ClearDeveloperInputFields();
-            ShowAllDeveloper();
+            if (CheckInputFieldsForUpdate() == true)
+            {
+                UpdateDeveloper();
+                ClearDeveloperInputFields();
+                ShowAllDeveloper();
+            }
+            else
+            {
+                //error handling +
+                ClearDeveloperInputFields();
+            }
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -74,9 +86,45 @@ namespace ClientApp.UILayer
 
             SetDeveloperInputFields(developerToShow);
 
+            ShowAllGamesForDeveloper();
+
 
         }
-        #region Methods
+        #region Developer Page Methods
+
+        public void CreateNewDeveloper()
+        {
+            Developer dev = new Developer();
+            dev.Name = textBoxCreateDeveloperName.Text;
+            dev.Email = textBoxCreateDeveloperEmail.Text;
+            dev.Description = textBoxCreateDeveloperDescription.Text;
+            developerApi.CreateDeveloper(dev);
+        }
+
+        public void ClearCreateDeveloperFormFields()
+        {
+            textBoxCreateDeveloperName.Clear();
+            textBoxCreateDeveloperEmail.Clear();
+            textBoxCreateDeveloperDescription.Clear();
+        }
+
+        public bool CheckInputFieldsForCreate()
+        {
+            if (textBoxCreateDeveloperName.Text.Length > 0 && textBoxCreateDeveloperEmail.Text.Length > 0 && textBoxCreateDeveloperDescription.Text.Length > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckInputFieldsForUpdate()
+        {
+            if (textBoxDeveloperName.Text.Length > 0 && textBoxEmail.Text.Length > 0 && textBoxDeveloperDescription.Text.Length > 0)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public void ChangeListToShowOnlyDeveloperBySearch()
         {
@@ -99,6 +147,16 @@ namespace ClientApp.UILayer
             foreach (var developer in developerList)
             {
                 listBoxDeveloperList.Items.Add(developer.Name);
+            }
+        }
+
+        public void ShowAllGamesForDeveloper()
+        {
+            listBoxDeveloperGames.Items.Clear();
+            IEnumerable<Game> gameList = gameApi.GetGamesByDeveloperId(GetSelectedDeveloperObjectFromList().DeveloperID);
+            foreach (var game in gameList)
+            {
+                listBoxDeveloperGames.Items.Add(game.Title);
             }
         }
 
@@ -160,6 +218,7 @@ namespace ClientApp.UILayer
             textBoxEmail.Clear();
             textBoxDeveloperDescription.Clear();
             labelDeveloperNamePanel.ResetText();
+            listBoxDeveloperGames.Items.Clear();
         }
 
         public void SetDeveloperInputFields(Developer developer)
@@ -171,5 +230,50 @@ namespace ClientApp.UILayer
             labelDeveloperNamePanel.Text = developer.Name;
         }
         #endregion
+
+        private void listBoxDeveloperGames_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ClearCreateDeveloperFormFields();
+            panelCreateDeveloper.Visible = false;
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonCreateDeveloper_Click(object sender, EventArgs e)
+        {
+            panelCreateDeveloper.Visible = true;
+            ClearCreateDeveloperFormFields();
+        }
+
+        private void buttonFinishDeveloperCreation_Click(object sender, EventArgs e)
+        {
+            if (CheckInputFieldsForCreate() == true)
+            {
+                CreateNewDeveloper();
+                ClearCreateDeveloperFormFields();
+                panelCreateDeveloper.Visible = false;
+                ShowAllDeveloper();
+            }
+            else
+            {
+                //error handling +
+                ClearCreateDeveloperFormFields();
+            }
+            
+        }
     }
 }

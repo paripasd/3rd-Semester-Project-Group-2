@@ -30,7 +30,7 @@ namespace ClientApp.UILayer
 
         public void LoginButtonValidate()
         {
-            Login login = new Login(textBoxUserName.Text, textBoxPassword.Text);
+            ModelLayer.Login login = new ModelLayer.Login(textBoxUserName.Text, textBoxPassword.Text);
             if (loginApi.ValidateLogin(login) == true)
             {
                 this.Hide();

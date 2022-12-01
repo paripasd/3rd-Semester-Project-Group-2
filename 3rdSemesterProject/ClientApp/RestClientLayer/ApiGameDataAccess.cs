@@ -26,5 +26,12 @@ namespace ClientApp.RestClientLayer
             request.AddJsonBody(game);
             return RestClient.Post<bool>(request).Data;
         }
+
+        public IEnumerable<Game> GetGamesByDeveloperId(int developerId)
+        {
+            var request = new RestRequest("client/" + developerId.ToString());
+            var response = RestClient.Execute<IEnumerable<Game>>(request);
+            return response.Data;
+        }
     }
 }

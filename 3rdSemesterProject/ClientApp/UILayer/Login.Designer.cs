@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.textBoxUserName = new System.Windows.Forms.TextBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.buttonLogin = new System.Windows.Forms.Button();
@@ -37,23 +38,27 @@
             // 
             // textBoxUserName
             // 
-            this.textBoxUserName.Location = new System.Drawing.Point(124, 153);
+            this.textBoxUserName.Location = new System.Drawing.Point(108, 115);
+            this.textBoxUserName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxUserName.Name = "textBoxUserName";
-            this.textBoxUserName.Size = new System.Drawing.Size(318, 27);
+            this.textBoxUserName.Size = new System.Drawing.Size(279, 23);
             this.textBoxUserName.TabIndex = 0;
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(124, 219);
+            this.textBoxPassword.Location = new System.Drawing.Point(108, 164);
+            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(318, 27);
+            this.textBoxPassword.Size = new System.Drawing.Size(279, 23);
             this.textBoxPassword.TabIndex = 1;
+            this.textBoxPassword.UseSystemPasswordChar = true;
             // 
             // buttonLogin
             // 
-            this.buttonLogin.Location = new System.Drawing.Point(206, 330);
+            this.buttonLogin.Location = new System.Drawing.Point(180, 248);
+            this.buttonLogin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonLogin.Name = "buttonLogin";
-            this.buttonLogin.Size = new System.Drawing.Size(161, 61);
+            this.buttonLogin.Size = new System.Drawing.Size(141, 46);
             this.buttonLogin.TabIndex = 2;
             this.buttonLogin.Text = "Login";
             this.buttonLogin.UseVisualStyleBackColor = true;
@@ -62,34 +67,39 @@
             // labelUserName
             // 
             this.labelUserName.AutoSize = true;
-            this.labelUserName.Location = new System.Drawing.Point(124, 130);
+            this.labelUserName.Location = new System.Drawing.Point(108, 98);
             this.labelUserName.Name = "labelUserName";
-            this.labelUserName.Size = new System.Drawing.Size(75, 20);
+            this.labelUserName.Size = new System.Drawing.Size(60, 15);
             this.labelUserName.TabIndex = 3;
             this.labelUserName.Text = "Username";
             // 
             // labelPassword
             // 
             this.labelPassword.AutoSize = true;
-            this.labelPassword.Location = new System.Drawing.Point(124, 196);
+            this.labelPassword.Location = new System.Drawing.Point(108, 147);
             this.labelPassword.Name = "labelPassword";
-            this.labelPassword.Size = new System.Drawing.Size(70, 20);
+            this.labelPassword.Size = new System.Drawing.Size(57, 15);
             this.labelPassword.TabIndex = 4;
             this.labelPassword.Text = "Password";
             // 
             // LoginForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(582, 453);
+            this.ClientSize = new System.Drawing.Size(509, 340);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUserName);
             this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.textBoxUserName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.HelpButton = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximizeBox = false;
             this.Name = "LoginForm";
-            this.Text = "LoginForm";
+            this.Text = "Login";
             this.ResumeLayout(false);
             this.PerformLayout();
 

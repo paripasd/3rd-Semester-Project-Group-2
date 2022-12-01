@@ -15,14 +15,14 @@ namespace WebApi.DataAccessLayer
         public bool CreateLogin(Login login)
         {
             string hashPassword = Login.HashPassword(login.Password);
-            string commandText = "INSERT INTO Login (UserName,Password) VALUES (@username,@password)";
+            string commandText = "INSERT INTO Login (UserName,Hash) VALUES (@username,@hash)";
             using (connection)
             {
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@username", login.UserName);
-                command.Parameters.AddWithValue("@password", hashPassword);
+                command.Parameters.AddWithValue("@hash", hashPassword);
                 try
                 {
                     command.ExecuteScalar();
@@ -60,7 +60,7 @@ namespace WebApi.DataAccessLayer
 
         public IEnumerable<Login> GetAllLoginInformation()
         {
-            string commandText = "SELECT * FROM Login";
+            string commandText = "SELECT UserName, Hash FROM Login";
             using (connection)
             {
                 connection.Open();
@@ -87,14 +87,14 @@ namespace WebApi.DataAccessLayer
 
         public bool UpdateLogin(Login login)
         {
-            string commandText = "UPDATE Login SET UserName=@username, Password=@password WHERE UserName=@un";
+            string commandText = "UPDATE Login SET UserName=@username, Hash=@hash WHERE UserName=@un";
             using (connection)
             {
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@username", login.UserName);
-                command.Parameters.AddWithValue("@password", login.Password);
+                command.Parameters.AddWithValue("@hash", login.Password);
                 command.Parameters.AddWithValue("@un", login.UserName);
 
                 try
@@ -114,7 +114,7 @@ namespace WebApi.DataAccessLayer
         {
             Login login = new Login();
             login.UserName = (string)reader["UserName"];
-            login.Password = (string)reader["Password"];
+            login.Password = (string)reader["Hash"];
             
 
             return login;

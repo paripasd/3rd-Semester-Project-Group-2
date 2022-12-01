@@ -1,7 +1,7 @@
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-.navbar[b-hfo96tx0bd] {
+.navbar[b-giswp39xn8] {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -14,7 +14,7 @@ for details on configuring this project to bundle and minify static web assets. 
     margin-left: 0px !important;
 }
 
-    .navbar li[b-hfo96tx0bd] {
+    .navbar li[b-giswp39xn8] {
         display: inline;
         font-weight: 300;
         font-size: x-large;
@@ -25,19 +25,19 @@ for details on configuring this project to bundle and minify static web assets. 
         text-decoration: none;
     }
 
-        .navbar li:hover[b-hfo96tx0bd] {
+        .navbar li:hover[b-giswp39xn8] {
             background-color: rgb(216, 84, 60)
         }
 
-body[b-hfo96tx0bd], html[b-hfo96tx0bd] {
+body[b-giswp39xn8], html[b-giswp39xn8] {
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-*[b-hfo96tx0bd] {
+*[b-giswp39xn8] {
     box-sizing: border-box;
 }
 
-html[b-hfo96tx0bd] {
+html[b-giswp39xn8] {
     scroll-behavior: smooth;
 }

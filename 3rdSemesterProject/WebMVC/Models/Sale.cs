@@ -25,6 +25,14 @@
 			SalesPrice = salesPrice;
 		}
 
+		public Sale(PartialSale ps)
+		{
+			GameID = ps.GameID;
+			Email = ps.Email;
+			Date = DateTime.UtcNow;
+			SalesPrice = ps.SalesPrice;
+		}
+
 		#region Properties
 		public Guid GameKey { get; set; }
 		public int GameID { get; set; }

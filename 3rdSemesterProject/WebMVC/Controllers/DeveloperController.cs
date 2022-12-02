@@ -4,15 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebMVC.RestClientLayer;
 
 namespace WebMVC.Controllers
 {
     public class DeveloperController : Controller
     {
+        ApiDeveloperDataAccess _dataAccess = new("https://localhost:7023/api/v1/developer");
+        
         // GET: Developer
         public ActionResult Index()
         {
-            return View();
+            return View(_dataAccess.GetAllDevelopers());
         }
 
         // GET: Developer/Details/5

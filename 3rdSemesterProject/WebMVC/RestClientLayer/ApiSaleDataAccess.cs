@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Security.Principal;
+using System.Text.Json;
 using RestSharp;
+using RestSharp.Serializers;
 using WebMVC.Models;
 
 namespace WebMVC.RestClientLayer
@@ -15,11 +18,12 @@ namespace WebMVC.RestClientLayer
 			RestClient = new(BaseUri);
 		}
 
-		public bool CreateSale(Sale sale)
+		public void CreateSale(Sale sale)
 		{
-			var request = new RestRequest();
-			request.AddJsonBody(sale);
-			return RestClient.Post<bool>(request);
+			string json = JsonSerializer.Serialize(sale);
+			var request = new RestRequest("", Method.Post);
+			request.AddStringBody(json, DataFormat.Json);
+			var response = RestClient.Execute(request);
 		}
 	}
 }

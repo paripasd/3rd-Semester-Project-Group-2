@@ -15,9 +15,9 @@ namespace MVC.Controllers
 		ApiSaleDataAccess _dataAccess = new("https://localhost:7023/api/v1/sale");
 
 		[HttpPost]
-		public void CreateSale(string saleJson)
-		{ 
-			Sale sale = JsonConvert.DeserializeObject<Sale>(saleJson);
+		public void CreateSale([FromBody] PartialSale saleJson)
+		{
+			Sale sale = new(saleJson);
 			_dataAccess.CreateSale(sale);
 		}
 	}

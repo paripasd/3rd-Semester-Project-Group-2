@@ -1,1 +1,7 @@
-﻿
+﻿@{
+    ViewData["Title"] = ViewData.Model.Name;
+    @model WebMVC.Models.Event;
+}
+
+<p>@Html.DisplayFor(m => m.Name)</p>
+<p>@Html.DisplayFor(m => m.Description)</p>

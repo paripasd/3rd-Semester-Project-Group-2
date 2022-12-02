@@ -40,6 +40,14 @@ namespace WebApi.Controllers
             }
             return Ok(game); //returns 200 + account JSON as body
         }
+
+        [HttpGet]
+        [Route("client/{developerId}")]
+        public ActionResult<IEnumerable<Game>> GetGamesByDeveloperId(int developerId)
+        {
+           return Ok(DataAccessLayer.GetGamesByDeveloperId(developerId));
+        }
+
         [HttpGet]
 		[Route("file/{gameId}")]
         public ActionResult<Game> GetGameFileById(int gameId)

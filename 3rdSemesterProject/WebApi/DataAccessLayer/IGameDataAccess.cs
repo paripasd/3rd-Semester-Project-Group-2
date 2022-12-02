@@ -13,6 +13,8 @@ namespace WebApi.DataAccessLayer
         public bool UpdateGameFile(Game game);
         //public FileResult Download(int gameId);
         public bool DeleteGame(int id);
+        public IEnumerable<Game> GetGamesByDeveloperId(int developerId);
 
-	}
+
+    }
 }

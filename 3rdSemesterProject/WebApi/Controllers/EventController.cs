@@ -48,7 +48,6 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
         public ActionResult DeleteEvent(Event e)
         {
             if (!DataAccessLayer.DeleteEvent(e))

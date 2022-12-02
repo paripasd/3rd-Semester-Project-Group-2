@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClientApp.RestClientLayer
 {
-    public class ApiDeveloperDataAccess : IApiDeveloperDataAccess
+    public class ApiDeveloperDataAccess
     {
         public string BaseUri { get; private set; }
 
@@ -29,7 +29,8 @@ namespace ClientApp.RestClientLayer
 
         public bool DeleteDeveloper(Developer developer)
         {
-            var request = new RestRequest(developer.DeveloperID.ToString());
+            var request = new RestRequest();
+            request.AddJsonBody(developer);
             var response = RestClient.Delete<bool>(request);
 
             if (!response.IsSuccessful)

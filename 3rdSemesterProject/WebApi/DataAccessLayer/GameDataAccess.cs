@@ -107,6 +107,34 @@ namespace WebApi.DataAccessLayer
             }
         }
 
+        public IEnumerable<Game> GetGamesByDeveloperId(int developerId)
+        {
+            string commandText = "SELECT * FROM Game WHERE DeveloperID = @developerid";
+            using (connection)
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(commandText, connection);
+                command.Parameters.AddWithValue("@developerid", developerId);
+
+                try
+                {
+                    List<Game> games = new List<Game>();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        games.Add(DataReaderRowToGame(reader));
+                    }
+                    return games;
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Exception while trying to get all games with a given developer id. The exception was: '{ex.Message}'", ex);
+                }
+            }
+        }
+
         public bool UpdateAllGameDetails(Game game)
         {
             string commandText = "UPDATE Game SET DeveloperID=@developerid, Title=@title, Description=@description, YearOfRelease=@yearofrelease, Specifications=@specifications, Type=@type, Price=@price WHERE GameID=@gameid";

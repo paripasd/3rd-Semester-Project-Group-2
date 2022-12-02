@@ -14,12 +14,13 @@ namespace WebApi.DataAccessLayer
         #region CRUD Methods
         public bool CreateEvent(Event e)
         {
-            string commandText = "INSERT INTO Event (Name,Description,StartDate,EndDate,Capacity) VALUES (@name,@description,@startdate,@enddate,@capacity)";
+            string commandText = "INSERT INTO Event (GameID,Name,Description,StartDate,EndDate,Capacity) VALUES (@gameid,@name,@description,@startdate,@enddate,@capacity)";
             using (connection)
             {
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(commandText, connection);
+                command.Parameters.AddWithValue("@gameid", e.GameID);
                 command.Parameters.AddWithValue("@name", e.Name);
                 command.Parameters.AddWithValue("@description", e.Description);
                 command.Parameters.AddWithValue("@startdate", e.StartDate);
@@ -32,8 +33,9 @@ namespace WebApi.DataAccessLayer
                 }
                 catch (Exception ex)
                 {
-                    return false;
                     throw new Exception($"Exception while trying to insert Event object. The exception was: '{ex.Message}'", ex);
+                    return false;
+                    
                 }
             }
         }
@@ -118,7 +120,7 @@ namespace WebApi.DataAccessLayer
 
         public bool UpdateEvent(Event e)
         {
-            string commandText = "UPDATE Event SET Name=@name, Description=@description, StartDate=@startdate, EndDate=@enddate, Capacity=@capacity WHERE EventID=@eventid";
+            string commandText = "UPDATE Event SET Name=@name, Description=@description, StartDate=@startdate, EndDate=@enddate WHERE EventID=@eventid";
             using (connection)
             {
                 connection.Open();
@@ -128,7 +130,6 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@description", e.Description);
                 command.Parameters.AddWithValue("@startdate", e.StartDate);
                 command.Parameters.AddWithValue("@enddate", e.EndDate);
-                command.Parameters.AddWithValue("@capacity", e.Capacity);
                 command.Parameters.AddWithValue("@eventid", e.EventID);
 
                 try
@@ -148,6 +149,7 @@ namespace WebApi.DataAccessLayer
             Event e = new Event();
             e.EventID = (int)reader["EventID"];
             e.GameID = (int)reader["GameID"];
+            e.Name = (string)reader["Name"];
             e.Description = (string)reader["Description"];
             e.StartDate = (DateTime)reader["StartDate"];
             e.EndDate = (DateTime)reader["EndDate"];

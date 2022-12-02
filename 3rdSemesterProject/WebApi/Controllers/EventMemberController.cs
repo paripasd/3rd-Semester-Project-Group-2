@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         #endregion
 
         [HttpGet]
-        [Route("{eventid}")]
+        [Route("event/{eventid}")]
         public ActionResult<EventMember> FindMemberInEventFromId(int eventId)
         {
             EventMember eventMember = DataAccessLayer.FindMemberInEventFromId(eventId);
@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("{memberid}")]
+        [Route("member/{memberid}")]
         public ActionResult<EventMember> FindEventByMemberId(int memberId)
         {
             EventMember eventMember = DataAccessLayer.FindEventByMemberId(memberId);

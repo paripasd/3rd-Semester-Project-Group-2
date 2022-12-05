@@ -26,9 +26,9 @@ namespace ClientApp.UILayer
             InitializeComponent();
             developerApi = new ApiDeveloperDataAccess("https://localhost:7023/api/v1/Developer");
             gameApi = new ApiGameDataAccess("https://localhost:7023/api/v1/Game");
-            eventApi = new ApiEventDataAccess("https://localhost:7023/ap1/v1/Event");
+            eventApi = new ApiEventDataAccess("https://localhost:7023/api/v1/Event");
             eventMemberApi = new ApiEventMemberDataAccess("https://localhost:7023/api/v1/eventmember");
-            memberApi = new ApiMemberDataAccess("https://localhost:7023/ap1/v1/Member");
+            memberApi = new ApiMemberDataAccess("https://localhost:7023/api/v1/Member");
 
 
             GetAllDevsFromApi();

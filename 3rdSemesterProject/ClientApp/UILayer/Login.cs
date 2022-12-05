@@ -18,7 +18,7 @@ namespace ClientApp.UILayer
         public LoginForm()
         {
             InitializeComponent();
-            loginApi = new ApiLoginDataAccess("https://localhost:7023/ap1/v1/Login");
+            loginApi = new ApiLoginDataAccess("https://localhost:7023/api/v1/Login");
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)

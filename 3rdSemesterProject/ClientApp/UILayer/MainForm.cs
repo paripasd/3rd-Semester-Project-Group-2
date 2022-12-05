@@ -20,19 +20,24 @@ namespace ClientApp.UILayer
         private ApiGameDataAccess gameApi;
         private ApiEventDataAccess eventApi;
         private ApiEventMemberDataAccess eventMemberApi;
+        private ApiMemberDataAccess memberApi;
         public MainForm()
         {
             InitializeComponent();
             developerApi = new ApiDeveloperDataAccess("https://localhost:7023/api/v1/Developer");
             gameApi = new ApiGameDataAccess("https://localhost:7023/api/v1/Game");
             eventApi = new ApiEventDataAccess("https://localhost:7023/ap1/v1/Event");
-            eventMemberApi = new ApiEventMemberDataAccess("https://localhost:7023/api/v1/EventMember");
+            eventMemberApi = new ApiEventMemberDataAccess("https://localhost:7023/api/v1/eventmember");
+            memberApi = new ApiMemberDataAccess("https://localhost:7023/ap1/v1/Member");
+
+
             GetAllDevsFromApi();
             ClearDeveloperInputFields();
             ShowAllEvent();
             ClearEventInputFields();
             panelCreateDeveloper.Visible = false;
             panelCreateEvent.Visible = false;
+            labelCapacityCounter.Visible = false;
         }
         #region Developer Page Wiring
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -298,6 +303,21 @@ namespace ClientApp.UILayer
             }
         }
 
+        public IEnumerable<int> GetAllMembersByEvent(int eventId)
+        {
+            try
+            {
+                IEnumerable<int> members = eventMemberApi.FindMembersFromEventId(eventId);
+                return members;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+            
+        }
+
         public Event GetSelectedEventObjectFromList()
         {
             Event eventToShow = new Event();
@@ -312,6 +332,32 @@ namespace ClientApp.UILayer
             return eventToShow;
         }
 
+        public void SetSelectedMemberFromMemberToList()
+        {
+            int counter = 0;
+            IEnumerable<Member> memberList = new List<Member>();
+
+            IEnumerable<Member> allMemberObjects = new List<Member>();
+            allMemberObjects = memberApi.GetAllMembers();
+
+            IEnumerable<int> memberIdList = new List<int>();
+            memberIdList = GetAllMembersByEvent(GetSelectedEventObjectFromList().EventID);
+
+            foreach (int i in memberIdList)
+            {
+                foreach (Member m in allMemberObjects)
+                {
+                    if (i == m.MemberID)
+                    {
+                        listBoxEventMember.Items.Add(m.MemberID + " | " + m.Name + " | " + m.Email);
+                        counter += 1;
+                    }
+                }
+            }
+            labelCapacityCounter.Text = counter.ToString() + "/" + numericUpDownEventPage.Value.ToString();
+            labelCapacityCounter.Visible = true;
+        }
+
         public void ClearEventInputFields()
         {
             textBoxEventId.Clear();
@@ -320,13 +366,20 @@ namespace ClientApp.UILayer
             textBoxEventDescription.Clear();
             labelEventNamePanel.ResetText();
             listBoxEventMember.Items.Clear();
-            textBoxEventCapacity.Clear();
+            numericUpDownEventPage.ResetText();
             dateTimePickerEventStartDate.ResetText();
             dateTimePickerEventEndDate.ResetText();
-            dateTimePickerEventStartDateTime.ResetText();
-            dateTimePickerEventEndDateTime.ResetText();
+            listBoxEventMember.Items.Clear();
+            labelCapacityCounter.Visible = false;
         }
 
+        public int GetSelectedMemberId()
+        {
+            string phrase = listBoxEventMember.SelectedItem.ToString();
+            string[] words = phrase.Split(' ');
+
+            return int.Parse(words[0]);
+        }
         public void SetEventInputFields(Event e)
         {
             textBoxEventId.Text = e.EventID.ToString();
@@ -334,26 +387,29 @@ namespace ClientApp.UILayer
             textBoxEventName.Text = e.Name;
             textBoxEventDescription.Text = e.Description;
             labelEventNamePanel.Text = e.Name;
-            //set method for member list
-            textBoxEventCapacity.Text = e.Capacity.ToString();
-            dateTimePickerEventStartDate.Text = e.StartDate.Date.ToString();
-            dateTimePickerEventEndDate.Text = e.EndDate.Date.ToString();
-            dateTimePickerEventStartDateTime.Text = e.StartDate.Hour.ToString()+ ":" + e.StartDate.Minute.ToString() + ":" + e.StartDate.Second.ToString();//HH:mm:ss
-            dateTimePickerEventEndDateTime.Text = e.EndDate.Hour.ToString() + ":" + e.EndDate.Minute.ToString() + ":" + e.EndDate.Second.ToString();
+            numericUpDownEventPage.Text = e.Capacity.ToString();
+            dateTimePickerEventStartDate.Text = e.StartDate.ToString();
+            dateTimePickerEventEndDate.Text = e.EndDate.ToString();
+            SetSelectedMemberFromMemberToList();
         }
 
         public void UpdateEvent()
         {
-
-            DateTime startDate = DateTime.ParseExact(dateTimePickerEventStartDate.Text + " " + dateTimePickerEventStartDateTime.Text, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-            DateTime endDate = DateTime.ParseExact(dateTimePickerEventEndDate.Text + " " + dateTimePickerEventEndDateTime.Text,"yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
             Event eventToUpdate = new Event();
-            eventToUpdate.EventID = int.Parse(textBoxEventId.Text);
             eventToUpdate.Name = textBoxEventName.Text;
             eventToUpdate.Description = textBoxEventDescription.Text;
-            eventToUpdate.StartDate = startDate;
-            eventToUpdate.EndDate = endDate;
+            eventToUpdate.StartDate = dateTimePickerEventStartDate.Value.AddHours(1) ;
+            eventToUpdate.EndDate = dateTimePickerEventEndDate.Value.AddHours(1);
+            eventToUpdate.EventID = int.Parse(textBoxEventId.Text);
             eventApi.UpdateEvent(eventToUpdate);
+        }
+
+        public void RemoveMemberFromEvent(int eventId, int memberId)
+        {
+            EventMember em = new EventMember();
+            em.EventID = eventId;
+            em.MemberID = memberId;
+            eventMemberApi.RemoveMemberFromEvent(em);
         }
 
         public void DeleteEvent()
@@ -362,7 +418,6 @@ namespace ClientApp.UILayer
             {
                 Event eventToDelete = GetSelectedEventObjectFromList();
                 eventApi.DeleteEvent(eventToDelete);
-                ShowAllEvent();
 
             }
             catch (Exception ex)
@@ -374,16 +429,25 @@ namespace ClientApp.UILayer
 
         public bool CreateNewEvent()
         {   
-            if (textBoxCreateEventGameId.Text.Length > 0 && textBoxCreateDeveloperName.Text.Length > 0 && textBoxCreateDeveloperDescription.Text.Length > 0 && textBoxCreateEventCapacity.Text.Length > 0 && textBoxCreateEventStartDate.Text.Length > 0 && textBoxCreateEventEndDate.Text.Length > 0)
+            if (textBoxCreateEventGameId.Text.Length > 0 && textBoxCreateEventName.Text.Length > 0 && textBoxCreateEventDescription.Text.Length > 0 && numericUpDownCreateEventCapacity.Text.Length > 0 && dateTimePickerCreateEventStartDate.Text.Length > 0 && dateTimePickerCreateEventEndDate.Text.Length > 0)
             {
                 Event e = new Event();
                 e.GameID = int.Parse(textBoxCreateEventGameId.Text);
-                e.Name = textBoxCreateDeveloperName.Text;
-                e.Description = textBoxCreateDeveloperDescription.Text;
-                e.Capacity = int.Parse(textBoxCreateEventCapacity.Text);
-                e.StartDate = DateTime.Parse(textBoxCreateEventStartDate.Text);
-                e.EndDate = DateTime.Parse(textBoxCreateEventEndDate.Text);
-                eventApi.CreateEvent(e);
+                e.Name = textBoxCreateEventName.Text;
+                e.Description = textBoxCreateEventDescription.Text;
+                e.Capacity = int.Parse(numericUpDownCreateEventCapacity.Text);
+                e.StartDate = DateTime.Parse(dateTimePickerCreateEventStartDate.Text).AddHours(1);
+                e.EndDate = DateTime.Parse(dateTimePickerCreateEventEndDate.Text).AddHours(1);
+                try
+                {
+                    eventApi.CreateEvent(e);
+                }
+                catch (Exception ex)
+                {
+
+                    throw new Exception(ex.Message);
+                }
+                
                 return true;
             }
             return false;
@@ -391,17 +455,32 @@ namespace ClientApp.UILayer
 
         public void ClearEventCreateFields()
         {
-            textBoxCreateEventCapacity.Clear();
+            numericUpDownCreateEventCapacity.ResetText();
             textBoxCreateEventName.Clear();
             textBoxCreateEventGameId.Clear();
             textBoxCreateEventDescription.Clear();
-            textBoxCreateEventStartDate.Clear();
-            textBoxCreateEventEndDate.Clear();
+            dateTimePickerCreateEventStartDate.ResetText();
+            dateTimePickerCreateEventEndDate.ResetText();
+        }
+        public void FindEventFromId()
+        {
+            Event e = new Event();
+            try
+            {
+                e = eventApi.FindEventFromId(int.Parse(textBoxEventIdSerach.Text));
+                listBoxEvent.Items.Clear();
+                listBoxEvent.Items.Add(e.Name);
+            }
+            catch (Exception)
+            {
+                //error handling
+            }
         }
 
         #endregion
         private void buttonShowAllEvent_Click(object sender, EventArgs e)
         {
+            textBoxEventIdSerach.Clear();
             ClearEventInputFields();
             ShowAllEvent();
         }
@@ -423,15 +502,18 @@ namespace ClientApp.UILayer
         {
             DeleteEvent();
             ClearEventInputFields();
+            ShowAllEvent();
         }
 
         private void buttonCreateEventFinish_Click(object sender, EventArgs e)
         {
-            if (CreateNewEvent() == true)
+            bool success = CreateNewEvent();
+            if (success == true)
             {
                 panelCreateEvent.Visible = false;
             }
             ClearEventCreateFields();
+            ShowAllEvent();
         }
 
         private void buttonCreateNewEvent_Click(object sender, EventArgs e)
@@ -447,6 +529,32 @@ namespace ClientApp.UILayer
         }
 
         private void labelEventendDateHour_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void EventMenuBar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSearchEventById_Click(object sender, EventArgs e)
+        {
+            ClearEventInputFields();
+            FindEventFromId();
+        }
+
+        private void buttonDeleteMember_Click(object sender, EventArgs e)
+        {
+            if (listBoxEventMember.SelectedItem != null)
+            {
+                RemoveMemberFromEvent(GetSelectedEventObjectFromList().EventID, GetSelectedMemberId());
+                listBoxEventMember.Items.Clear();
+                SetSelectedMemberFromMemberToList();
+            } 
+        }
+
+        private void listBoxEventMember_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

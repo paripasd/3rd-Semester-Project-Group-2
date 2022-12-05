@@ -21,7 +21,7 @@ namespace ClientApp.RestClientLayer
         }
 
 
-        public bool DeleteEvent(EventMember em)
+        public bool RemoveMemberFromEvent(EventMember em)
         {
             var request = new RestRequest();
             request.AddJsonBody(em);
@@ -29,15 +29,15 @@ namespace ClientApp.RestClientLayer
 
             if (!response.IsSuccessful)
             {
-                throw new Exception($"Error deleting event member with id {em.EventMemberID}. Message was {response.StatusDescription}");
+                throw new Exception($"Error deleting event member with id {em.MemberID}. Message was {response.StatusDescription}");
             }
             return response.Data;
         }
 
-        public Event FindMemberFromEventId(int eventId)
+        public IEnumerable<int> FindMembersFromEventId(int eventId)
         {
-            var request = new RestRequest(eventId.ToString());
-            var response = RestClient.Execute<Event>(request).Data;
+            var request = new RestRequest("event/"+eventId.ToString());
+            var response = RestClient.Execute<IEnumerable<int>>(request).Data;
             return response;
         }
     }

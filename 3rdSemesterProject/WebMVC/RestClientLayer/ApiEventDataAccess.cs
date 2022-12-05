@@ -1,0 +1,31 @@
+﻿using System;
+using System.Linq;
+using RestSharp;
+using WebMVC.Models;
+
+namespace WebMVC.RestClientLayer
+{
+	public class ApiEventDataAccess
+	{
+		public string BaseUri { get; private set; }
+		public RestClient RestClient { get; set; }
+
+		public ApiEventDataAccess(string baseUri)
+		{
+			BaseUri = baseUri;
+			RestClient = new(BaseUri);
+		}
+
+		public IEnumerable<Event> GetAllEvents()
+		{
+			var response = RestClient.Execute<IEnumerable<Event>>(new RestRequest());
+			return response.Data;
+		}
+
+		public Event GetUpcomingEvent()
+		{
+			return GetAllEvents().Last();
+		}
+	}
+}
+

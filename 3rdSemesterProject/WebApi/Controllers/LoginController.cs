@@ -5,7 +5,7 @@ using WebApi.ModelLayer;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("ap1/v1/[controller]")]
+    [Route("api/v1/[controller]")]
     public class LoginController : ControllerBase
     {
         #region Properties

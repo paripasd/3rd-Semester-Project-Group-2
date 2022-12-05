@@ -179,7 +179,7 @@ namespace WebApi.DataAccessLayer
             sale.GameID = (int)reader["GameID"];
             sale.Email = (string)reader["Email"];
             sale.Date = (DateTime)reader["Date"];
-            sale.SalesPrice = (int)reader["SalesPrice"];
+            sale.SalesPrice = Convert.ToSingle(reader["SalesPrice"]);
 
             return sale;
         }

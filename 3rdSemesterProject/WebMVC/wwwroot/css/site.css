@@ -52,7 +52,7 @@ body {
 
 
 
-#titlearea {
+.titlearea {
     margin-top: 85px;
     display: flex;
     justify-content: space-between;
@@ -62,7 +62,7 @@ body {
     margin-bottom: 20px;
 }
 
-    #titlearea h1 {
+    .titlearea h1 {
         padding-top: 8px;
         margin-top: 0px;
         margin-bottom: 0px;
@@ -172,4 +172,113 @@ body {
 
 .gamelistitem:hover .overlay {
     opacity: 1;
+}
+
+
+
+
+/*developer index*/
+
+.picture-text-list {
+    width: 75%;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.picture-text {
+    display: flex;
+    height: 300px;
+    margin: 0px;
+    margin-bottom: 20px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+    .picture-text img{
+        width: 30%;
+        object-fit: cover;
+        float:left;
+    }
+
+    .picture-text #text {
+        padding: 0px;
+        margin-left: 20px;
+    }
+
+
+/*contact*/
+
+.contact-container {
+    width: 75vw;
+    margin: auto;
+}
+
+    .contact-container p {
+        text-align: center;
+    }
+
+#contactemail {
+    width: 25%;
+    float:left;
+    margin-bottom: 10px;
+    margin-top: 50px;
+}
+
+#contacttext {
+    float:left;
+    width: 100%;
+    height: 400px;
+    resize: none;
+}
+
+#contactsubmit {
+    margin-top: 10px;
+    float: right;
+}
+
+
+/*event*/
+
+#eventname {
+    text-align:center;
+    margin-top: 150px;
+}
+
+#countdown {
+    text-align:center;
+}
+
+#eventimage {
+    width: 50vw;
+    margin: auto;
+}
+
+    #eventimage img {
+        width: 100%;
+        object-fit:scale-down;
+    }
+
+#eventdescription {
+    width: 50%;
+    margin:auto;
+}
+
+#eventform {
+    width:50%;
+    margin:auto;
+    margin-top:50px;
+}
+
+    #eventform div {
+        display:flex;
+        justify-content:space-between;
+        width:250px;
+    }
+
+        #eventform div h4 {
+            padding-top:6px;
+        }
+
+#eventsubmit {
+    margin-top:10px;
 }

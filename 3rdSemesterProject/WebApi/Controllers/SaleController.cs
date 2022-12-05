@@ -6,7 +6,7 @@ using WebApi.ModelLayer;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("ap1/v1/[controller]")]
+    [Route("api/v1/[controller]")]
     public class SaleController : ControllerBase
     {
         #region Properties
@@ -41,7 +41,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("{gameid}")]
+        [Route("byGame/{gameid}")]
         public ActionResult<Sale> SalesByGame(int gameId)
         {
             IEnumerable<Sale> sales = DataAccessLayer.SalesByGame(gameId);

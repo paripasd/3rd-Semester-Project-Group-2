@@ -34,10 +34,21 @@
 function addSale() {
     var game = JSON.parse('@Html.Raw(JsonConvert.SerializeObject(Model))');
     var email = document.getElementById("emailfield").value;
-    var date = new Date().toLocaleTimeString('en-GB');
-    const sale = { GameID: game.GameID, Email: email, Date: date, SalesPrice: game.Price };
-    var saleString = JSON.stringify(sale);
-    $.post('@Url.Action("CreateSale","Sale")', saleString, null, "json");
+    const sale = { GameID: game.GameID, Email: email, SalesPrice: game.Price };
+    fetch('https://localhost:7064/Sale/CreateSale/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sale),
+    })
+        .then((response) => response.json())
+        .then((sale) => {
+            console.log('Success:', sale);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
 
 function downloadGame(link) {
@@ -57,7 +68,7 @@ function buyGame(link) {
 }
 
 <div id="pagecontent">
-    <div id="titlearea">
+    <div class="titlearea">
         <h1>@Html.DisplayFor(m => m.Title)</h1>
         <a href="#buyform"><input type="button" value="BUY" class="tomatobutton"></a>
 

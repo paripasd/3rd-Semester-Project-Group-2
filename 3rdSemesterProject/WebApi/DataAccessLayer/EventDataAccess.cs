@@ -91,7 +91,7 @@ namespace WebApi.DataAccessLayer
             }
         }
 
-        public IEnumerable<Event> GetAllEvents()
+		public IEnumerable<Event> GetAllEvents()
         {
             string commandText = "SELECT * FROM Event";
             using (connection)

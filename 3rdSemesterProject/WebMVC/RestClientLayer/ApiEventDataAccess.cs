@@ -24,9 +24,7 @@ namespace WebMVC.RestClientLayer
 
 		public Event GetUpcomingEvent()
 		{
-			int id = 69;
-			var response = RestClient.Execute<Event>(new RestRequest(id.ToString()));
-			return response.Data;
+			return GetAllEvents().Last();
 		}
 	}
 }

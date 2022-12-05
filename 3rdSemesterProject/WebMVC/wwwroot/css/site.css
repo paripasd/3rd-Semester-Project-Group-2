@@ -52,7 +52,7 @@ body {
 
 
 
-#titlearea {
+.titlearea {
     margin-top: 85px;
     display: flex;
     justify-content: space-between;
@@ -62,7 +62,7 @@ body {
     margin-bottom: 20px;
 }
 
-    #titlearea h1 {
+    .titlearea h1 {
         padding-top: 8px;
         margin-top: 0px;
         margin-bottom: 0px;
@@ -234,4 +234,51 @@ body {
 #contactsubmit {
     margin-top: 10px;
     float: right;
+}
+
+
+/*event*/
+
+#eventname {
+    text-align:center;
+    margin-top: 150px;
+}
+
+#countdown {
+    text-align:center;
+}
+
+#eventimage {
+    width: 50vw;
+    margin: auto;
+}
+
+    #eventimage img {
+        width: 100%;
+        object-fit:scale-down;
+    }
+
+#eventdescription {
+    width: 50%;
+    margin:auto;
+}
+
+#eventform {
+    width:50%;
+    margin:auto;
+    margin-top:50px;
+}
+
+    #eventform div {
+        display:flex;
+        justify-content:space-between;
+        width:250px;
+    }
+
+        #eventform div h4 {
+            padding-top:6px;
+        }
+
+#eventsubmit {
+    margin-top:10px;
 }

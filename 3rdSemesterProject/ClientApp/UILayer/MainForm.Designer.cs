@@ -67,13 +67,13 @@
             this.EventMenuBar = new System.Windows.Forms.TabPage();
             this.buttonUpdateEvent = new System.Windows.Forms.Button();
             this.panelCreateEvent = new System.Windows.Forms.Panel();
+            this.numericUpDownCreateEventCapacity = new System.Windows.Forms.NumericUpDown();
+            this.dateTimePickerCreateEventEndDate = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerCreateEventStartDate = new System.Windows.Forms.DateTimePicker();
             this.labelCreateEventGamId = new System.Windows.Forms.Label();
             this.textBoxCreateEventGameId = new System.Windows.Forms.TextBox();
-            this.textBoxCreateEventEndDate = new System.Windows.Forms.TextBox();
-            this.textBoxCreateEventCapacity = new System.Windows.Forms.TextBox();
             this.labelCreateEventEndDate = new System.Windows.Forms.Label();
             this.labelCreateEvent = new System.Windows.Forms.Label();
-            this.textBoxCreateEventStartDate = new System.Windows.Forms.TextBox();
             this.labelCreateEventStartDate = new System.Windows.Forms.Label();
             this.labelCreateEventCapacity = new System.Windows.Forms.Label();
             this.buttonCreateEventCancel = new System.Windows.Forms.Button();
@@ -85,10 +85,8 @@
             this.buttonCreateNewEvent = new System.Windows.Forms.Button();
             this.buttonDeleteEvent = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.dateTimePickerEventStartDateTime = new System.Windows.Forms.DateTimePicker();
-            this.labelEventendDateHour = new System.Windows.Forms.Label();
+            this.numericUpDownEventPage = new System.Windows.Forms.NumericUpDown();
             this.dateTimePickerEventEndDate = new System.Windows.Forms.DateTimePicker();
-            this.labelEventStartDateHour = new System.Windows.Forms.Label();
             this.dateTimePickerEventStartDate = new System.Windows.Forms.DateTimePicker();
             this.labelEventMemberList = new System.Windows.Forms.Label();
             this.labelEventNamePanel = new System.Windows.Forms.Label();
@@ -98,7 +96,6 @@
             this.labelEventId = new System.Windows.Forms.Label();
             this.labelEventEndDate = new System.Windows.Forms.Label();
             this.labelEventStartDate = new System.Windows.Forms.Label();
-            this.textBoxEventCapacity = new System.Windows.Forms.TextBox();
             this.labelEventcapacity = new System.Windows.Forms.Label();
             this.textBoxEventGameId = new System.Windows.Forms.TextBox();
             this.labelEventGameId = new System.Windows.Forms.Label();
@@ -112,14 +109,16 @@
             this.listBoxEvent = new System.Windows.Forms.ListBox();
             this.SalesMenuBar = new System.Windows.Forms.TabPage();
             this.LoginMenuBar = new System.Windows.Forms.TabPage();
-            this.dateTimePickerEventEndDateTime = new System.Windows.Forms.DateTimePicker();
+            this.labelCapacityCounter = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.DeveloperMenuBar.SuspendLayout();
             this.panelCreateDeveloper.SuspendLayout();
             this.panel1.SuspendLayout();
             this.EventMenuBar.SuspendLayout();
             this.panelCreateEvent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCreateEventCapacity)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventPage)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -502,6 +501,7 @@
             this.EventMenuBar.TabIndex = 2;
             this.EventMenuBar.Text = "Event";
             this.EventMenuBar.UseVisualStyleBackColor = true;
+            this.EventMenuBar.Click += new System.EventHandler(this.EventMenuBar_Click);
             // 
             // buttonUpdateEvent
             // 
@@ -516,13 +516,13 @@
             // panelCreateEvent
             // 
             this.panelCreateEvent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelCreateEvent.Controls.Add(this.numericUpDownCreateEventCapacity);
+            this.panelCreateEvent.Controls.Add(this.dateTimePickerCreateEventEndDate);
+            this.panelCreateEvent.Controls.Add(this.dateTimePickerCreateEventStartDate);
             this.panelCreateEvent.Controls.Add(this.labelCreateEventGamId);
             this.panelCreateEvent.Controls.Add(this.textBoxCreateEventGameId);
-            this.panelCreateEvent.Controls.Add(this.textBoxCreateEventEndDate);
-            this.panelCreateEvent.Controls.Add(this.textBoxCreateEventCapacity);
             this.panelCreateEvent.Controls.Add(this.labelCreateEventEndDate);
             this.panelCreateEvent.Controls.Add(this.labelCreateEvent);
-            this.panelCreateEvent.Controls.Add(this.textBoxCreateEventStartDate);
             this.panelCreateEvent.Controls.Add(this.labelCreateEventStartDate);
             this.panelCreateEvent.Controls.Add(this.labelCreateEventCapacity);
             this.panelCreateEvent.Controls.Add(this.buttonCreateEventCancel);
@@ -536,6 +536,46 @@
             this.panelCreateEvent.Name = "panelCreateEvent";
             this.panelCreateEvent.Size = new System.Drawing.Size(690, 544);
             this.panelCreateEvent.TabIndex = 14;
+            // 
+            // numericUpDownCreateEventCapacity
+            // 
+            this.numericUpDownCreateEventCapacity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDownCreateEventCapacity.Location = new System.Drawing.Point(77, 206);
+            this.numericUpDownCreateEventCapacity.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownCreateEventCapacity.Name = "numericUpDownCreateEventCapacity";
+            this.numericUpDownCreateEventCapacity.Size = new System.Drawing.Size(249, 27);
+            this.numericUpDownCreateEventCapacity.TabIndex = 17;
+            this.numericUpDownCreateEventCapacity.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // dateTimePickerCreateEventEndDate
+            // 
+            this.dateTimePickerCreateEventEndDate.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            this.dateTimePickerCreateEventEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerCreateEventEndDate.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.dateTimePickerCreateEventEndDate.Location = new System.Drawing.Point(78, 333);
+            this.dateTimePickerCreateEventEndDate.Name = "dateTimePickerCreateEventEndDate";
+            this.dateTimePickerCreateEventEndDate.Size = new System.Drawing.Size(249, 27);
+            this.dateTimePickerCreateEventEndDate.TabIndex = 28;
+            this.dateTimePickerCreateEventEndDate.Value = new System.DateTime(2022, 1, 1, 0, 0, 0, 0);
+            // 
+            // dateTimePickerCreateEventStartDate
+            // 
+            this.dateTimePickerCreateEventStartDate.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            this.dateTimePickerCreateEventStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerCreateEventStartDate.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.dateTimePickerCreateEventStartDate.Location = new System.Drawing.Point(78, 270);
+            this.dateTimePickerCreateEventStartDate.Name = "dateTimePickerCreateEventStartDate";
+            this.dateTimePickerCreateEventStartDate.Size = new System.Drawing.Size(248, 27);
+            this.dateTimePickerCreateEventStartDate.TabIndex = 27;
+            this.dateTimePickerCreateEventStartDate.Value = new System.DateTime(2022, 1, 1, 0, 0, 0, 0);
             // 
             // labelCreateEventGamId
             // 
@@ -554,20 +594,6 @@
             this.textBoxCreateEventGameId.Size = new System.Drawing.Size(249, 27);
             this.textBoxCreateEventGameId.TabIndex = 21;
             // 
-            // textBoxCreateEventEndDate
-            // 
-            this.textBoxCreateEventEndDate.Location = new System.Drawing.Point(77, 333);
-            this.textBoxCreateEventEndDate.Name = "textBoxCreateEventEndDate";
-            this.textBoxCreateEventEndDate.Size = new System.Drawing.Size(250, 27);
-            this.textBoxCreateEventEndDate.TabIndex = 20;
-            // 
-            // textBoxCreateEventCapacity
-            // 
-            this.textBoxCreateEventCapacity.Location = new System.Drawing.Point(77, 205);
-            this.textBoxCreateEventCapacity.Name = "textBoxCreateEventCapacity";
-            this.textBoxCreateEventCapacity.Size = new System.Drawing.Size(250, 27);
-            this.textBoxCreateEventCapacity.TabIndex = 18;
-            // 
             // labelCreateEventEndDate
             // 
             this.labelCreateEventEndDate.AutoSize = true;
@@ -585,13 +611,6 @@
             this.labelCreateEvent.Size = new System.Drawing.Size(130, 20);
             this.labelCreateEvent.TabIndex = 8;
             this.labelCreateEvent.Text = "Create Event Form";
-            // 
-            // textBoxCreateEventStartDate
-            // 
-            this.textBoxCreateEventStartDate.Location = new System.Drawing.Point(77, 269);
-            this.textBoxCreateEventStartDate.Name = "textBoxCreateEventStartDate";
-            this.textBoxCreateEventStartDate.Size = new System.Drawing.Size(250, 27);
-            this.textBoxCreateEventStartDate.TabIndex = 18;
             // 
             // labelCreateEventStartDate
             // 
@@ -662,7 +681,7 @@
             // 
             // textBoxCreateEventName
             // 
-            this.textBoxCreateEventName.Location = new System.Drawing.Point(78, 143);
+            this.textBoxCreateEventName.Location = new System.Drawing.Point(77, 143);
             this.textBoxCreateEventName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBoxCreateEventName.Name = "textBoxCreateEventName";
             this.textBoxCreateEventName.Size = new System.Drawing.Size(249, 27);
@@ -691,11 +710,9 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.dateTimePickerEventEndDateTime);
-            this.panel2.Controls.Add(this.dateTimePickerEventStartDateTime);
-            this.panel2.Controls.Add(this.labelEventendDateHour);
+            this.panel2.Controls.Add(this.labelCapacityCounter);
+            this.panel2.Controls.Add(this.numericUpDownEventPage);
             this.panel2.Controls.Add(this.dateTimePickerEventEndDate);
-            this.panel2.Controls.Add(this.labelEventStartDateHour);
             this.panel2.Controls.Add(this.dateTimePickerEventStartDate);
             this.panel2.Controls.Add(this.labelEventMemberList);
             this.panel2.Controls.Add(this.labelEventNamePanel);
@@ -705,7 +722,6 @@
             this.panel2.Controls.Add(this.labelEventId);
             this.panel2.Controls.Add(this.labelEventEndDate);
             this.panel2.Controls.Add(this.labelEventStartDate);
-            this.panel2.Controls.Add(this.textBoxEventCapacity);
             this.panel2.Controls.Add(this.labelEventcapacity);
             this.panel2.Controls.Add(this.textBoxEventGameId);
             this.panel2.Controls.Add(this.labelEventGameId);
@@ -718,52 +734,46 @@
             this.panel2.Size = new System.Drawing.Size(657, 544);
             this.panel2.TabIndex = 4;
             // 
-            // dateTimePickerEventStartDateTime
+            // numericUpDownEventPage
             // 
-            this.dateTimePickerEventStartDateTime.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerEventStartDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerEventStartDateTime.Location = new System.Drawing.Point(456, 77);
-            this.dateTimePickerEventStartDateTime.Name = "dateTimePickerEventStartDateTime";
-            this.dateTimePickerEventStartDateTime.Size = new System.Drawing.Size(84, 27);
-            this.dateTimePickerEventStartDateTime.TabIndex = 28;
-            // 
-            // labelEventendDateHour
-            // 
-            this.labelEventendDateHour.AutoSize = true;
-            this.labelEventendDateHour.Location = new System.Drawing.Point(546, 148);
-            this.labelEventendDateHour.Name = "labelEventendDateHour";
-            this.labelEventendDateHour.Size = new System.Drawing.Size(17, 20);
-            this.labelEventendDateHour.TabIndex = 27;
-            this.labelEventendDateHour.Text = "h";
-            this.labelEventendDateHour.Click += new System.EventHandler(this.labelEventendDateHour_Click);
+            this.numericUpDownEventPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDownEventPage.Location = new System.Drawing.Point(46, 403);
+            this.numericUpDownEventPage.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownEventPage.Name = "numericUpDownEventPage";
+            this.numericUpDownEventPage.ReadOnly = true;
+            this.numericUpDownEventPage.Size = new System.Drawing.Size(250, 27);
+            this.numericUpDownEventPage.TabIndex = 29;
+            this.numericUpDownEventPage.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // dateTimePickerEventEndDate
             // 
-            this.dateTimePickerEventEndDate.CustomFormat = "yyyy-MM-dd";
+            this.dateTimePickerEventEndDate.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.dateTimePickerEventEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerEventEndDate.ImeMode = System.Windows.Forms.ImeMode.On;
             this.dateTimePickerEventEndDate.Location = new System.Drawing.Point(332, 141);
             this.dateTimePickerEventEndDate.Name = "dateTimePickerEventEndDate";
-            this.dateTimePickerEventEndDate.Size = new System.Drawing.Size(118, 27);
+            this.dateTimePickerEventEndDate.Size = new System.Drawing.Size(185, 27);
             this.dateTimePickerEventEndDate.TabIndex = 26;
-            // 
-            // labelEventStartDateHour
-            // 
-            this.labelEventStartDateHour.AutoSize = true;
-            this.labelEventStartDateHour.Location = new System.Drawing.Point(546, 82);
-            this.labelEventStartDateHour.Name = "labelEventStartDateHour";
-            this.labelEventStartDateHour.Size = new System.Drawing.Size(17, 20);
-            this.labelEventStartDateHour.TabIndex = 24;
-            this.labelEventStartDateHour.Text = "h";
+            this.dateTimePickerEventEndDate.Value = new System.DateTime(2022, 1, 1, 0, 0, 0, 0);
             // 
             // dateTimePickerEventStartDate
             // 
-            this.dateTimePickerEventStartDate.CustomFormat = "yyyy-MM-dd";
+            this.dateTimePickerEventStartDate.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.dateTimePickerEventStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerEventStartDate.ImeMode = System.Windows.Forms.ImeMode.On;
             this.dateTimePickerEventStartDate.Location = new System.Drawing.Point(332, 77);
             this.dateTimePickerEventStartDate.Name = "dateTimePickerEventStartDate";
-            this.dateTimePickerEventStartDate.Size = new System.Drawing.Size(118, 27);
+            this.dateTimePickerEventStartDate.Size = new System.Drawing.Size(185, 27);
             this.dateTimePickerEventStartDate.TabIndex = 23;
-            this.dateTimePickerEventStartDate.Value = new System.DateTime(2022, 12, 2, 0, 0, 0, 0);
+            this.dateTimePickerEventStartDate.Value = new System.DateTime(2022, 1, 1, 0, 0, 0, 0);
             // 
             // labelEventMemberList
             // 
@@ -777,7 +787,7 @@
             // labelEventNamePanel
             // 
             this.labelEventNamePanel.AutoSize = true;
-            this.labelEventNamePanel.Location = new System.Drawing.Point(305, 11);
+            this.labelEventNamePanel.Location = new System.Drawing.Point(279, 10);
             this.labelEventNamePanel.Name = "labelEventNamePanel";
             this.labelEventNamePanel.Size = new System.Drawing.Size(49, 20);
             this.labelEventNamePanel.TabIndex = 16;
@@ -791,6 +801,7 @@
             this.buttonDeleteMember.TabIndex = 15;
             this.buttonDeleteMember.Text = "Remove";
             this.buttonDeleteMember.UseVisualStyleBackColor = true;
+            this.buttonDeleteMember.Click += new System.EventHandler(this.buttonDeleteMember_Click);
             // 
             // listBoxEventMember
             // 
@@ -800,6 +811,7 @@
             this.listBoxEventMember.Name = "listBoxEventMember";
             this.listBoxEventMember.Size = new System.Drawing.Size(267, 224);
             this.listBoxEventMember.TabIndex = 14;
+            this.listBoxEventMember.SelectedIndexChanged += new System.EventHandler(this.listBoxEventMember_SelectedIndexChanged);
             // 
             // textBoxEventId
             // 
@@ -835,14 +847,6 @@
             this.labelEventStartDate.Size = new System.Drawing.Size(76, 20);
             this.labelEventStartDate.TabIndex = 8;
             this.labelEventStartDate.Text = "Start Date";
-            // 
-            // textBoxEventCapacity
-            // 
-            this.textBoxEventCapacity.Location = new System.Drawing.Point(46, 398);
-            this.textBoxEventCapacity.Name = "textBoxEventCapacity";
-            this.textBoxEventCapacity.ReadOnly = true;
-            this.textBoxEventCapacity.Size = new System.Drawing.Size(250, 27);
-            this.textBoxEventCapacity.TabIndex = 7;
             // 
             // labelEventcapacity
             // 
@@ -919,6 +923,7 @@
             this.buttonSearchEventById.TabIndex = 2;
             this.buttonSearchEventById.Text = "Search";
             this.buttonSearchEventById.UseVisualStyleBackColor = true;
+            this.buttonSearchEventById.Click += new System.EventHandler(this.buttonSearchEventById_Click);
             // 
             // buttonShowAllEvent
             // 
@@ -958,14 +963,14 @@
             this.LoginMenuBar.Text = "Login";
             this.LoginMenuBar.UseVisualStyleBackColor = true;
             // 
-            // dateTimePickerEventEndDateTime
+            // labelCapacityCounter
             // 
-            this.dateTimePickerEventEndDateTime.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerEventEndDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerEventEndDateTime.Location = new System.Drawing.Point(456, 141);
-            this.dateTimePickerEventEndDateTime.Name = "dateTimePickerEventEndDateTime";
-            this.dateTimePickerEventEndDateTime.Size = new System.Drawing.Size(84, 27);
-            this.dateTimePickerEventEndDateTime.TabIndex = 29;
+            this.labelCapacityCounter.AutoSize = true;
+            this.labelCapacityCounter.Location = new System.Drawing.Point(549, 182);
+            this.labelCapacityCounter.Name = "labelCapacityCounter";
+            this.labelCapacityCounter.Size = new System.Drawing.Size(50, 20);
+            this.labelCapacityCounter.TabIndex = 30;
+            this.labelCapacityCounter.Text = "label2";
             // 
             // MainForm
             // 
@@ -988,8 +993,10 @@
             this.EventMenuBar.PerformLayout();
             this.panelCreateEvent.ResumeLayout(false);
             this.panelCreateEvent.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCreateEventCapacity)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventPage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1052,11 +1059,8 @@
         private Button buttonDeleteMember;
         private Button buttonUpdateEvent;
         private Panel panelCreateEvent;
-        private TextBox textBoxCreateEventEndDate;
-        private TextBox textBoxCreateEventCapacity;
         private Label labelCreateEventEndDate;
         private Label labelCreateEvent;
-        private TextBox textBoxCreateEventStartDate;
         private Label labelCreateEventStartDate;
         private Label labelCreateEventCapacity;
         private Button buttonCreateEventCancel;
@@ -1069,15 +1073,15 @@
         private Button buttonDeleteEvent;
         private Label labelEventMemberList;
         private Label labelEventNamePanel;
-        private TextBox textBoxEventCapacity;
         private Label labelEventcapacity;
         private Label labelCreateEventGamId;
         private TextBox textBoxCreateEventGameId;
         private DateTimePicker dateTimePickerEventStartDate;
-        private Label labelEventStartDateHour;
-        private Label labelEventendDateHour;
         private DateTimePicker dateTimePickerEventEndDate;
-        private DateTimePicker dateTimePickerEventStartDateTime;
-        private DateTimePicker dateTimePickerEventEndDateTime;
+        private DateTimePicker dateTimePickerCreateEventEndDate;
+        private DateTimePicker dateTimePickerCreateEventStartDate;
+        private NumericUpDown numericUpDownCreateEventCapacity;
+        private NumericUpDown numericUpDownEventPage;
+        private Label labelCapacityCounter;
     }
 }

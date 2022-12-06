@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fJyq/xAMvXUWFuqSydGaQ0TH4eV98OOwdK0IFBoI/+c=",
+  "Hash": "IZMz17DUqBVWIQX7NOYSfSXe4/j5msB2nlWkkFgzbWk=",
   "Source": "WebMVC",
   "BasePath": "_content/WebMVC",
   "Mode": "Default",
@@ -102,6 +102,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebMVC\\wwwroot\\images\\.DS_Store",
+      "SourceId": "WebMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebMVC\\wwwroot\\",
+      "BasePath": "_content/WebMVC",
+      "RelativePath": "images/.DS_Store",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\.DS_Store"
+    },
+    {
       "Identity": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebMVC\\wwwroot\\images\\2.jpeg",
       "SourceId": "WebMVC",
       "SourceType": "Discovered",
@@ -134,6 +151,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\placeholder2.jpg"
+    },
+    {
+      "Identity": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebMVC\\wwwroot\\images\\placeholder3.jpg",
+      "SourceId": "WebMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebMVC\\wwwroot\\",
+      "BasePath": "_content/WebMVC",
+      "RelativePath": "images/placeholder3.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\placeholder3.jpg"
     },
     {
       "Identity": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\WebMVC\\wwwroot\\js\\site.js",

@@ -1,7 +1,5 @@
-﻿using System.Data.Common;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using WebApi.ModelLayer;
-using Microsoft.Extensions.Configuration;
 
 namespace WebApi.DataAccessLayer
 {

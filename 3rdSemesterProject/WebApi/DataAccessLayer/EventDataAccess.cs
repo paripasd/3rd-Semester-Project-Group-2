@@ -91,6 +91,34 @@ namespace WebApi.DataAccessLayer
             }
         }
 
+		public Event FindUpcomingEvent()
+		{
+            string commandText = "SELECT TOP 1 * FROM Event WHERE StartDate = (SELECT MIN(StartDate) FROM Event)";
+			using (connection)
+			{
+				connection.Open();
+
+				SqlCommand command = new SqlCommand(commandText, connection);
+
+				try
+				{
+					SqlDataReader reader = command.ExecuteReader();
+					if (reader.Read())
+					{
+						return DataReaderRowToEvent(reader);
+					}
+					else
+					{
+						return null;
+					}
+				}
+				catch (Exception ex)
+				{
+					throw new Exception($"Exception while trying to find the upcoming Event. The exception was: '{ex.Message}'", ex);
+				}
+			}
+		}
+
 		public IEnumerable<Event> GetAllEvents()
         {
             string commandText = "SELECT * FROM Event";

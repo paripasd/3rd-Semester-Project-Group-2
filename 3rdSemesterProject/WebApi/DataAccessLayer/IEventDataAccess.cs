@@ -9,5 +9,6 @@ namespace WebApi.DataAccessLayer
         public IEnumerable<Event> GetAllEvents();
         public bool UpdateEvent(Event e);
         public bool DeleteEvent(Event e);
+        public Event FindUpcomingEvent();
     }
 }

@@ -66,6 +66,13 @@ namespace WebApi.Controllers
             }
             return Ok();
         }
+
+		[HttpGet]
+		[Route("upcoming")]
+        public ActionResult<Event> GetUpcomingEvent()
+		{
+            return Ok(DataAccessLayer.FindUpcomingEvent());
+		}
         #endregion
     }
 }

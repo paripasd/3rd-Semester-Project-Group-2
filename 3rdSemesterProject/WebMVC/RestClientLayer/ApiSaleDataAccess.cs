@@ -18,12 +18,12 @@ namespace WebMVC.RestClientLayer
 			RestClient = new(BaseUri);
 		}
 
-		public void CreateSale(Sale sale)
+		public string CreateSale(Sale sale)
 		{
 			string json = JsonSerializer.Serialize(sale);
 			var request = new RestRequest("", Method.Post);
 			request.AddStringBody(json, DataFormat.Json);
-			var response = RestClient.Execute(request);
+			return RestClient.Post<Sale>(request).GameKey.ToString();
 		}
 	}
 }

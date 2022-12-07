@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "RfqFRKCT2mzEG2j+CuyILd5YmC9N+4RlVFfce81zfHm6ueDEThOyYetUikqr4Xk9U7raedhZ3n8/Wbyv5LtdHg==",
+  "dgSpecHash": "GRDWxjqPJmUz0xBBbf8iG5ePu8gvIvMtKCmx1KQxzj5wjg/rvMuoMGxxEkE8kmXqCayw8CT8rFhaFjUw8PvCVA==",
   "success": true,
   "projectFilePath": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\ClientApp\\ClientApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\parip\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
+    "C:\\Users\\parip\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\parip\\.nuget\\packages\\restsharp\\106.12.0\\restsharp.106.12.0.nupkg.sha512"
   ],
   "logs": []

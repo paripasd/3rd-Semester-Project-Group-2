@@ -38,3 +38,4 @@ C:\Users\marki\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\
 C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\BCrypt.Net-Core.dll
 C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.UILayer.LoginForm.resources
 C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.UILayer.MainForm.resources
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Newtonsoft.Json.dll

@@ -29,12 +29,15 @@ namespace ClientApp.UILayer
             eventApi = new ApiEventDataAccess("https://localhost:7023/api/v1/Event");
             eventMemberApi = new ApiEventMemberDataAccess("https://localhost:7023/api/v1/eventmember");
             memberApi = new ApiMemberDataAccess("https://localhost:7023/api/v1/Member");
+            gameApi = new ApiGameDataAccess("https://localhost:7023/api/v1/Game");
 
 
             GetAllDevsFromApi();
             ClearDeveloperInputFields();
             ShowAllEvent();
             ClearEventInputFields();
+            ShowAllGames();
+            ClearGameUpdateInputFields();
             panelCreateDeveloper.Visible = false;
             panelCreateEvent.Visible = false;
             labelCapacityCounter.Visible = false;
@@ -478,6 +481,7 @@ namespace ClientApp.UILayer
         }
 
         #endregion
+        #region Event Page Wiring
         private void buttonShowAllEvent_Click(object sender, EventArgs e)
         {
             textBoxEventIdSerach.Clear();
@@ -557,6 +561,91 @@ namespace ClientApp.UILayer
         private void listBoxEventMember_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+        #endregion
+
+        #region Game Page Methods
+        public void ShowAllGames()
+        {
+            listBoxGameList.Items.Clear();
+            IEnumerable<Game> gameList = gameApi.GetAllGames();
+            foreach (var g in gameList)
+            {
+                listBoxGameList.Items.Add(g.Title);
+            }
+        }
+
+        public Game GetSelectedGameObjectFromList()
+        {
+            Game gameToShow = new Game();
+            IEnumerable<Game> gameList = gameApi.GetAllGames();
+            foreach (Game g in gameList)
+            {
+                if (g.Title.Equals(listBoxGameList.SelectedItem))
+                {
+                    gameToShow = g;
+                }
+            }
+
+            Game gameFile = new Game();
+            gameFile = GetSelectedGameFileObject(gameToShow.GameID);
+            gameToShow.FileName = gameFile.FileName;
+            gameToShow.FileContent = gameFile.FileContent;
+            return gameToShow;
+        }
+
+        public void SetGameUpdateInputFields(Game game)
+        {
+            textBoxUpdateGameGameId.Text = game.GameID.ToString();
+            textBoxUpdateGameTitle.Text = game.Title;
+            textBoxUpdateGameDeveloperId.Text = game.DeveloperID.ToString(); ;
+            textBoxUpdateGameType.Text = game.Type;
+            textBoxUpdateGameDescription.Text = game.Description;
+            numericUpDownUpdateGamePrice.Text = game.Price.ToString(); ;
+            labelUpdateGameFileName.Text = game.FileName;
+            numericUpDownUpdateGameYearOfRelease.Text = game.YearOfRelease.ToString();
+            textBoxUpdateGameSpecifications.Text = game.Specifications;
+            labelUpdateGameName.Text = game.Title;
+        }
+
+        public void ClearGameUpdateInputFields()
+        {
+            textBoxUpdateGameGameId.Clear();
+            textBoxUpdateGameTitle.Clear();
+            textBoxUpdateGameDeveloperId.Clear();
+            textBoxUpdateGameType.Clear();
+            textBoxUpdateGameDescription.Clear();
+            numericUpDownUpdateGamePrice.ResetText();
+            labelUpdateGameFileName.ResetText();
+            numericUpDownUpdateGameYearOfRelease.ResetText();
+            textBoxUpdateGameSpecifications.Clear();
+            labelUpdateGameName.ResetText();
+
+        }
+
+        public void ClearGameCreateInputFields()
+        {
+            textBoxCreateGameTitle.Clear();
+            textBoxCreateGameDeveloperId.Clear();
+            textBoxCreateGameType.Clear();
+            textBoxCreateGameDescription.Clear();
+            numericUpDownCreateGamePrice.ResetText();
+            labelCreateGameFileName.ResetText();
+            numericUpDownCreateGameYearOfRelease.ResetText();
+            textBoxCreateGameSpecifications.Clear();
+        }
+
+        public Game GetSelectedGameFileObject(int gameId)
+        {
+            Game gameFileToShow = gameApi.GetGameFileByGameId(gameId);
+            return gameFileToShow;
+        }
+        #endregion
+
+        private void listBoxGameList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ClearGameUpdateInputFields();
+            SetGameUpdateInputFields(GetSelectedGameObjectFromList());
         }
     }
 }

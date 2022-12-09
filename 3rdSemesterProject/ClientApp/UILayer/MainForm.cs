@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using ClientApp.ModelLayer;
 using System.Diagnostics;
 using System.Globalization;
+using RestSharp.Extensions;
+using System.Security.AccessControl;
 
 namespace ClientApp.UILayer
 {
@@ -21,15 +23,20 @@ namespace ClientApp.UILayer
         private ApiEventDataAccess eventApi;
         private ApiEventMemberDataAccess eventMemberApi;
         private ApiMemberDataAccess memberApi;
+        private ApiSaleDataAccess saleApi;
+        private byte[] CurrentGameFile { get; set; }//not so good clean code wise but works
+        public byte[] CurrentGameFileCreate { get; set; }//not so good clean code wise but works
         public MainForm()
         {
             InitializeComponent();
+            
             developerApi = new ApiDeveloperDataAccess("https://localhost:7023/api/v1/Developer");
             gameApi = new ApiGameDataAccess("https://localhost:7023/api/v1/Game");
             eventApi = new ApiEventDataAccess("https://localhost:7023/api/v1/Event");
             eventMemberApi = new ApiEventMemberDataAccess("https://localhost:7023/api/v1/eventmember");
             memberApi = new ApiMemberDataAccess("https://localhost:7023/api/v1/Member");
             gameApi = new ApiGameDataAccess("https://localhost:7023/api/v1/Game");
+            saleApi = new ApiSaleDataAccess("https://localhost:7023/api/v1/Sale");
 
 
             GetAllDevsFromApi();
@@ -38,9 +45,20 @@ namespace ClientApp.UILayer
             ClearEventInputFields();
             ShowAllGames();
             ClearGameUpdateInputFields();
+            ClearGameCreateInputFields();
+            GetAllSales();
+
+            CurrentGameFile = null;
+            CurrentGameFileCreate = null;
+
             panelCreateDeveloper.Visible = false;
             panelCreateEvent.Visible = false;
+            panelCreateGame.Visible = false;
             labelCapacityCounter.Visible = false;
+
+            
+
+
         }
         #region Developer Page Wiring
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -606,6 +624,8 @@ namespace ClientApp.UILayer
             numericUpDownUpdateGameYearOfRelease.Text = game.YearOfRelease.ToString();
             textBoxUpdateGameSpecifications.Text = game.Specifications;
             labelUpdateGameName.Text = game.Title;
+            CurrentGameFile = game.FileContent;
+
         }
 
         public void ClearGameUpdateInputFields()
@@ -616,11 +636,122 @@ namespace ClientApp.UILayer
             textBoxUpdateGameType.Clear();
             textBoxUpdateGameDescription.Clear();
             numericUpDownUpdateGamePrice.ResetText();
-            labelUpdateGameFileName.ResetText();
+            labelUpdateGameFileName.Text = "No File";
             numericUpDownUpdateGameYearOfRelease.ResetText();
             textBoxUpdateGameSpecifications.Clear();
             labelUpdateGameName.ResetText();
+            CurrentGameFile = null;
 
+        }
+
+        public Game GetSelectedGameFileObject(int gameId)
+        {
+            Game gameFileToShow = gameApi.GetGameFileByGameId(gameId);
+            return gameFileToShow;
+        }
+
+        public void UpdateGame()
+        {
+            if (AllUpdateFieldsAreCorrect() == true)
+            {
+                Game gameToUpdate = new Game();
+                gameToUpdate.GameID = int.Parse(textBoxUpdateGameGameId.Text);
+                gameToUpdate.Title = textBoxUpdateGameTitle.Text;
+                gameToUpdate.Type = textBoxUpdateGameType.Text;
+                gameToUpdate.Description = textBoxUpdateGameDescription.Text;
+                gameToUpdate.DeveloperID = int.Parse(textBoxUpdateGameDeveloperId.Text);
+                gameToUpdate.Price = float.Parse(numericUpDownUpdateGamePrice.Text);
+                gameToUpdate.Specifications = textBoxUpdateGameSpecifications.Text;
+                gameToUpdate.YearOfRelease = int.Parse(numericUpDownUpdateGameYearOfRelease.Text);
+                gameToUpdate.FileName = labelUpdateGameFileName.Text;
+                gameToUpdate.FileContent = CurrentGameFile;
+                gameApi.UpdateGame(gameToUpdate);
+            }
+
+        }
+
+        public bool AllUpdateFieldsAreCorrect()
+        {
+            if (textBoxUpdateGameTitle.Text.Length > 0 && textBoxUpdateGameDescription.Text.Length > 0 && numericUpDownUpdateGamePrice.Text.Length > 0 && textBoxUpdateGameDeveloperId.Text.Length > 0 && textBoxUpdateGameSpecifications.Text.Length > 0 && numericUpDownUpdateGameYearOfRelease.Text.Length > 0 && labelUpdateGameFileName.Text.Length > 0 && CurrentGameFile != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void SelectFileDialog()
+        {
+            DialogResult dialog = saveFileDialogGame.ShowDialog();
+            saveFileDialogGame.Title = "Choose new game file for updating";
+            string path = saveFileDialogGame.FileName;
+
+            if (dialog == DialogResult.OK)
+            {
+                if (string.IsNullOrEmpty(path))
+                {
+                    //error
+                }
+                labelUpdateGameFileName.Text = Path.GetFileName(path);
+                CurrentGameFile = File.ReadAllBytes(Path.GetFullPath(path));
+            }
+            if (dialog == DialogResult.Cancel)
+            {
+                if (string.IsNullOrEmpty(path))
+                {
+                    //error
+                }
+            }
+        }
+
+        public void FindGameFromId()
+        {
+            Game gameSearch = new Game();
+            try
+            {
+                IEnumerable<Game> allGames = new List<Game>();
+                allGames = gameApi.GetAllGames();
+                foreach (Game game in allGames)
+                {
+                    if (game.GameID == int.Parse(textBoxSearchGame.Text))
+                    {
+                        gameSearch = game;
+                    }
+                }
+                listBoxGameList.Items.Clear();
+                listBoxGameList.Items.Add(gameSearch.Title);
+            }
+            catch (Exception)
+            {
+                //error handling
+            }
+        }
+
+        //create 
+        public void AddNewGame()
+        {
+            if (AllCreateFieldsAreCorrect() == true)
+            {
+                Game gameToCreate = new Game();
+                gameToCreate.Title = textBoxCreateGameTitle.Text;
+                gameToCreate.DeveloperID = int.Parse(textBoxCreateGameDeveloperId.Text);
+                gameToCreate.Type = textBoxCreateGameType.Text;
+                gameToCreate.Description = textBoxCreateGameDescription.Text;
+                gameToCreate.Specifications = textBoxCreateGameSpecifications.Text;
+                gameToCreate.Price = float.Parse(numericUpDownCreateGamePrice.Text);
+                gameToCreate.YearOfRelease = int.Parse(numericUpDownCreateGameYearOfRelease.Text);
+                gameToCreate.FileName = labelCreateGameFileName.Text;
+                gameToCreate.FileContent = CurrentGameFileCreate;
+                gameApi.CreateGame(gameToCreate);
+            }
+        }
+
+        public bool AllCreateFieldsAreCorrect()
+        {
+            if (CurrentGameFileCreate != null && textBoxCreateGameTitle.Text.Length > 0 && textBoxCreateGameDeveloperId.Text.Length > 0 && textBoxCreateGameType.Text.Length > 0 && textBoxCreateGameDescription.Text.Length > 0 && textBoxCreateGameSpecifications.Text.Length > 0 && numericUpDownCreateGamePrice.Text.Length > 0 && numericUpDownCreateGameYearOfRelease.Text.Length > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void ClearGameCreateInputFields()
@@ -630,22 +761,137 @@ namespace ClientApp.UILayer
             textBoxCreateGameType.Clear();
             textBoxCreateGameDescription.Clear();
             numericUpDownCreateGamePrice.ResetText();
-            labelCreateGameFileName.ResetText();
+            labelCreateGameFileName.Text = "No File";
             numericUpDownCreateGameYearOfRelease.ResetText();
             textBoxCreateGameSpecifications.Clear();
+            CurrentGameFileCreate = null;
         }
 
-        public Game GetSelectedGameFileObject(int gameId)
+        public void SelectFileDialogCreate()
         {
-            Game gameFileToShow = gameApi.GetGameFileByGameId(gameId);
-            return gameFileToShow;
+            DialogResult dialog = saveFileDialogCreate.ShowDialog();
+            saveFileDialogCreate.Title = "Choose new game file";
+            string path = saveFileDialogCreate.FileName;
+
+            if (dialog == DialogResult.OK)
+            {
+                if (string.IsNullOrEmpty(path))
+                {
+                    //error
+                }
+                labelCreateGameFileName.Text = Path.GetFileName(path);
+                CurrentGameFileCreate = File.ReadAllBytes(Path.GetFullPath(path));
+            }
+            if (dialog == DialogResult.Cancel)
+            {
+                if (string.IsNullOrEmpty(path))
+                {
+                    //error
+                }
+            }
+        }
+
+        public void DeleteGame()
+        {
+            gameApi.DeleteGame(GetSelectedGameObjectFromList().GameID);
         }
         #endregion
-
+        #region Game Page Wiring
         private void listBoxGameList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ClearGameUpdateInputFields();
             SetGameUpdateInputFields(GetSelectedGameObjectFromList());
+        }
+
+        private void buttonUpdateGameChangeFile_Click(object sender, EventArgs e)
+        {
+            SelectFileDialog();
+        }
+
+        private void buttonUpdateGame_Click(object sender, EventArgs e)
+        {
+            UpdateGame();
+            ClearGameUpdateInputFields();
+            ShowAllGames();
+        }
+
+        private void buttonCreateNewGame_Click(object sender, EventArgs e)
+        {
+            panelCreateGame.Visible = true;
+        }
+
+        private void buttonCreateGameCancel_Click(object sender, EventArgs e)
+        {
+            ClearGameCreateInputFields();
+            panelCreateGame.Visible = false;
+        }
+
+        private void buttonCreateGameFinish_Click(object sender, EventArgs e)
+        {
+            AddNewGame();
+            ClearGameCreateInputFields();
+            panelCreateGame.Visible = false;
+            ShowAllGames();
+        }
+
+        private void buttonCreateGameFile_Click(object sender, EventArgs e)
+        {
+            SelectFileDialogCreate();
+        }
+
+        private void buttonShowAllGame_Click(object sender, EventArgs e)
+        {
+            ClearGameUpdateInputFields();
+            ShowAllGames();
+        }
+
+        private void buttonDeleteGame_Click(object sender, EventArgs e)
+        {
+            DeleteGame();
+            ClearGameUpdateInputFields();
+            ShowAllGames();
+        }
+
+        private void buttonSearchGame_Click(object sender, EventArgs e)
+        {
+            FindGameFromId();
+            ClearGameUpdateInputFields();
+            textBoxSearchGame.ResetText();
+        }
+        #endregion
+
+        #region Sale Page Methods
+
+
+        public void GetAllSales()
+        {
+            List<Sale> allSales = new List<Sale>();
+            allSales = saleApi.GetAllSales();
+            
+            
+            foreach (Sale sale in allSales)
+            {
+                saleBindingSource.Add(sale);
+            }
+            
+        }
+        #endregion
+
+        private void advancedDataGridViewSale_SortStringChanged(object sender, EventArgs e)
+        {
+            saleBindingSource.Sort = advancedDataGridViewSale.SortString;
+            advancedDataGridViewSale.Refresh();
+        }
+
+        private void advancedDataGridViewSale_FilterStringChanged(object sender, EventArgs e)
+        {
+            saleBindingSource.Filter = advancedDataGridViewSale.FilterString;
+            advancedDataGridViewSale.Refresh();
+        }
+
+        private void saleBindingSource_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            labelSaleTotalRows.Text = string.Format("Total Rows: {0}",saleBindingSource.List.Count);
         }
     }
 }

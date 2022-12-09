@@ -56,6 +56,16 @@ namespace WebApi.Controllers
             return Ok(gameFile);
         }
 
+        [HttpPut]
+        public ActionResult UpdateAllGameDetails(Game game)
+        {
+            if (!DataAccessLayer.UpdateAllGameDetails(game))
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
         [HttpPost]
         public ActionResult<Game> AddGame(Game game)
         {
@@ -74,19 +84,10 @@ namespace WebApi.Controllers
             return Ok();    //returns 200
         }
 
-        [HttpPut]
-        [Route("update/{game}")]
-        public ActionResult UpdateAllGameDetails(Game game)
-        {
-            if (!DataAccessLayer.UpdateAllGameDetails(game))
-            {
-                return NotFound();
-            }
-            return Ok();
-        }
+        
 
-        [HttpPut]
-        [Route("update/gamefile/{game}")]
+        /*[HttpPut]
+        [Route("update/gamefile")]
         public ActionResult UpdateGameFile(Game game)
         {
             if (!DataAccessLayer.UpdateGameFile(game))
@@ -94,7 +95,7 @@ namespace WebApi.Controllers
                 return NotFound();
             }
             return Ok();
-        }
+        }*/
         #endregion
     }
 }

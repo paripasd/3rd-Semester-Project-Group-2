@@ -72,18 +72,18 @@ namespace WebApi.DataAccessLayer
             int eventCapacity;
             int eventParticipantNumber;
 
-            string step1 = "SELECT Capacity FROM Event WHERE EventID = @eventid";
-            string step2 = "SELECT Count(*) FROM EventMember WHERE EventID = @eventid";
-            string step3 = "INSERT INTO EventMember (EventID, MemberID) VALUES (@eventid, @memberid)";
+            string getCapacity = "SELECT Capacity FROM Event WHERE EventID = @eventid";
+            string getCurrentParticipantNumber = "SELECT Count(*) FROM EventMember WHERE EventID = @eventid";
+            string makeJoinEvent = "INSERT INTO EventMember (EventID, MemberID) VALUES (@eventid, @memberid)";
             using (transaction = connection.BeginTransaction(System.Data.IsolationLevel.RepeatableRead))
             {
-                SqlCommand commandGetCapacity = new SqlCommand(step1, connection, transaction);
+                SqlCommand commandGetCapacity = new SqlCommand(getCapacity, connection, transaction);
                 commandGetCapacity.Parameters.AddWithValue("@eventid", eventMember.EventID);
 
-                SqlCommand numberOfParticipants = new SqlCommand(step2, connection, transaction);
+                SqlCommand numberOfParticipants = new SqlCommand(getCurrentParticipantNumber, connection, transaction);
                 numberOfParticipants.Parameters.AddWithValue("@eventid", eventMember.EventID);
 
-                SqlCommand commandCreateAttendance = new SqlCommand(step3, connection, transaction);
+                SqlCommand commandCreateAttendance = new SqlCommand(makeJoinEvent, connection, transaction);
                 commandCreateAttendance.Parameters.AddWithValue("@eventid", eventMember.EventID);
                 commandCreateAttendance.Parameters.AddWithValue("@memberid", eventMember.MemberID);
 

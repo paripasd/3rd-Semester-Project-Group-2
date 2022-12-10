@@ -38,3 +38,16 @@ C:\Users\marki\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\
 C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\BCrypt.Net-Core.dll
 C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.UILayer.LoginForm.resources
 C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.UILayer.MainForm.resources
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\AdvancedDataGridView.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\fr\AdvancedDataGridView.resources.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\ru\AdvancedDataGridView.resources.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.Json.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.UserSecrets.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.Primitives.dll

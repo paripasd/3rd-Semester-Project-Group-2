@@ -43,11 +43,7 @@ namespace WebApi.DataAccessLayer
                 {
                     return false;
                     throw new Exception($"Exception while trying to insert Game object into Game and GameFile tables. The exception was: '{ex.Message}'", ex);
-                }
-
-
-
-               
+                }  
             }
         }
 
@@ -137,7 +133,7 @@ namespace WebApi.DataAccessLayer
 
         public bool UpdateAllGameDetails(Game game)
         {
-            string commandText = "UPDATE Game SET DeveloperID=@developerid, Title=@title, Description=@description, YearOfRelease=@yearofrelease, Specifications=@specifications, Type=@type, Price=@price WHERE GameID=@gameid";
+            string commandText = "UPDATE Game SET DeveloperID=@developerid, Title=@title, Description=@description, YearOfRelease=@yearofrelease, Specifications=@specifications, Type=@type, Price=@price WHERE GameID=@gameid; UPDATE GameFile SET FileName=@filename, FileContent=CAST(@filecontent AS varbinary(MAX)) WHERE GameID=@gameid";
             using (connection)
             {
                 connection.Open();
@@ -150,6 +146,10 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@specifications", game.Specifications);
                 command.Parameters.AddWithValue("@type", game.Type);
                 command.Parameters.AddWithValue("@price", game.Price);
+                command.Parameters.AddWithValue("@gameid", game.GameID);
+                command.Parameters.AddWithValue("@filename", game.FileName);
+                command.Parameters.AddWithValue("@filecontent", game.FileContent);
+
 
                 try
                 {
@@ -157,7 +157,7 @@ namespace WebApi.DataAccessLayer
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Exception while trying to update game. The exception was: '{ex.Message}'", ex);
+                    throw new Exception($"Exception while trying to update game. The exception was: '{ex.Data}'", ex);
                 }
             }
         }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClientApp.RestClientLayer
 {
-    internal class ApiLoginDataAccess : IApiLoginDataAccess
+    internal class ApiLoginDataAccess
     {
         public string BaseUri { get; private set; }
 

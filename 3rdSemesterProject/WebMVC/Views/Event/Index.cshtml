@@ -1,12 +1,21 @@
 ﻿@{
     @model WebMVC.Models.Event;
     ViewData["Title"] = ViewData.Model.Name;
+    @using Newtonsoft.Json;
 }
 
 @section script{
     <script>
         // Set the date we're counting down to
-        var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
+        const event = JSON.parse('@Html.Raw(JsonConvert.SerializeObject(Model))');
+        var countDownDate = new Date(event.StartDate).getTime();
+        var memberAmount = fetch('https://localhost:7064/Event/GetMemberAmount/' + event.EventID)
+            .then(response => response.text());
+        console.log(memberAmount);
+        console.log(typeof (memberAmount));
+        var spotsLeft = event.Capacity - memberAmount;
+        console.log(spotsLeft);
+        document.getElementById("spotsleft");
 
         // Update the count down every 1 second
         var x = setInterval(function () {
@@ -23,23 +32,51 @@
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Display the result in the element with id="demo"
+            // Display the result in the element with id="countdown"
             document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
                 + minutes + "m " + seconds + "s ";
 
             // If the count down is finished, write some text
             if (distance < 0) {
-                clearInterval(x);
                 document.getElementById("countdown").innerHTML = "LIVE";
             }
+            if (now > event.EndDate) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "FINISHED";
+            }
         }, 1000);
+
+
+        function registerForEvent() {
+            var email = document.getElementById("eventemailfield").value;
+            if (email == "") {
+                alert("Please provide your email address!");
+                return false;
+            }
+
+            var eventId = event.EventID;
+            fetch('https://localhost:7064/Event/JoinEvent/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(eventId),
+            })
+                .then((response) => response.json())
+                .then((success) => {
+                    console.log('Success:', success);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            return true;
+        }
     </script>
 }
 
 
 <h1 id="eventname">@Html.DisplayFor(m => m.Name)</h1>
 <h1 id="countdown"></h1>
-<h1>@Html.DisplayFor(m => m.StartDate)</h1>
 <div id="eventimage">
     <img src="/images/placeholder2.jpg" />
 </div>
@@ -47,12 +84,12 @@
     <h2>Description</h2>
     <p>@Html.DisplayFor(m => m.Description)</p>
 </div>
-<form id="eventform">
+<form id="eventform" onsubmit="return registerForEvent();">
     <div>
         <h2>Register</h2>
-        <h4>Spots left: @Html.DisplayFor(m => m.Capacity)</h4>
+        <h4 id="spotsleft">Spots left: </h4>
     </div>
     <label for="email">Email:</label>
-    <input type="email" /><br />
+    <input type="email" id="eventemailfield"/><br />
     <input type="submit" class="tomatobutton" id="eventsubmit"/>
 </form>

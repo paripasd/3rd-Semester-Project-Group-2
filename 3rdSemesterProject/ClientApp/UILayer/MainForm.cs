@@ -25,6 +25,7 @@ namespace ClientApp.UILayer
         private ApiMemberDataAccess memberApi;
         private ApiSaleDataAccess saleApi;
         private ApiLoginDataAccess loginApi;
+        private BindingSource salesSource;
         private byte[] CurrentGameFile { get; set; }//not so good clean code wise but works
         public byte[] CurrentGameFileCreate { get; set; }//not so good clean code wise but works
         public bool IsAdmin { get; set; }
@@ -51,6 +52,7 @@ namespace ClientApp.UILayer
             ClearGameUpdateInputFields();
             ClearGameCreateInputFields();
             GetAllSales();
+            labelSaleTotalRows.Text = string.Format("Total Rows: {0}", salesSource.List.Count);
 
             CurrentGameFile = null;
             CurrentGameFileCreate = null;
@@ -956,28 +958,48 @@ namespace ClientApp.UILayer
         {
             List<Sale> allSales = new List<Sale>();
             allSales = saleApi.GetAllSales();
+
+            DataTable data = new DataTable();
+            data.Columns.Add("GameKey");
+            data.Columns.Add("GameID");
+            data.Columns.Add("Email");
+            data.Columns.Add("Date");
+            data.Columns.Add("SalesPrice");
+
             foreach (Sale sale in allSales)
             {
-                saleBindingSource.Add(sale);
+                DataRow row = data.NewRow();
+                row["GameKey"] = sale.GameKey;
+                row["GameID"] = sale.GameID;
+                row["Email"] = sale.Email;
+                row["Date"] = sale.Date;
+                row["SalesPrice"] = sale.SalesPrice;
+                data.Rows.Add(row);
+            }
+
+            salesSource = new BindingSource();
+            salesSource.DataSource = data;
+            advancedDataGridViewSale.DataSource = salesSource;
+            for (int i = 0; i < 5; i++)
+            {
+                advancedDataGridViewSale.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
         }
         #endregion
         #region Sale Page Wiring
         private void advancedDataGridViewSale_SortStringChanged(object sender, EventArgs e)
         {
-            saleBindingSource.Sort = advancedDataGridViewSale.SortString;
-            saleBindingSource.ResetBindings(true);
+            salesSource.Sort = advancedDataGridViewSale.SortString;
         }
 
         private void advancedDataGridViewSale_FilterStringChanged(object sender, EventArgs e)
         {
-            saleBindingSource.Filter = advancedDataGridViewSale.FilterString;
-            saleBindingSource.ResetBindings(true);
+            salesSource.Filter = advancedDataGridViewSale.FilterString;
         }
 
         private void saleBindingSource_ListChanged(object sender, ListChangedEventArgs e)
         {
-            labelSaleTotalRows.Text = string.Format("Total Rows: {0}",saleBindingSource.List.Count);
+            labelSaleTotalRows.Text = string.Format("Total Rows: {0}",salesSource.List.Count);
         }
         #endregion
 

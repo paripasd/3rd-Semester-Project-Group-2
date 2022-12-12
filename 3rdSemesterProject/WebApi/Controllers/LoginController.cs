@@ -28,7 +28,6 @@ namespace WebApi.Controllers
             return Ok(DataAccessLayer.GetAllLoginInformation());
         }
 
-
         [HttpPost]
         public ActionResult<Login> AddLogin(Login login)
         {
@@ -37,7 +36,6 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("{username}")]
         public ActionResult DeleteLogin(Login login)
         {
             if (!DataAccessLayer.DeleteLogin(login))
@@ -47,15 +45,16 @@ namespace WebApi.Controllers
             return Ok();    //returns 200
         }
 
-        [HttpPut]
+        /*[HttpPut]
         public ActionResult UpdateLogin(Login login)
         {
+            login.Password = Login.HashPassword(login.Password);
             if (!DataAccessLayer.UpdateLogin(login))
             {
                 return NotFound();
             }
             return Ok();
-        }
+        }*/
         #endregion
     }
 }

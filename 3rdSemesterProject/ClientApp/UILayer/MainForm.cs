@@ -24,12 +24,16 @@ namespace ClientApp.UILayer
         private ApiEventMemberDataAccess eventMemberApi;
         private ApiMemberDataAccess memberApi;
         private ApiSaleDataAccess saleApi;
+        private ApiLoginDataAccess loginApi;
         private byte[] CurrentGameFile { get; set; }//not so good clean code wise but works
         public byte[] CurrentGameFileCreate { get; set; }//not so good clean code wise but works
-        public MainForm()
+        public bool IsAdmin { get; set; }
+        public MainForm(bool isAdmin)
         {
+            IsAdmin = isAdmin;
             InitializeComponent();
-            
+            SetAccessAccordingToLogin();
+
             developerApi = new ApiDeveloperDataAccess("https://localhost:7023/api/v1/Developer");
             gameApi = new ApiGameDataAccess("https://localhost:7023/api/v1/Game");
             eventApi = new ApiEventDataAccess("https://localhost:7023/api/v1/Event");
@@ -37,7 +41,7 @@ namespace ClientApp.UILayer
             memberApi = new ApiMemberDataAccess("https://localhost:7023/api/v1/Member");
             gameApi = new ApiGameDataAccess("https://localhost:7023/api/v1/Game");
             saleApi = new ApiSaleDataAccess("https://localhost:7023/api/v1/Sale");
-
+            loginApi = new ApiLoginDataAccess("https://localhost:7023/api/v1/Login");
 
             GetAllDevsFromApi();
             ClearDeveloperInputFields();
@@ -55,11 +59,24 @@ namespace ClientApp.UILayer
             panelCreateEvent.Visible = false;
             panelCreateGame.Visible = false;
             labelCapacityCounter.Visible = false;
-
-            
-
-
         }
+
+        #region Helper Methods
+        public void SetAccessAccordingToLogin()
+        {
+            if (IsAdmin == false)
+            {
+                panelAdminAccess.Visible = false;
+                labelAuthorizationLoginPage.Visible = true;
+            }
+            else if(IsAdmin == true)
+            {
+                panelAdminAccess.Visible = true;
+                labelAuthorizationLoginPage.Visible = false;
+            }
+        }
+        #endregion
+
         #region Developer Page Wiring
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -170,6 +187,21 @@ namespace ClientApp.UILayer
             }
             
         }
+
+        private void listBoxDeveloperGames_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+        private void listBoxDeveloperGames_MouseDoubleClick(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        private void listBoxDeveloperGames_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            RedirectToGamePage();
+        }
         #endregion
         #region Developer Page Methods
 
@@ -180,6 +212,13 @@ namespace ClientApp.UILayer
             dev.Email = textBoxCreateDeveloperEmail.Text;
             dev.Description = textBoxCreateDeveloperDescription.Text;
             developerApi.CreateDeveloper(dev);
+        }
+
+        public void RedirectToGamePage()
+        {
+            string gameNameToSearch = listBoxDeveloperGames.Text;
+            tabControl1.SelectedTab = GameMenuBar;
+            listBoxGameList.SelectedItem = gameNameToSearch;
         }
 
         public void ClearCreateDeveloperFormFields()
@@ -403,15 +442,30 @@ namespace ClientApp.UILayer
         }
         public void SetEventInputFields(Event e)
         {
-            textBoxEventId.Text = e.EventID.ToString();
-            textBoxEventGameId.Text = e.GameID.ToString();
-            textBoxEventName.Text = e.Name;
-            textBoxEventDescription.Text = e.Description;
-            labelEventNamePanel.Text = e.Name;
-            numericUpDownEventPage.Text = e.Capacity.ToString();
-            dateTimePickerEventStartDate.Text = e.StartDate.ToString();
-            dateTimePickerEventEndDate.Text = e.EndDate.ToString();
-            SetSelectedMemberFromMemberToList();
+            if (e.EventID != 0)
+            {
+                Game gameOfEvent = new Game();
+                gameOfEvent = gameApi.GetGameUsingId(e.GameID);
+                textBoxEventId.Text = e.EventID.ToString();
+                textBoxEventGameId.Text = e.GameID.ToString() + " - " + gameOfEvent.Title;
+                textBoxEventName.Text = e.Name;
+                textBoxEventDescription.Text = e.Description;
+                labelEventNamePanel.Text = e.Name;
+                numericUpDownEventPage.Text = e.Capacity.ToString();
+                dateTimePickerEventStartDate.Text = e.StartDate.ToString();
+                dateTimePickerEventEndDate.Text = e.EndDate.ToString();
+                SetSelectedMemberFromMemberToList();
+            } 
+        }
+
+        public void SetCreateEventGameIdDropDown()
+        {
+            IEnumerable<Game> allGames = new List<Game>();
+            allGames = gameApi.GetAllGames();
+            foreach (Game g in allGames)
+            {
+                comboBoxCreateEventGameId.Items.Add(g.GameID + " - " + g.Title);
+            }
         }
 
         public void UpdateEvent()
@@ -450,10 +504,11 @@ namespace ClientApp.UILayer
 
         public bool CreateNewEvent()
         {   
-            if (textBoxCreateEventGameId.Text.Length > 0 && textBoxCreateEventName.Text.Length > 0 && textBoxCreateEventDescription.Text.Length > 0 && numericUpDownCreateEventCapacity.Text.Length > 0 && dateTimePickerCreateEventStartDate.Text.Length > 0 && dateTimePickerCreateEventEndDate.Text.Length > 0)
+            if (comboBoxCreateEventGameId.Text.Length > 0 && textBoxCreateEventName.Text.Length > 0 && textBoxCreateEventDescription.Text.Length > 0 && numericUpDownCreateEventCapacity.Text.Length > 0 && dateTimePickerCreateEventStartDate.Text.Length > 0 && dateTimePickerCreateEventEndDate.Text.Length > 0)
             {
+                string[] wordsinString = comboBoxCreateEventGameId.Text.Split(" ");
                 Event e = new Event();
-                e.GameID = int.Parse(textBoxCreateEventGameId.Text);
+                e.GameID = int.Parse(wordsinString[0]);
                 e.Name = textBoxCreateEventName.Text;
                 e.Description = textBoxCreateEventDescription.Text;
                 e.Capacity = int.Parse(numericUpDownCreateEventCapacity.Text);
@@ -478,7 +533,8 @@ namespace ClientApp.UILayer
         {
             numericUpDownCreateEventCapacity.ResetText();
             textBoxCreateEventName.Clear();
-            textBoxCreateEventGameId.Clear();
+            comboBoxCreateEventGameId.ResetText();
+            comboBoxCreateEventGameId.Items.Clear();
             textBoxCreateEventDescription.Clear();
             dateTimePickerCreateEventStartDate.ResetText();
             dateTimePickerCreateEventEndDate.ResetText();
@@ -542,6 +598,7 @@ namespace ClientApp.UILayer
         {
             panelCreateEvent.Visible = true;
             ClearEventCreateFields();
+            SetCreateEventGameIdDropDown();
         }
 
         private void buttonCreateEventCancel_Click(object sender, EventArgs e)
@@ -596,27 +653,47 @@ namespace ClientApp.UILayer
         public Game GetSelectedGameObjectFromList()
         {
             Game gameToShow = new Game();
+            if (listBoxGameList.SelectedItem != null)
+            {
+               
+                IEnumerable<Game> gameList = gameApi.GetAllGames();
+                foreach (Game g in gameList)
+                {
+                    if (g.Title.Equals(listBoxGameList.SelectedItem))
+                    {
+                        gameToShow = g;
+                        Game gameFile = new Game();
+                        gameFile = GetSelectedGameFileObject(gameToShow.GameID);
+                        gameToShow.FileName = gameFile.FileName;
+                        gameToShow.FileContent = gameFile.FileContent;
+                    }
+                }  
+            }
+            return gameToShow;
+        }
+
+        public Game GetSelectedGameObjectFromDeveloperGameList()
+        {
+            Game game = new Game();
             IEnumerable<Game> gameList = gameApi.GetAllGames();
             foreach (Game g in gameList)
             {
-                if (g.Title.Equals(listBoxGameList.SelectedItem))
+                if (g.Title.Equals(listBoxDeveloperGames.SelectedItem))
                 {
-                    gameToShow = g;
+                    game = g;
                 }
             }
-
-            Game gameFile = new Game();
-            gameFile = GetSelectedGameFileObject(gameToShow.GameID);
-            gameToShow.FileName = gameFile.FileName;
-            gameToShow.FileContent = gameFile.FileContent;
-            return gameToShow;
+            return game;
         }
 
         public void SetGameUpdateInputFields(Game game)
         {
+            
+            Developer gameDeveloper = new Developer();
+            gameDeveloper = developerApi.FindDeveloperFromId(game.DeveloperID);
             textBoxUpdateGameGameId.Text = game.GameID.ToString();
             textBoxUpdateGameTitle.Text = game.Title;
-            textBoxUpdateGameDeveloperId.Text = game.DeveloperID.ToString(); ;
+            textBoxUpdateGameDeveloperId.Text = game.DeveloperID.ToString() + " - " + gameDeveloper.Name;
             textBoxUpdateGameType.Text = game.Type;
             textBoxUpdateGameDescription.Text = game.Description;
             numericUpDownUpdateGamePrice.Text = game.Price.ToString(); ;
@@ -625,7 +702,16 @@ namespace ClientApp.UILayer
             textBoxUpdateGameSpecifications.Text = game.Specifications;
             labelUpdateGameName.Text = game.Title;
             CurrentGameFile = game.FileContent;
+        }
 
+        public void SetCreateDeveloperListDropDown()
+        {
+            IEnumerable<Developer> allDev = developerApi.GetAllDevelopers();
+            foreach (Developer d in allDev)
+            {
+                comboBoxCreateGameDeveloperList.Items.Add(d.DeveloperID + " - " + d.Name);
+            }
+            
         }
 
         public void ClearGameUpdateInputFields()
@@ -731,9 +817,10 @@ namespace ClientApp.UILayer
         {
             if (AllCreateFieldsAreCorrect() == true)
             {
+                string[] wordsOfString = comboBoxCreateGameDeveloperList.Text.Split(" ");
                 Game gameToCreate = new Game();
                 gameToCreate.Title = textBoxCreateGameTitle.Text;
-                gameToCreate.DeveloperID = int.Parse(textBoxCreateGameDeveloperId.Text);
+                gameToCreate.DeveloperID = int.Parse(wordsOfString[0]);
                 gameToCreate.Type = textBoxCreateGameType.Text;
                 gameToCreate.Description = textBoxCreateGameDescription.Text;
                 gameToCreate.Specifications = textBoxCreateGameSpecifications.Text;
@@ -747,7 +834,7 @@ namespace ClientApp.UILayer
 
         public bool AllCreateFieldsAreCorrect()
         {
-            if (CurrentGameFileCreate != null && textBoxCreateGameTitle.Text.Length > 0 && textBoxCreateGameDeveloperId.Text.Length > 0 && textBoxCreateGameType.Text.Length > 0 && textBoxCreateGameDescription.Text.Length > 0 && textBoxCreateGameSpecifications.Text.Length > 0 && numericUpDownCreateGamePrice.Text.Length > 0 && numericUpDownCreateGameYearOfRelease.Text.Length > 0)
+            if (CurrentGameFileCreate != null && textBoxCreateGameTitle.Text.Length > 0 && comboBoxCreateGameDeveloperList.Text.Length > 0 && textBoxCreateGameType.Text.Length > 0 && textBoxCreateGameDescription.Text.Length > 0 && textBoxCreateGameSpecifications.Text.Length > 0 && numericUpDownCreateGamePrice.Text.Length > 0 && numericUpDownCreateGameYearOfRelease.Text.Length > 0)
             {
                 return true;
             }
@@ -757,7 +844,7 @@ namespace ClientApp.UILayer
         public void ClearGameCreateInputFields()
         {
             textBoxCreateGameTitle.Clear();
-            textBoxCreateGameDeveloperId.Clear();
+            comboBoxCreateGameDeveloperList.ResetText();
             textBoxCreateGameType.Clear();
             textBoxCreateGameDescription.Clear();
             numericUpDownCreateGamePrice.ResetText();
@@ -817,7 +904,9 @@ namespace ClientApp.UILayer
 
         private void buttonCreateNewGame_Click(object sender, EventArgs e)
         {
+            comboBoxCreateGameDeveloperList.Items.Clear();
             panelCreateGame.Visible = true;
+            SetCreateDeveloperListDropDown();
         }
 
         private void buttonCreateGameCancel_Click(object sender, EventArgs e)
@@ -867,31 +956,129 @@ namespace ClientApp.UILayer
         {
             List<Sale> allSales = new List<Sale>();
             allSales = saleApi.GetAllSales();
-            
-            
             foreach (Sale sale in allSales)
             {
                 saleBindingSource.Add(sale);
             }
-            
         }
         #endregion
-
+        #region Sale Page Wiring
         private void advancedDataGridViewSale_SortStringChanged(object sender, EventArgs e)
         {
             saleBindingSource.Sort = advancedDataGridViewSale.SortString;
-            advancedDataGridViewSale.Refresh();
+            saleBindingSource.ResetBindings(true);
         }
 
         private void advancedDataGridViewSale_FilterStringChanged(object sender, EventArgs e)
         {
             saleBindingSource.Filter = advancedDataGridViewSale.FilterString;
-            advancedDataGridViewSale.Refresh();
+            saleBindingSource.ResetBindings(true);
         }
 
         private void saleBindingSource_ListChanged(object sender, ListChangedEventArgs e)
         {
             labelSaleTotalRows.Text = string.Format("Total Rows: {0}",saleBindingSource.List.Count);
+        }
+        #endregion
+
+        #region Login Page Methods
+
+        /*
+          How login management works:
+          - Only people with a certain login can delete and create logins (admins)
+          - People with the non-admin accounts cannot make changes in this page
+          - When we have a new employee and they need access to the system the admins will create new credentials for them
+        */
+        public void GetAllLogins()
+        {
+            IEnumerable<Login> allLogins = new List<Login>();
+            allLogins = loginApi.GetAllLogins();
+            foreach (Login login in allLogins)
+            {
+                listBoxLogins.Items.Add(login.UserName);
+            }
+        }
+
+        public Login GetSelectedLoginObjectFromList()
+        {
+            Login loginToGet = new Login();
+            IEnumerable<Login> loginList = loginApi.GetAllLogins();
+            foreach (Login login in loginList)
+            {
+                if (login.UserName.Equals(listBoxLogins.SelectedItem))
+                {
+                    loginToGet = login;
+                }
+            }
+            return loginToGet;
+        }
+
+        public void DeleteLogin()
+        {
+            if (GetSelectedLoginObjectFromList() != null)
+            {
+                loginApi.DeleteLogin(GetSelectedLoginObjectFromList());
+            }
+        }
+
+        public void AddNewLogin()
+        {
+            if (textBoxCreateLoginUsername.Text.Length > 0 && textBoxCreateLoginUsername.Text.Length > 0)//we can add password creation rules here
+            {
+                Login login = new Login();
+                login.UserName = textBoxCreateLoginUsername.Text;
+                login.Password = textBoxCreateLoginUsername.Text;
+                login.AdminRights = radioButtonAdminRightsYes.Checked;
+                loginApi.AddLogin(login);
+            }
+        }
+
+        public void ClearFieldsCreateLogin()
+        {
+            textBoxCreateLoginUsername.ResetText();
+            textBoxCreateLoginPassword.ResetText();
+            radioButtonAdminRightsNo.Checked = false;
+            radioButtonAdminRightsYes.Checked = false;
+        }
+
+        public void Refresh()
+        {
+            listBoxLogins.Items.Clear();
+            GetAllLogins();
+        }
+        #endregion
+
+        private void buttonRefreshLogins_Click(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private void buttonCreateLoginFinish_Click(object sender, EventArgs e)
+        {
+            AddNewLogin();
+            ClearFieldsCreateLogin();
+            Refresh();
+        }
+
+        private void buttonDeleteLogin_Click(object sender, EventArgs e)
+        {
+            DeleteLogin();
+            Refresh();
+        }
+
+        private void buttonCancelCreateLogin_Click(object sender, EventArgs e)
+        {
+            ClearFieldsCreateLogin();
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
         }
     }
 }

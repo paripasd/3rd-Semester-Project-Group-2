@@ -23,20 +23,64 @@ namespace ClientApp.UILayer
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
+            /*MainForm main = new MainForm(true);
+            main.ShowDialog();*/
             LoginButtonValidate();
         }
 
         #region Methods
-
+        //decides which view to show: admin or non admin
         public void LoginButtonValidate()
         {
             ModelLayer.Login login = new ModelLayer.Login(textBoxUserName.Text, textBoxPassword.Text);
-            if (loginApi.ValidateLogin(login) == true)
+            if (ValidateLogin(login) == true)
             {
-                this.Hide();
-                MainForm main = new MainForm();
-                main.ShowDialog();
+                bool adminRights = GetFullLoginObject(login).AdminRights;
+                if (adminRights == true)
+                {
+                    this.Hide();
+                    MainForm main = new MainForm(true);
+                    main.ShowDialog();
+                }
+                else if (adminRights == false)
+                {
+                    this.Hide();
+                    MainForm main = new MainForm(false);
+                    main.ShowDialog();
+                } 
             }
+        }
+        //check if username and password combo is valid
+        public bool ValidateLogin(Login incomingLogin)
+        {
+            IEnumerable<Login> logins = loginApi.GetAllLogins();
+            foreach (Login login in logins)
+            {
+                bool IsValidUserName = incomingLogin.UserName.Equals(login.UserName);
+                bool IsValidPassword = Login.ValidatePassword(incomingLogin.Password, login.Password);
+                if (IsValidUserName == true && IsValidPassword == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        //get the admin rights info with the full object
+        public Login GetFullLoginObject(Login incomingLogin)
+        {
+            IEnumerable<Login> logins = loginApi.GetAllLogins();
+            Login fullLogin = new Login();
+            foreach (Login login in logins)
+            {
+                if (incomingLogin.UserName.Equals(login.UserName) && Login.ValidatePassword(incomingLogin.Password, login.Password) == true)
+                {
+                    incomingLogin.AdminRights = login.AdminRights;
+                    fullLogin.UserName = incomingLogin.UserName;
+                    fullLogin.Password = incomingLogin.Password;
+                    fullLogin.AdminRights = incomingLogin.AdminRights;
+                }
+            }
+            return incomingLogin;
         }
         #endregion
     }

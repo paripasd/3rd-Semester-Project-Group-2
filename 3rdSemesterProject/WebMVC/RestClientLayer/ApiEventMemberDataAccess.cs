@@ -20,16 +20,20 @@ namespace WebMVC.RestClientLayer
 		public string GetMemberAmount(int eventId)
 		{
 			var response = RestClient.Execute<IEnumerable<Event>>(new RestRequest("event/" + eventId));
-			int memberAmount = response.Data.Count();
+			string members = response.Content;
+			int[] memberArray = JsonConvert.DeserializeObject<int[]>(members);
+			int memberAmount = memberArray.Count();
 			return JsonConvert.SerializeObject(memberAmount);
 		}
 
-		public void JoinEvent(int eventId)
+		public bool JoinEvent(EventMember eventMember)
 		{
-			string json = System.Text.Json.JsonSerializer.Serialize(new {EventID = eventId});
+			string json = System.Text.Json.JsonSerializer.Serialize(eventMember);
 			var request = new RestRequest("", Method.Post);
 			request.AddStringBody(json, DataFormat.Json);
 			var response = RestClient.Execute(request);
+			if (response.IsSuccessful) return true;
+			else return false;
 		}
 	}
 }

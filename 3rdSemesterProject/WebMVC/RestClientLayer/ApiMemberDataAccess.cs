@@ -19,10 +19,16 @@ namespace WebMVC.RestClientLayer
 
 		public void CreateMember(string email)
 		{
-			string json = System.Text.Json.JsonSerializer.Serialize(new { MemberID = 0, Email = email, Name = "Example" });
+			string json = System.Text.Json.JsonSerializer.Serialize(new { MemberID = 0, Email = email, Name = "No Name Provided" });
 			var request = new RestRequest("", Method.Post);
 			request.AddStringBody(json, DataFormat.Json);
 			var response = RestClient.Execute(request);
+		}
+
+		public IEnumerable<Member> GetAllMembers()
+		{
+			var response = RestClient.Execute<IEnumerable<Member>>(new RestRequest());
+			return response.Data;
 		}
 	}
 }

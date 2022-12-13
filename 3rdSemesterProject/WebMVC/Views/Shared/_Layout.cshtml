@@ -6,17 +6,21 @@
     <title>@ViewData["Title"] - WebMVC</title>
     <link rel="stylesheet" href="~/WebMVC.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="/css/site.css" />
-    @RenderSection("script", false/*required*/)
 </head>
-<body style="background-image:url(/images/2.jpeg)">
+<body style="background-image:url(/images/background.jpeg)">
     <header>
-        
+
         <ul class="navbar">
-            <a asp-area="" asp-controller="Home" asp-action="Index"><li class="nav-item">Home</li></a>
-            <a asp-area="" asp-controller="Game" asp-action="Index"><li class="nav-item">Games</li></a>
-            <a asp-area="" asp-controller="Developer" asp-action="Index"><li class="nav-item">Developers</li></a>
-            <a asp-area="" asp-controller="Event" asp-action="Index"><li class="nav-item">Event</li></a>
-            <a asp-area="" asp-controller="Contact" asp-action="Index"><li class="nav-item" style="float:right">Contact</li></a>
+            <a asp-area="" asp-controller="Home" asp-action="Index">
+            <li class="nav-item">Home</li></a>
+            <a asp-area="" asp-controller="Game" asp-action="Index">
+            <li class="nav-item">Games</li></a>
+            <a asp-area="" asp-controller="Developer" asp-action="Index">
+            <li class="nav-item">Developers</li></a>
+            <a asp-area="" asp-controller="Event" asp-action="Index">
+            <li class="nav-item">Event</li></a>
+            <a asp-area="" asp-controller="Contact" asp-action="Index">
+            <li class="nav-item" style="float:right">Contact</li></a>
         </ul>
     </header>
     <div class="container">
@@ -27,6 +31,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("script", false/*required*/)
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

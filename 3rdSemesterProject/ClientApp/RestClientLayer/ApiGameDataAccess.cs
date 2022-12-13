@@ -21,13 +21,11 @@ namespace ClientApp.RestClientLayer
         public string BaseUri { get; private set; }
 
         private RestClient RestClient { get; set; }
-        public HttpClient HttpClient { get; set; }
 
         public ApiGameDataAccess(string baseUri)
         {
             BaseUri = baseUri;
             RestClient = new RestClient(baseUri);
-            HttpClient = new HttpClient();
         }
 
         public bool CreateGame(Game game)

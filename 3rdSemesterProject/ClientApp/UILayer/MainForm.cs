@@ -52,7 +52,6 @@ namespace ClientApp.UILayer
             ClearGameUpdateInputFields();
             ClearGameCreateInputFields();
             GetAllSales();
-            labelSaleTotalRows.Text = string.Format("Total Rows: {0}", salesSource.List.Count);
 
             CurrentGameFile = null;
             CurrentGameFileCreate = null;
@@ -742,12 +741,13 @@ namespace ClientApp.UILayer
         {
             if (AllUpdateFieldsAreCorrect() == true)
             {
+                string[] wordsOfString = textBoxUpdateGameDeveloperId.Text.Split(" ");
                 Game gameToUpdate = new Game();
                 gameToUpdate.GameID = int.Parse(textBoxUpdateGameGameId.Text);
                 gameToUpdate.Title = textBoxUpdateGameTitle.Text;
                 gameToUpdate.Type = textBoxUpdateGameType.Text;
                 gameToUpdate.Description = textBoxUpdateGameDescription.Text;
-                gameToUpdate.DeveloperID = int.Parse(textBoxUpdateGameDeveloperId.Text);
+                gameToUpdate.DeveloperID = int.Parse(wordsOfString[0]);
                 gameToUpdate.Price = float.Parse(numericUpDownUpdateGamePrice.Text);
                 gameToUpdate.Specifications = textBoxUpdateGameSpecifications.Text;
                 gameToUpdate.YearOfRelease = int.Parse(numericUpDownUpdateGameYearOfRelease.Text);
@@ -997,9 +997,9 @@ namespace ClientApp.UILayer
             salesSource.Filter = advancedDataGridViewSale.FilterString;
         }
 
-        private void saleBindingSource_ListChanged(object sender, ListChangedEventArgs e)
+        private void salesSource_ListChanged(object sender, ListChangedEventArgs e)
         {
-            labelSaleTotalRows.Text = string.Format("Total Rows: {0}",salesSource.List.Count);
+            
         }
         #endregion
 
@@ -1069,7 +1069,7 @@ namespace ClientApp.UILayer
             GetAllLogins();
         }
         #endregion
-
+        #region Login Page Wiring
         private void buttonRefreshLogins_Click(object sender, EventArgs e)
         {
             Refresh();
@@ -1092,6 +1092,7 @@ namespace ClientApp.UILayer
         {
             ClearFieldsCreateLogin();
         }
+        #endregion
 
         private void tabControl1_Click(object sender, EventArgs e)
         {
@@ -1099,6 +1100,16 @@ namespace ClientApp.UILayer
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
+
+        private void saleBindingSource_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            
+        }
+
+        private void buttonRefreshSale_Click(object sender, EventArgs e)
         {
             
         }

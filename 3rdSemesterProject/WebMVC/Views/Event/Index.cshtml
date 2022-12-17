@@ -9,12 +9,18 @@
         // Set the date we're counting down to
         const event = JSON.parse('@Html.Raw(JsonConvert.SerializeObject(Model))');
         var countDownDate = new Date(event.StartDate).getTime();
+
+        // Update spots left every 5 seconds
         var y = setInterval(function () {
-            var memberAmount;
+            memberAmount = 0;
+            /*fetches members already registered for event*/
             fetch('https://localhost:7064/Event/GetMemberAmount?eventId=' + event.EventID)
+                /*deserializes json*/
                 .then(response => response.json())
+                /*saves data*/
                 .then(data => (memberAmount = data));
             var spotsLeft = event.Capacity - memberAmount;
+            // Updates html
             document.getElementById("spotsleft").innerHTML = "Spots left: " + spotsLeft;
         }, 5000);
 
@@ -48,6 +54,7 @@
         }, 1000);
 
 
+        // verifies form and registers for event
         function registerForEvent() {
             var email = document.getElementById("eventemailfield").value;
             if (email == "") {
@@ -55,7 +62,9 @@
                 return false;
             }
 
+            // creates object later parsed into EventController.EventJoinData object
             const data = { EventId: event.EventID, MemberEmail: email };
+            // posts the data using the JoinEvent method in EventController
             fetch('https://localhost:7064/Event/JoinEvent/', {
                 method: 'POST',
                 headers: {

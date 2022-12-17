@@ -16,87 +16,21 @@ namespace WebMVC.Controllers
         ApiGameDataAccess _dataAccess = new("https://localhost:7023/api/v1/game");
 
         // GET: Game
+        // Returns a lsit view of games after taking an IEnmureable<Game> as parameter
         public ActionResult Index()
         {
             return View(_dataAccess.GetAllGames());
         }
 
         // GET: Game/Details/5
+        // Returns a detail view of a game after taking a Game object as parameter
         public ActionResult Details(int id)
         {
             return View(_dataAccess.GetGameUsingId(id));
         }
 
-        // GET: Game/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Game/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Game/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Game/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Game/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Game/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-		[HttpGet]
+        // Called when a game is bought or download link is clicked on the website
+        [HttpGet]
         public FileResult DownloadGame(int gameId)
 		{
             Game gameToDownload = _dataAccess.GetGameFileById(gameId);

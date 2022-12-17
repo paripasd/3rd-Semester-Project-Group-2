@@ -19,11 +19,11 @@ namespace WebMVC.RestClientLayer
 
 		public string GetMemberAmount(int eventId)
 		{
-			var response = RestClient.Execute<IEnumerable<Event>>(new RestRequest("event/" + eventId));
+			var response = RestClient.Execute<IEnumerable<Event>>(new RestRequest("event/" + eventId)); // gets all MemberIDs for a given event
 			string members = response.Content;
-			int[] memberArray = JsonConvert.DeserializeObject<int[]>(members);
+			int[] memberArray = JsonConvert.DeserializeObject<int[]>(members); // makes an array from the data
 			int memberAmount = memberArray.Count();
-			return JsonConvert.SerializeObject(memberAmount);
+			return JsonConvert.SerializeObject(memberAmount); // returns number of array elements
 		}
 
 		public bool JoinEvent(EventMember eventMember)

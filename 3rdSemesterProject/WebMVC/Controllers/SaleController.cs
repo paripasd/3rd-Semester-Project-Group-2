@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 
 namespace MVC.Controllers
 {
+	/*
+	 * Has no associated views, only used for creating Sale objects when a purchase is made
+	*/
 	public class SaleController : Controller
 	{
 		ApiSaleDataAccess _dataAccess = new("https://localhost:7023/api/v1/sale");

@@ -11,21 +11,17 @@ namespace WebMVC.Controllers
 {
     public class EventController : Controller
     {
+        // Uses 3 data access obejcts, the Event and Member are needed for functionality, whereas the EventMember accesses the connection table
         ApiEventDataAccess _dataAccessEvent = new("https://localhost:7023/api/v1/Event");
 		ApiMemberDataAccess _dataAccessMember = new("https://localhost:7023/api/v1/Member");
 		ApiEventMemberDataAccess _dataAccessEventMember = new("https://localhost:7023/api/v1/EventMember");
 
 		// GET: Event
+        // Returns a detail view of a single event after taking an Event object as parameter
 		[HttpGet]
         public ActionResult Index()
         {
             return View(_dataAccessEvent.GetUpcomingEvent());
-        }
-
-        // GET: Event/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
 		[HttpGet]
@@ -40,7 +36,7 @@ namespace WebMVC.Controllers
             Member member;
             try
             {
-                member = _dataAccessMember.GetAllMembers().First(m => m.Email == data.MemberEmail);
+                member = _dataAccessMember.GetAllMembers().First(m => m.Email == data.MemberEmail); //tries to find a member with matching email
             }
             catch(Exception ex) //we don't have a member with the given email address
 			{
@@ -51,6 +47,7 @@ namespace WebMVC.Controllers
             return _dataAccessEventMember.JoinEvent(eventMember);
 		}
 
+        // Class for creating objects from fetched data
         public class EventJoinData
 		{
 			public int EventId { get; private set; }

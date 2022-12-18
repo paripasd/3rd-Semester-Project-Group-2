@@ -65,15 +65,17 @@ namespace WebApi.DataAccessLayer
                 }
             }
         }
-
+        //concurrency issue -> transaction, if we only have one available space in the event capacity who should come first if they want to join at the same time
         public bool JoinEvent(EventMember eventMember)
         {
             SqlTransaction transaction;
             int eventCapacity;
             int eventParticipantNumber;
-
+            //get capacity of event
             string getCapacity = "SELECT Capacity FROM Event WHERE EventID = @eventid";
+            //get the number of already joined members
             string getCurrentParticipantNumber = "SELECT Count(*) FROM EventMember WHERE EventID = @eventid";
+            //if possible add the member to participants
             string makeJoinEvent = "INSERT INTO EventMember (EventID, MemberID) VALUES (@eventid, @memberid)";
             using (transaction = connection.BeginTransaction(System.Data.IsolationLevel.RepeatableRead))
             {
@@ -113,19 +115,21 @@ namespace WebApi.DataAccessLayer
                     {
                         throw new Exception(ex.Message);
                     }
-                   
+                   // check if we have space to add a new participant
                     if (eventParticipantNumber >= eventCapacity)
                     {
+                        //if not roll back
                         transaction.Rollback();
                         return false;
                     }
+                    // if yes add participant and commit
                     commandCreateAttendance.ExecuteScalar();
                     transaction.Commit();
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    //if the connection with the database breaks at the same time as the rollback happens we need to add a try catch to be able to see what happened.
+                    //if transaction breaks at the exact moment when rolling back we can see from this try catch below
                     try
                     {
                         transaction.Rollback();

@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.saleBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.saveFileDialogGame = new System.Windows.Forms.SaveFileDialog();
-            this.saveFileDialogCreate = new System.Windows.Forms.SaveFileDialog();
             this.LoginMenuBar = new System.Windows.Forms.TabPage();
             this.panelAdminAccess = new System.Windows.Forms.Panel();
             this.buttonRefreshLogins = new System.Windows.Forms.Button();
@@ -182,6 +180,8 @@
             this.buttonShowAllGame = new System.Windows.Forms.Button();
             this.listBoxGameList = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.openFileDialogUpdateGame = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialogCreateGame = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.saleBindingSource)).BeginInit();
             this.LoginMenuBar.SuspendLayout();
             this.panelAdminAccess.SuspendLayout();
@@ -252,7 +252,7 @@
             this.listBoxLogins.ItemHeight = 32;
             this.listBoxLogins.Location = new System.Drawing.Point(119, 84);
             this.listBoxLogins.Name = "listBoxLogins";
-            this.listBoxLogins.Size = new System.Drawing.Size(442, 452);
+            this.listBoxLogins.Size = new System.Drawing.Size(442, 484);
             this.listBoxLogins.TabIndex = 5;
             // 
             // panelCreateLogin
@@ -271,7 +271,7 @@
             this.panelCreateLogin.Location = new System.Drawing.Point(746, 84);
             this.panelCreateLogin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelCreateLogin.Name = "panelCreateLogin";
-            this.panelCreateLogin.Size = new System.Drawing.Size(354, 505);
+            this.panelCreateLogin.Size = new System.Drawing.Size(354, 484);
             this.panelCreateLogin.TabIndex = 2;
             // 
             // labelAdminRights
@@ -309,7 +309,7 @@
             // 
             // buttonCancelCreateLogin
             // 
-            this.buttonCancelCreateLogin.Location = new System.Drawing.Point(22, 445);
+            this.buttonCancelCreateLogin.Location = new System.Drawing.Point(16, 431);
             this.buttonCancelCreateLogin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonCancelCreateLogin.Name = "buttonCancelCreateLogin";
             this.buttonCancelCreateLogin.Size = new System.Drawing.Size(90, 37);
@@ -347,7 +347,7 @@
             // 
             // buttonCreateLoginFinish
             // 
-            this.buttonCreateLoginFinish.Location = new System.Drawing.Point(247, 445);
+            this.buttonCreateLoginFinish.Location = new System.Drawing.Point(248, 431);
             this.buttonCreateLoginFinish.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonCreateLoginFinish.Name = "buttonCreateLoginFinish";
             this.buttonCreateLoginFinish.Size = new System.Drawing.Size(90, 37);
@@ -417,7 +417,7 @@
             this.advancedDataGridViewSale.Name = "advancedDataGridViewSale";
             this.advancedDataGridViewSale.RowHeadersWidth = 51;
             this.advancedDataGridViewSale.RowTemplate.Height = 29;
-            this.advancedDataGridViewSale.Size = new System.Drawing.Size(1761, 883);
+            this.advancedDataGridViewSale.Size = new System.Drawing.Size(1761, 847);
             this.advancedDataGridViewSale.TabIndex = 0;
             this.advancedDataGridViewSale.TimeFilter = false;
             this.advancedDataGridViewSale.SortStringChanged += new System.EventHandler(this.advancedDataGridViewSale_SortStringChanged);
@@ -934,7 +934,7 @@
             this.panelCreateDeveloper.Location = new System.Drawing.Point(1555, 153);
             this.panelCreateDeveloper.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelCreateDeveloper.Name = "panelCreateDeveloper";
-            this.panelCreateDeveloper.Size = new System.Drawing.Size(351, 538);
+            this.panelCreateDeveloper.Size = new System.Drawing.Size(351, 544);
             this.panelCreateDeveloper.TabIndex = 13;
             // 
             // label1
@@ -1082,7 +1082,7 @@
             // 
             // buttonUpdateDeveloper
             // 
-            this.buttonUpdateDeveloper.Location = new System.Drawing.Point(1350, 743);
+            this.buttonUpdateDeveloper.Location = new System.Drawing.Point(1350, 715);
             this.buttonUpdateDeveloper.Name = "buttonUpdateDeveloper";
             this.buttonUpdateDeveloper.Size = new System.Drawing.Size(200, 40);
             this.buttonUpdateDeveloper.TabIndex = 4;
@@ -1123,7 +1123,7 @@
             this.panel1.Controls.Add(this.textBoxDeveloperID);
             this.panel1.Location = new System.Drawing.Point(533, 153);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1017, 538);
+            this.panel1.Size = new System.Drawing.Size(1017, 544);
             this.panel1.TabIndex = 1;
             // 
             // labelDeveloperGames
@@ -1227,12 +1227,12 @@
             // 
             // listBoxDeveloperList
             // 
-            this.listBoxDeveloperList.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.listBoxDeveloperList.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.listBoxDeveloperList.FormattingEnabled = true;
-            this.listBoxDeveloperList.ItemHeight = 32;
+            this.listBoxDeveloperList.ItemHeight = 20;
             this.listBoxDeveloperList.Location = new System.Drawing.Point(59, 153);
             this.listBoxDeveloperList.Name = "listBoxDeveloperList";
-            this.listBoxDeveloperList.Size = new System.Drawing.Size(442, 484);
+            this.listBoxDeveloperList.Size = new System.Drawing.Size(442, 544);
             this.listBoxDeveloperList.TabIndex = 0;
             this.listBoxDeveloperList.SelectedIndexChanged += new System.EventHandler(this.listBoxDeveloperList_SelectedIndexChanged);
             // 
@@ -1867,8 +1867,6 @@
         }
 
         #endregion
-        private SaveFileDialog saveFileDialogGame;
-        private SaveFileDialog saveFileDialogCreate;
         private BindingSource saleBindingSource;
         private TabPage LoginMenuBar;
         private Panel panelAdminAccess;
@@ -2019,5 +2017,7 @@
         private Button buttonShowAllGame;
         private ListBox listBoxGameList;
         private TabControl tabControl1;
+        private OpenFileDialog openFileDialogUpdateGame;
+        private OpenFileDialog openFileDialogCreateGame;
     }
 }

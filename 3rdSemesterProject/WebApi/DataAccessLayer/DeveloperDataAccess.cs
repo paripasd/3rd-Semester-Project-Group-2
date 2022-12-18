@@ -114,7 +114,7 @@ namespace WebApi.DataAccessLayer
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Exception while trying to update game. The exception was: '{ex.Message}'", ex);
+                    throw new Exception($"Exception while trying to update developer. The exception was: '{ex.Message}'", ex);
                 }
             }
         }

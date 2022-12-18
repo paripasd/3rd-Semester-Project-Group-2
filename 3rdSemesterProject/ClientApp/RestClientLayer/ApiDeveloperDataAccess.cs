@@ -1,10 +1,5 @@
 ﻿using ClientApp.ModelLayer;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientApp.RestClientLayer
 {
@@ -62,7 +57,7 @@ namespace ClientApp.RestClientLayer
 
             if (!response.IsSuccessful)
             {
-                throw new Exception($"Error updating company {developer}. Message was {response.StatusDescription}");
+                throw new Exception($"Error updating developer {developer}. Message was {response.StatusDescription}");
             }
             return response.Data;
         }

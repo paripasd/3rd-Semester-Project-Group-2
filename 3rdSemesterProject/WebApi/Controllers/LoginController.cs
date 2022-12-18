@@ -44,17 +44,6 @@ namespace WebApi.Controllers
             }
             return Ok();    //returns 200
         }
-
-        /*[HttpPut]
-        public ActionResult UpdateLogin(Login login)
-        {
-            login.Password = Login.HashPassword(login.Password);
-            if (!DataAccessLayer.UpdateLogin(login))
-            {
-                return NotFound();
-            }
-            return Ok();
-        }*/
         #endregion
     }
 }

@@ -1,18 +1,7 @@
 ﻿using ClientApp.RestClientLayer;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using ClientApp.ModelLayer;
-using System.Diagnostics;
-using System.Globalization;
-using RestSharp.Extensions;
-using System.Security.AccessControl;
 
 namespace ClientApp.UILayer
 {
@@ -26,9 +15,11 @@ namespace ClientApp.UILayer
         private ApiSaleDataAccess saleApi;
         private ApiLoginDataAccess loginApi;
         private BindingSource salesSource;
-        private byte[] CurrentGameFile { get; set; }//not so good clean code wise but works
-        public byte[] CurrentGameFileCreate { get; set; }//not so good clean code wise but works
+        private byte[] CurrentGameFile { get; set; }//could be better solution
+        public byte[] CurrentGameFileCreate { get; set; }//could be better solution
         public bool IsAdmin { get; set; }
+        //creating and starting all the things in the constructor
+        //also handling admin or non admin
         public MainForm(bool isAdmin)
         {
             IsAdmin = isAdmin;
@@ -63,6 +54,7 @@ namespace ClientApp.UILayer
         }
 
         #region Helper Methods
+        // helper method for admin non admin handling
         public void SetAccessAccordingToLogin()
         {
             if (IsAdmin == false)
@@ -214,7 +206,7 @@ namespace ClientApp.UILayer
             dev.Description = textBoxCreateDeveloperDescription.Text;
             developerApi.CreateDeveloper(dev);
         }
-
+        //when double click game in dev page we go to game page
         public void RedirectToGamePage()
         {
             string gameNameToSearch = listBoxDeveloperGames.Text;
@@ -228,7 +220,7 @@ namespace ClientApp.UILayer
             textBoxCreateDeveloperEmail.Clear();
             textBoxCreateDeveloperDescription.Clear();
         }
-
+        //we need to check if all the input fields has information so the creation runs smooth
         public bool CheckInputFieldsForCreate()
         {
             if (textBoxCreateDeveloperName.Text.Length > 0 && textBoxCreateDeveloperEmail.Text.Length > 0 && textBoxCreateDeveloperDescription.Text.Length > 0)
@@ -237,7 +229,7 @@ namespace ClientApp.UILayer
             }
             return false;
         }
-
+        //we need to check if all the input fields has information so the updating runs smooth
         public bool CheckInputFieldsForUpdate()
         {
             if (textBoxDeveloperName.Text.Length > 0 && textBoxEmail.Text.Length > 0 && textBoxDeveloperDescription.Text.Length > 0)
@@ -246,7 +238,7 @@ namespace ClientApp.UILayer
             }
             return false;
         }
-
+        //search by id 
         public void ChangeListToShowOnlyDeveloperBySearch()
         {
             Developer d = new Developer();
@@ -261,6 +253,7 @@ namespace ClientApp.UILayer
                 //error handling
             }
         }
+        //populate list
         public void ShowAllDeveloper()
         {
             listBoxDeveloperList.Items.Clear();
@@ -317,7 +310,7 @@ namespace ClientApp.UILayer
             }
             return developerList;
         }
-
+        //we get the whole object from the list to show it in the input fields
         public Developer GetSelectedDeveloperObjectFromList()
         {
             Developer developerToShow = new Developer();
@@ -354,6 +347,7 @@ namespace ClientApp.UILayer
 
 
         #region Event Page Methods
+        //populate list
         public void ShowAllEvent()
         {
             listBoxEvent.Items.Clear();
@@ -378,7 +372,7 @@ namespace ClientApp.UILayer
             }
             
         }
-
+        //we need to get the whole object from list to show
         public Event GetSelectedEventObjectFromList()
         {
             Event eventToShow = new Event();
@@ -392,7 +386,7 @@ namespace ClientApp.UILayer
             }
             return eventToShow;
         }
-
+        //set the member list to the selected event
         public void SetSelectedMemberFromMemberToList()
         {
             int counter = 0;
@@ -641,6 +635,7 @@ namespace ClientApp.UILayer
         #endregion
 
         #region Game Page Methods
+        //populate game list
         public void ShowAllGames()
         {
             listBoxGameList.Items.Clear();
@@ -650,7 +645,7 @@ namespace ClientApp.UILayer
                 listBoxGameList.Items.Add(g.Title);
             }
         }
-
+        //get whole object from list to show
         public Game GetSelectedGameObjectFromList()
         {
             Game gameToShow = new Game();
@@ -672,7 +667,7 @@ namespace ClientApp.UILayer
             }
             return gameToShow;
         }
-
+        //redirect to game page from dev page helper
         public Game GetSelectedGameObjectFromDeveloperGameList()
         {
             Game game = new Game();
@@ -766,12 +761,12 @@ namespace ClientApp.UILayer
             }
             return false;
         }
-
+        //file dialog pop up when button pressed
         public void SelectFileDialog()
         {
-            DialogResult dialog = saveFileDialogGame.ShowDialog();
-            saveFileDialogGame.Title = "Choose new game file for updating";
-            string path = saveFileDialogGame.FileName;
+            DialogResult dialog = openFileDialogUpdateGame.ShowDialog();
+            openFileDialogUpdateGame.Title = "Choose new game file for updating";
+            string path = openFileDialogUpdateGame.FileName;
 
             if (dialog == DialogResult.OK)
             {
@@ -790,7 +785,7 @@ namespace ClientApp.UILayer
                 }
             }
         }
-
+        //find one game by id and show in list
         public void FindGameFromId()
         {
             Game gameSearch = new Game();
@@ -814,7 +809,7 @@ namespace ClientApp.UILayer
             }
         }
 
-        //create 
+        //create game
         public void AddNewGame()
         {
             if (AllCreateFieldsAreCorrect() == true)
@@ -855,12 +850,12 @@ namespace ClientApp.UILayer
             textBoxCreateGameSpecifications.Clear();
             CurrentGameFileCreate = null;
         }
-
+        // file dialog for create new game
         public void SelectFileDialogCreate()
         {
-            DialogResult dialog = saveFileDialogCreate.ShowDialog();
-            saveFileDialogCreate.Title = "Choose new game file";
-            string path = saveFileDialogCreate.FileName;
+            DialogResult dialog = openFileDialogCreateGame.ShowDialog();
+            openFileDialogCreateGame.Title = "Choose new game file";
+            string path = openFileDialogCreateGame.FileName;
 
             if (dialog == DialogResult.OK)
             {
@@ -953,7 +948,7 @@ namespace ClientApp.UILayer
 
         #region Sale Page Methods
 
-
+        //create a data table with the info from api, add it to the binding source, than add it to the advanced data grid view
         public void GetAllSales()
         {
             List<Sale> allSales = new List<Sale>();
@@ -989,11 +984,13 @@ namespace ClientApp.UILayer
         #region Sale Page Wiring
         private void advancedDataGridViewSale_SortStringChanged(object sender, EventArgs e)
         {
+            //sorting handle
             salesSource.Sort = advancedDataGridViewSale.SortString;
         }
 
         private void advancedDataGridViewSale_FilterStringChanged(object sender, EventArgs e)
         {
+            //filter handle
             salesSource.Filter = advancedDataGridViewSale.FilterString;
         }
 
@@ -1011,6 +1008,7 @@ namespace ClientApp.UILayer
           - People with the non-admin accounts cannot make changes in this page
           - When we have a new employee and they need access to the system the admins will create new credentials for them
         */
+        //populate login list
         public void GetAllLogins()
         {
             IEnumerable<Login> allLogins = new List<Login>();
@@ -1020,7 +1018,7 @@ namespace ClientApp.UILayer
                 listBoxLogins.Items.Add(login.UserName);
             }
         }
-
+        //get whole object from list
         public Login GetSelectedLoginObjectFromList()
         {
             Login loginToGet = new Login();
@@ -1062,7 +1060,7 @@ namespace ClientApp.UILayer
             radioButtonAdminRightsNo.Checked = false;
             radioButtonAdminRightsYes.Checked = false;
         }
-
+        // refresh login page
         public void Refresh()
         {
             listBoxLogins.Items.Clear();

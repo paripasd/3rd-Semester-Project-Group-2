@@ -86,6 +86,7 @@ namespace WebApi.DataAccessLayer
             }
         }
 
+        // we don't want to update login information, admin has rights to delete and create new logins but not to change passwords and usernames
         /*public bool UpdateLogin(Login login)
         {
             string commandText = "UPDATE Login SET UserName=@username, Hash=@hash WHERE UserName=@un";

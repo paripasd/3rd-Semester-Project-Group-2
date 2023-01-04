@@ -9,10 +9,10 @@
         // Set the date we're counting down to
         const event = JSON.parse('@Html.Raw(JsonConvert.SerializeObject(Model))');
         var countDownDate = new Date(event.StartDate).getTime();
-
+        memberAmount = 0;
         // Update spots left every 5 seconds
         var y = setInterval(function () {
-            memberAmount = 0;
+            
             /*fetches members already registered for event*/
             fetch('https://localhost:7064/Event/GetMemberAmount?eventId=' + event.EventID)
                 /*deserializes json*/
@@ -22,7 +22,7 @@
             var spotsLeft = event.Capacity - memberAmount;
             // Updates html
             document.getElementById("spotsleft").innerHTML = "Spots left: " + spotsLeft;
-        }, 5000);
+        }, 0010);
 
         // Update the count down every 1 second
         var x = setInterval(function () {

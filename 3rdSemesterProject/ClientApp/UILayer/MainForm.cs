@@ -980,6 +980,11 @@ namespace ClientApp.UILayer
                 advancedDataGridViewSale.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
         }
+
+        public void ClearSaleTable()
+        { 
+            salesSource.DataSource = null;
+        }
         #endregion
         #region Sale Page Wiring
         private void advancedDataGridViewSale_SortStringChanged(object sender, EventArgs e)
@@ -997,6 +1002,12 @@ namespace ClientApp.UILayer
         private void salesSource_ListChanged(object sender, ListChangedEventArgs e)
         {
             
+        }
+
+        private void buttonRefreshSale_Click_1(object sender, EventArgs e)
+        {
+            ClearSaleTable();
+            GetAllSales();
         }
         #endregion
 

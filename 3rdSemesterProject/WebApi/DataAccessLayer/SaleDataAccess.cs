@@ -20,7 +20,7 @@ namespace WebApi.DataAccessLayer
                 SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@gameid", sale.GameID);
                 command.Parameters.AddWithValue("@email", sale.Email);
-                command.Parameters.AddWithValue("@date", sale.Date);
+                command.Parameters.AddWithValue("@date", sale.Date.AddHours(1));
                 command.Parameters.AddWithValue("@salesprice", sale.SalesPrice);
                 
 

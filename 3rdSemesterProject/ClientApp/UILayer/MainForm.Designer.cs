@@ -182,6 +182,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.openFileDialogUpdateGame = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogCreateGame = new System.Windows.Forms.OpenFileDialog();
+            this.buttonRefreshSale = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.saleBindingSource)).BeginInit();
             this.LoginMenuBar.SuspendLayout();
             this.panelAdminAccess.SuspendLayout();
@@ -397,6 +398,7 @@
             // 
             // SalesMenuBar
             // 
+            this.SalesMenuBar.Controls.Add(this.buttonRefreshSale);
             this.SalesMenuBar.Controls.Add(this.advancedDataGridViewSale);
             this.SalesMenuBar.Location = new System.Drawing.Point(4, 54);
             this.SalesMenuBar.Name = "SalesMenuBar";
@@ -1819,6 +1821,16 @@
             this.tabControl1.TabIndex = 1;
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
+            // buttonRefreshSale
+            // 
+            this.buttonRefreshSale.Location = new System.Drawing.Point(1747, 18);
+            this.buttonRefreshSale.Name = "buttonRefreshSale";
+            this.buttonRefreshSale.Size = new System.Drawing.Size(94, 29);
+            this.buttonRefreshSale.TabIndex = 1;
+            this.buttonRefreshSale.Text = "Refresh";
+            this.buttonRefreshSale.UseVisualStyleBackColor = true;
+            this.buttonRefreshSale.Click += new System.EventHandler(this.buttonRefreshSale_Click_1);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -2019,5 +2031,6 @@
         private TabControl tabControl1;
         private OpenFileDialog openFileDialogUpdateGame;
         private OpenFileDialog openFileDialogCreateGame;
+        private Button buttonRefreshSale;
     }
 }

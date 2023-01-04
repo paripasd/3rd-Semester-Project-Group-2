@@ -4,7 +4,8 @@ using WebApi.Controllers;
 using WebApi.DataAccessLayer;
 using WebApi.ModelLayer;
 
-namespace TestDeveloperAPI
+
+namespace TestAPI
 {
     public class Tests
     {

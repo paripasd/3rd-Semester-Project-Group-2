@@ -8,7 +8,7 @@ using WebMVC.RestClientLayer;
 using WebMVC.Models;
 using Newtonsoft.Json;
 
-namespace MVC.Controllers
+namespace WebMVC.Controllers
 {
 	public class SaleController : Controller
 	{

@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "RfqFRKCT2mzEG2j+CuyILd5YmC9N+4RlVFfce81zfHm6ueDEThOyYetUikqr4Xk9U7raedhZ3n8/Wbyv5LtdHg==",
+  "dgSpecHash": "mmgdmLvUbyhc5JFtyRAKpdoDQY2657ignwWc3eQhYie1rDO37g6rdkTFcfnxwKAESSKhmas4p1B7hJzFlupMAg==",
   "success": true,
-  "projectFilePath": "C:\\repositories\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\ClientApp\\ClientApp.csproj",
+  "projectFilePath": "C:\\Users\\korik\\OneDrive\\Documents\\GitHub\\3rd-Semester-Project-Group-2\\3rdSemesterProject\\ClientApp\\ClientApp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\parip\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
-    "C:\\Users\\parip\\.nuget\\packages\\restsharp\\106.12.0\\restsharp.106.12.0.nupkg.sha512"
+    "C:\\Users\\korik\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
+    "C:\\Users\\korik\\.nuget\\packages\\restsharp\\106.12.0\\restsharp.106.12.0.nupkg.sha512"
   ],
   "logs": []
 }

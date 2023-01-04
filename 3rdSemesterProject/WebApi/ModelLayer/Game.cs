@@ -9,6 +9,11 @@ namespace WebApi.ModelLayer
         {
 
         }
+        public Game(string fileName, byte[] fileContent)
+        { 
+            FileName = fileName;
+            FileContent = fileContent;
+        }
         // full for game table
         public Game(int gameId, int developerID, string title, string description, int yearOfRelease, string specifications, string type, float price)
         {

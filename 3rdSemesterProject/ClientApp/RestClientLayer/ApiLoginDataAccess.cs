@@ -1,14 +1,9 @@
 ﻿using ClientApp.ModelLayer;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientApp.RestClientLayer
 {
-    internal class ApiLoginDataAccess : IApiLoginDataAccess
+    internal class ApiLoginDataAccess
     {
         public string BaseUri { get; private set; }
 
@@ -26,23 +21,29 @@ namespace ClientApp.RestClientLayer
             return response.Data;
         }
 
-        #region Helper Methods
-
-        public bool ValidateLogin(Login incomingLogin)
+        public bool AddLogin(Login login)
         {
-            IEnumerable<Login> logins = GetAllLogins();
-            foreach (Login login in logins)
-            {
-                bool IsValidUserName = incomingLogin.UserName.Equals(login.UserName);
-                bool IsValidPassword = Login.ValidatePassword(incomingLogin.Password,login.Password);
-                if (IsValidUserName == true && IsValidPassword == true)
-                {
-                    return true;
-                }
-            }
-            return false;
+            var request = new RestRequest();
+            request.AddJsonBody(login);
+            var response = RestClient.Post<bool>(request);
+            return response.Data;
         }
 
-        #endregion
+        public bool UpdateLogin(Login login)
+        {
+            var request = new RestRequest();
+            request.AddJsonBody(login);
+            var response = RestClient.Put<bool>(request);
+            return response.Data;
+        }
+
+        public bool DeleteLogin(Login login)
+        {
+            var request = new RestRequest();
+            request.AddJsonBody(login);
+            var response = RestClient.Delete<bool>(request);
+            return response.Data;
+        }
+        
     }
 }

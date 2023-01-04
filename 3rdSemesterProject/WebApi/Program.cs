@@ -12,7 +12,7 @@ builder.Services.AddScoped<IEventDataAccess>((conf) => new EventDataAccess(_conf
 builder.Services.AddScoped<IMemberDataAccess>((conf) => new MemberDataAccess(_configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<ILoginDataAccess>((conf) => new LoginDataAccess(_configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<ISaleDataAccess>((conf) => new SaleDataAccess(_configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IEventMemberDataAccess>((conf) => new EventMemberDataAccess(_configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IEventMemberDataAccess>((conf) => new EventMemberDataAccess(_configuration.GetConnectionString("TransactionConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

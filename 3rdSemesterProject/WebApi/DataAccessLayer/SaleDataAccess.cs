@@ -1,6 +1,5 @@
 ﻿using System.Data.SqlClient;
 using WebApi.ModelLayer;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApi.DataAccessLayer
 {
@@ -37,7 +36,7 @@ namespace WebApi.DataAccessLayer
                 }
             }
         }
-
+        // we don't actually use this in the client app (because of the advanced datagrid view), but the api provides this functionality
         public IEnumerable<Sale> SalesInPeriod(DateTime startTime, DateTime endTime)
         {
             string commandText = "SELECT * FROM Sale WHERE Date BETWEEN @starttime AND @endtime";
@@ -65,7 +64,7 @@ namespace WebApi.DataAccessLayer
                 }
             }
         }
-
+        // we don't actually use this in the client app (because of the advanced datagrid view), but the api provides this functionality
         public IEnumerable<Sale> SalesByGame(int gameId)
         {
             string commandText = "SELECT * FROM Sale WHERE GameID = @gameid";
@@ -114,7 +113,7 @@ namespace WebApi.DataAccessLayer
                 }
             }
         }
-
+        // we don't actually use this in the client app (because of the advanced datagrid view), but the api provides this functionality
         public Sale FindSaleFromGameKey(Guid gameKey)
         {
             string commandText = "SELECT * FROM Sale WHERE GameKey = @gamekey";

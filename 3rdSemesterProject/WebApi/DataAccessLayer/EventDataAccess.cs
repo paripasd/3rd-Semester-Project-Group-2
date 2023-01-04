@@ -23,8 +23,8 @@ namespace WebApi.DataAccessLayer
                 command.Parameters.AddWithValue("@gameid", e.GameID);
                 command.Parameters.AddWithValue("@name", e.Name);
                 command.Parameters.AddWithValue("@description", e.Description);
-                command.Parameters.AddWithValue("@startdate", e.StartDate);
-                command.Parameters.AddWithValue("@enddate", e.EndDate);
+                command.Parameters.AddWithValue("@startdate", e.StartDate.ToUniversalTime());
+                command.Parameters.AddWithValue("@enddate", e.EndDate.ToUniversalTime());
                 command.Parameters.AddWithValue("@capacity", e.Capacity);
                 try
                 {
@@ -91,6 +91,34 @@ namespace WebApi.DataAccessLayer
             }
         }
 
+		public Event FindUpcomingEvent()
+		{
+            string commandText = "SELECT TOP 1 * FROM Event WHERE StartDate = (SELECT MIN(StartDate) FROM Event)";
+			using (connection)
+			{
+				connection.Open();
+
+				SqlCommand command = new SqlCommand(commandText, connection);
+
+				try
+				{
+					SqlDataReader reader = command.ExecuteReader();
+					if (reader.Read())
+					{
+						return DataReaderRowToEvent(reader);
+					}
+					else
+					{
+						return null;
+					}
+				}
+				catch (Exception ex)
+				{
+					throw new Exception($"Exception while trying to find the upcoming Event. The exception was: '{ex.Message}'", ex);
+				}
+			}
+		}
+
 		public IEnumerable<Event> GetAllEvents()
         {
             string commandText = "SELECT * FROM Event";
@@ -107,6 +135,11 @@ namespace WebApi.DataAccessLayer
                     while (reader.Read())
                     {
                         events.Add(DataReaderRowToEvent(reader));
+                    }
+                    foreach (Event e in events)
+                    {
+                        e.StartDate = e.StartDate.ToLocalTime();
+                        e.EndDate = e.EndDate.ToLocalTime();
                     }
                     return events;
 
@@ -126,10 +159,11 @@ namespace WebApi.DataAccessLayer
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(commandText, connection);
+                
                 command.Parameters.AddWithValue("@name", e.Name);
                 command.Parameters.AddWithValue("@description", e.Description);
-                command.Parameters.AddWithValue("@startdate", e.StartDate);
-                command.Parameters.AddWithValue("@enddate", e.EndDate);
+                command.Parameters.AddWithValue("@startdate", e.StartDate.ToUniversalTime());
+                command.Parameters.AddWithValue("@enddate", e.EndDate.ToUniversalTime());
                 command.Parameters.AddWithValue("@eventid", e.EventID);
 
                 try

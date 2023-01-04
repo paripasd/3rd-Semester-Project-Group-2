@@ -52,7 +52,18 @@ namespace WebApi.Controllers
 		[Route("file/{gameId}")]
         public ActionResult<Game> GetGameFileById(int gameId)
         {
-            return DataAccessLayer.GetGameFileById(gameId);
+            Game gameFile = DataAccessLayer.GetGameFileById(gameId);
+            return Ok(gameFile);
+        }
+
+        [HttpPut]
+        public ActionResult UpdateAllGameDetails(Game game)
+        {
+            if (!DataAccessLayer.UpdateAllGameDetails(game))
+            {
+                return NotFound();
+            }
+            return Ok();
         }
 
         [HttpPost]
@@ -73,15 +84,18 @@ namespace WebApi.Controllers
             return Ok();    //returns 200
         }
 
-        [HttpPut]
-        public ActionResult UpdateAllGameDetails(Game game)
+        
+
+        /*[HttpPut]
+        [Route("update/gamefile")]
+        public ActionResult UpdateGameFile(Game game)
         {
-            if (!DataAccessLayer.UpdateAllGameDetails(game))
+            if (!DataAccessLayer.UpdateGameFile(game))
             {
                 return NotFound();
             }
             return Ok();
-        }
+        }*/
         #endregion
     }
 }

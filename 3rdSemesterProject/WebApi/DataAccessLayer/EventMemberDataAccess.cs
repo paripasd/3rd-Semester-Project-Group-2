@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using Microsoft.Extensions.Logging;
+using System.Data.SqlClient;
 using System.Linq.Expressions;
 using WebApi.ModelLayer;
 
@@ -13,7 +14,7 @@ namespace WebApi.DataAccessLayer
             connection.Open();
         }
         #region CRUD Methods
-        public EventMember FindEventByMemberId(int memberid)
+        public IEnumerable<int> GetEventIdListByMemberId(int memberid)
         {
             string commandText = "SELECT EventID FROM EventMember WHERE MemberID = @memberid";
             using (connection)
@@ -24,24 +25,22 @@ namespace WebApi.DataAccessLayer
 
                 try
                 {
+                    List<int> eventIdList = new List<int>();
                     SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        return DataReaderRowToEventMember(reader);
+                        eventIdList.Add((int)reader["EventID"]);
                     }
-                    else
-                    {
-                        return null;
-                    }
+                    return eventIdList;
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Exception while trying to find the event by member id with the '{memberid}'. The exception was: '{ex.Message}'", ex);
+                    throw new Exception($"Exception while trying to find the event list by member id with the '{memberid}'. The exception was: '{ex.Message}'", ex);
                 }
             }
         }
 
-        public EventMember FindMemberInEventFromId(int eventId)
+        public IEnumerable<int> GetMemberIdListByEventId(int eventId)
         {
             string commandText = "SELECT MemberID FROM EventMember WHERE EventID = @eventid";
             using (connection)
@@ -52,68 +51,93 @@ namespace WebApi.DataAccessLayer
 
                 try
                 {
+                    List<int> memberIdList = new List<int>();
                     SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        return DataReaderRowToEventMember(reader);
+                        memberIdList.Add((int)reader["MemberID"]);
                     }
-                    else
-                    {
-                        return null;
-                    }
+                    return memberIdList;
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Exception while trying to find the member in event with the '{eventId}'. The exception was: '{ex.Message}'", ex);
+                    throw new Exception($"Exception while trying to find the member list in event with the '{eventId}'. The exception was: '{ex.Message}'", ex);
                 }
             }
         }
-
+        //concurrency issue -> transaction, if we only have one available space in the event capacity who should come first if they want to join at the same time
         public bool JoinEvent(EventMember eventMember)
         {
             SqlTransaction transaction;
             int eventCapacity;
             int eventParticipantNumber;
-
-            string step1 = "SELECT Capacity FROM Event WHERE EventID = @eventid";
-            string step2 = "SELECT COUNT(MemberID) FROM EventMember WHERE EventID = @eventid";
-            string step3 = "INSERT INTO EventMember (EventID, MemberID) VALUES (@eventid, @memberid)";
+            //get capacity of event
+            string getCapacity = "SELECT Capacity FROM Event WHERE EventID = @eventid";
+            //get the number of already joined members
+            string getCurrentParticipantNumber = "SELECT Count(*) FROM EventMember WHERE EventID = @eventid";
+            //if possible add the member to participants
+            string makeJoinEvent = "INSERT INTO EventMember (EventID, MemberID) VALUES (@eventid, @memberid)";
             using (transaction = connection.BeginTransaction(System.Data.IsolationLevel.RepeatableRead))
             {
-                SqlCommand commandGetCapacity = new SqlCommand(step1, connection, transaction);
+                SqlCommand commandGetCapacity = new SqlCommand(getCapacity, connection, transaction);
                 commandGetCapacity.Parameters.AddWithValue("@eventid", eventMember.EventID);
 
-                SqlCommand numberOfParticipants = new SqlCommand(step2, connection, transaction);
+                SqlCommand numberOfParticipants = new SqlCommand(getCurrentParticipantNumber, connection, transaction);
                 numberOfParticipants.Parameters.AddWithValue("@eventid", eventMember.EventID);
 
-                SqlCommand commandCreateAttendance = new SqlCommand(step3, connection, transaction);
+                SqlCommand commandCreateAttendance = new SqlCommand(makeJoinEvent, connection, transaction);
                 commandCreateAttendance.Parameters.AddWithValue("@eventid", eventMember.EventID);
                 commandCreateAttendance.Parameters.AddWithValue("@memberid", eventMember.MemberID);
 
+
                 try
                 {
-                    eventCapacity = (int)commandGetCapacity.ExecuteReader().GetInt64(0);
-                    eventParticipantNumber = (int)numberOfParticipants.ExecuteReader().GetInt64(0);
+                    try
+                    {
+                        SqlDataReader readerCapacity = commandGetCapacity.ExecuteReader();
+                        readerCapacity.Read();
+                        eventCapacity = (int)readerCapacity["Capacity"];
+                        readerCapacity.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+
+                    try
+                    {
+                        SqlDataReader readerParticipant = numberOfParticipants.ExecuteReader();
+                        readerParticipant.Read();
+                        eventParticipantNumber = (int)readerParticipant.GetInt32(0);
+                        readerParticipant.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                   // check if we have space to add a new participant
                     if (eventParticipantNumber >= eventCapacity)
                     {
+                        //if not roll back
                         transaction.Rollback();
                         return false;
                     }
+                    // if yes add participant and commit
                     commandCreateAttendance.ExecuteScalar();
                     transaction.Commit();
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    //if the connection with the database breaks at the same time as the rollback happens we need to add a try catch to be able to see what happened.
+                    //if transaction breaks at the exact moment when rolling back we can see from this try catch below
                     try
                     {
                         transaction.Rollback();
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
 
-                        throw new Exception("Error rolling back signup transaction.");
+                        throw new Exception(e.Message);
                     }
                     throw new Exception("Error in the transaction." + ex);
                     return false;

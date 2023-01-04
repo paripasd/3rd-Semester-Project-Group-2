@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.Metrics;
 using WebApi.DataAccessLayer;
 using WebApi.ModelLayer;
 
@@ -24,26 +23,26 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("event/{eventid}")]
-        public ActionResult<EventMember> FindMemberInEventFromId(int eventId)
+        public ActionResult<IEnumerable<int>> GetMemberIdListByEventId(int eventId)
         {
-            EventMember eventMember = DataAccessLayer.FindMemberInEventFromId(eventId);
-            if (eventMember == null)
+            IEnumerable<int> memberId = DataAccessLayer.GetMemberIdListByEventId(eventId);
+            if (memberId == null)
             {
                 return NotFound();  //returns 404
             }
-            return Ok(eventMember); //returns 200 + account JSON as body
+            return Ok(memberId); //returns 200 + account JSON as body
         }
 
         [HttpGet]
         [Route("member/{memberid}")]
-        public ActionResult<EventMember> FindEventByMemberId(int memberId)
+        public ActionResult<IEnumerable<int>> GetEventIdListByMemberId(int memberId)
         {
-            EventMember eventMember = DataAccessLayer.FindEventByMemberId(memberId);
-            if (eventMember == null)
+            IEnumerable<int> eventId = DataAccessLayer.GetEventIdListByMemberId(memberId);
+            if (eventId == null)
             {
                 return NotFound();  //returns 404
             }
-            return Ok(eventMember); //returns 200 + account JSON as body
+            return Ok(eventId); //returns 200 + account JSON as body
         }
 
         

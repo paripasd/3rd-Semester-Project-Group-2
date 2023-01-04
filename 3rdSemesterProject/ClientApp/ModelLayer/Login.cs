@@ -6,10 +6,18 @@ namespace ClientApp.ModelLayer
         #region Properties
         public string UserName { get; set; }
         public string Password { get; set; }
+
+        public bool AdminRights { get; set; }
         #endregion
         public Login()
         {
 
+        }
+        public Login(string usreName, string password, bool adminRights)
+        {
+            UserName = usreName;
+            Password = password;
+            AdminRights = adminRights;
         }
         public Login(string usreName, string password)
         {

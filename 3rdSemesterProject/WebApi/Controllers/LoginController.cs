@@ -28,7 +28,6 @@ namespace WebApi.Controllers
             return Ok(DataAccessLayer.GetAllLoginInformation());
         }
 
-
         [HttpPost]
         public ActionResult<Login> AddLogin(Login login)
         {
@@ -37,7 +36,6 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("{username}")]
         public ActionResult DeleteLogin(Login login)
         {
             if (!DataAccessLayer.DeleteLogin(login))
@@ -45,16 +43,6 @@ namespace WebApi.Controllers
                 return NotFound();  //returns 404
             }
             return Ok();    //returns 200
-        }
-
-        [HttpPut]
-        public ActionResult UpdateLogin(Login login)
-        {
-            if (!DataAccessLayer.UpdateLogin(login))
-            {
-                return NotFound();
-            }
-            return Ok();
         }
         #endregion
     }

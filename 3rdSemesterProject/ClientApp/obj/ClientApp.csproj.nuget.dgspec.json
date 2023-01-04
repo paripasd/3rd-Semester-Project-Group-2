@@ -40,9 +40,21 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
+            "ADGV": {
+              "target": "Package",
+              "version": "[0.1.0.10, )"
+            },
             "BCrypt.Net-Core": {
               "target": "Package",
               "version": "[1.6.0, )"
+            },
+            "Microsoft.Extensions.Configuration.UserSecrets": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
             },
             "RestSharp": {
               "target": "Package",

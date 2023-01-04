@@ -1,10 +1,6 @@
 ﻿using ClientApp.ModelLayer;
+using Newtonsoft.Json;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientApp.RestClientLayer
 {
@@ -19,12 +15,25 @@ namespace ClientApp.RestClientLayer
             BaseUri = baseUri;
             RestClient = new RestClient(baseUri);
         }
-
-        public bool CreateGame(Game game, GameFile gameFile)
+        //using different serialization than Restsharp already has because of the byte array serialization problem with Restsharp
+        public bool CreateGame(Game game)
         {
             var request = new RestRequest();
-            request.AddJsonBody(game);
+            // Serialize the object to JSON using a different library
+            var json = JsonConvert.SerializeObject(game);
+            // Add the JSON string to the request body
+            request.AddParameter("application/json", json, ParameterType.RequestBody);
             return RestClient.Post<bool>(request).Data;
+        }
+        public void UpdateGame(Game g)
+        {
+            var request = new RestRequest();
+            // Serialize the object to JSON using a different library
+            var json = JsonConvert.SerializeObject(g);
+            // Add the JSON string to the request body
+            request.AddParameter("application/json", json, ParameterType.RequestBody);
+            var response = RestClient.Put<bool>(request);
+
         }
 
         public IEnumerable<Game> GetGamesByDeveloperId(int developerId)
@@ -32,6 +41,35 @@ namespace ClientApp.RestClientLayer
             var request = new RestRequest("client/" + developerId.ToString());
             var response = RestClient.Execute<IEnumerable<Game>>(request);
             return response.Data;
+        }
+
+        public IEnumerable<Game> GetAllGames()
+        {
+            var request = new RestRequest();
+            var response = RestClient.Execute<IEnumerable<Game>>(request);
+            return response.Data;
+        }
+
+        public Game GetGameUsingId(int gameId)
+        {
+            var request = new RestRequest(gameId.ToString());
+            var response = RestClient.Execute<Game>(request);
+            return response.Data;
+        }
+
+        public Game GetGameFileByGameId(int gameId)
+        {
+            var request = new RestRequest("file/" + gameId.ToString());
+            var response = RestClient.Execute<Game>(request);
+            var keyResponse = JsonConvert.DeserializeObject<Game>(response.Content);
+            return keyResponse;
+        }
+
+        public void DeleteGame(int id)
+        {
+            var request = new RestRequest(id.ToString());
+            request.AddJsonBody(id);
+            var response = RestClient.Delete<bool>(request);
         }
     }
 }

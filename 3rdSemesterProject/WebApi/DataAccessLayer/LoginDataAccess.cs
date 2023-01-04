@@ -15,7 +15,7 @@ namespace WebApi.DataAccessLayer
         public bool CreateLogin(Login login)
         {
             string hashPassword = Login.HashPassword(login.Password);
-            string commandText = "INSERT INTO Login (UserName,Hash) VALUES (@username,@hash)";
+            string commandText = "INSERT INTO Login (UserName,Hash,AdminRights) VALUES (@username,@hash,@adminrights)";
             using (connection)
             {
                 connection.Open();
@@ -23,6 +23,7 @@ namespace WebApi.DataAccessLayer
                 SqlCommand command = new SqlCommand(commandText, connection);
                 command.Parameters.AddWithValue("@username", login.UserName);
                 command.Parameters.AddWithValue("@hash", hashPassword);
+                command.Parameters.AddWithValue("@adminrights", login.AdminRights);
                 try
                 {
                     command.ExecuteScalar();
@@ -60,7 +61,7 @@ namespace WebApi.DataAccessLayer
 
         public IEnumerable<Login> GetAllLoginInformation()
         {
-            string commandText = "SELECT UserName, Hash FROM Login";
+            string commandText = "SELECT UserName,Hash,AdminRights FROM Login";
             using (connection)
             {
                 connection.Open();
@@ -85,7 +86,8 @@ namespace WebApi.DataAccessLayer
             }
         }
 
-        public bool UpdateLogin(Login login)
+        // we don't want to update login information, admin has rights to delete and create new logins but not to change passwords and usernames
+        /*public bool UpdateLogin(Login login)
         {
             string commandText = "UPDATE Login SET UserName=@username, Hash=@hash WHERE UserName=@un";
             using (connection)
@@ -106,7 +108,7 @@ namespace WebApi.DataAccessLayer
                     throw new Exception($"Exception while trying to update Login. The exception was: '{ex.Message}'", ex);
                 }
             }
-        }
+        }*/
         #endregion
 
         #region Helper Methods
@@ -115,7 +117,7 @@ namespace WebApi.DataAccessLayer
             Login login = new Login();
             login.UserName = (string)reader["UserName"];
             login.Password = (string)reader["Hash"];
-            
+            login.AdminRights = (bool)reader["AdminRights"];
 
             return login;
         }

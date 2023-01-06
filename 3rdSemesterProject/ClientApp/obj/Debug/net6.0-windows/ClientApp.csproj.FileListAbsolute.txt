@@ -51,3 +51,15 @@ C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\De
 C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
 C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\repositories\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\bin\Debug\net6.0-windows\Microsoft.Extensions.Primitives.dll
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.csproj.AssemblyReference.cache
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.Form1.resources
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.UILayer.LoginForm.resources
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.UILayer.MainForm.resources
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.csproj.GenerateResource.cache
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.AssemblyInfoInputs.cache
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.AssemblyInfo.cs
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.csproj.CoreCompileInputs.cache
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.dll
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\refint\ClientApp.dll
+C:\Users\korik\OneDrive\Documents\GitHub\3rd-Semester-Project-Group-2\3rdSemesterProject\ClientApp\obj\Debug\net6.0-windows\ClientApp.pdb
